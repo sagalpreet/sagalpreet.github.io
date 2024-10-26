@@ -23,27 +23,32 @@
 - title: Experience
   type: time_table
   contents:
+    - title: Predoctoral Researcher
+      institution: Google Deepmind
+      year: Aug 2024 - Present
+      description:
+        # - 
+    
     - title: Member Technical Staff
       institution: Oracle
-      year: Jun 2023 - Present
+      year: Jun 2023 - Aug 2024
       description:
-        - Building highly scalable state of the art AI based speech services for cloud
+        - Led the Natural TTS voice feature from ideation to production ready stage - <a href="https://blogs.oracle.com/ai-and-datascience/post/oci-speechs-tts-now-supports-additional-voices">Blog</a>
+        - Designed and implemented the API layer for Whisper ASR model - <A href="https://blogs.oracle.com/ai-and-datascience/post/oci-speech-supports-the-whisper-model">Blog</a>
+        - Led E2E implementation and testing of delete workflow for async transcription jobs - <a href="https://docs.oracle.com/en-us/iaas/Content/speech/using/delete-trans-job.htm">API</a>
 
     - title: CS Subject Matter Expert
       institution: Chegg India
       year: May 2022 - May 2023
       description:
-        - Subject matter expert in Computer Science
-        - Helped students with their doubts in various topics like DBMS, OS and other core CS topics
+        - Helped students with their doubts in DBMS, OS and other core CS topics
 
     - title: Project Intern (Server Technology)
       institution: Oracle
       year: Jun 2022 - Jul 2022
       description:
-        - Developed circuit breaker to handle the noisy neighbor problem in the email notification microservice that is used more than 1 million times a day
-        - Enhanced notification architecture by adding API endpoints to support sending emails using customer tenancy
-        - Modified UI of the Oracle Integrations Platform to allow user to enter SMTP credentials
-        - Was offered full time role at the end of the internship
+        - Developed circuit breaker to handle the {noisy neighbor problem} in the {email notification microservice} that is used more than {1 million} times a day
+        - Enhanced notification architecture by adding {API} endpoints to support sending emails using {customer tenancy}. Check "Bring your own Email Server"  section in this <a href="https://blogs.oracle.com/integration/post/oic-3-2210-release-new-features">blog</a>
     
     - title: Department Engineering Project
       institution: IPSA Lab
