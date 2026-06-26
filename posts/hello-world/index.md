@@ -22,7 +22,7 @@ That single session hooked me. I immediately dove into Andrew Ng's online course
 
 While I spent most of my undergraduate years building a solid machine learning foundation, I didn't get to do novel RL research or publish major RL projects back then. After graduating, I joined Oracle AI in the Speech team as a Member of Technical Staff. It was a great experience, but my passion for RL never faded. 
 
-Eventually, I made my way to **Google DeepMind** as a Pre-Doctoral Researcher in the Autonomous Agents team. Coming full circle, I now work on RL post-training algorithms for LLMs (like Gemini Thinking). Recently, I had the opportunity to present our team's work to **Satinder Singh** and **Doina Precup**, who closely supervise and collaborate with my team. Because they are such close collaborators and mentors, I wasn't nervous at all; I was just incredibly excited to share our progress.
+Eventually, I made my way to **Google DeepMind** as a Pre-Doctoral Researcher in the Autonomous Agents team. Coming full circle, I now work on RL post-training algorithms for LLMs (like Gemini Thinking). I am grateful for the opportunity to work along side some of the best researchers and get feedback from researchers whose papers and books I have read during my early days.
 
 ---
 
