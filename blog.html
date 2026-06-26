@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-71WGBZ8XFJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-71WGBZ8XFJ');
+  </script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Primary Meta Tags -->
+  <title id="page-title">Blog | Sagalpreet Singh</title>
+  <meta name="description" id="page-description" content="Research notes, tutorials, and writings by Sagalpreet Singh.">
+  <meta name="robots" content="index, follow">
+
+  <!-- Google Verification -->
+  <meta name="google-site-verification" content="N2iS0YhlmknKU71fCZ22sqLumulgrJUVXjkkNR7ek6A" />
+
+  <!-- Open Graph -->
+  <meta property="og:image" content="https://sagalpreet.github.io/images/sagalpreet.png">
+
+  <!-- ── Fonts ─────────────────────────────────────────────────────────── -->
+  <!-- Roboto to match the main site; Inter for prose; JetBrains Mono for code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome (matches main site) -->
+  <script src="https://kit.fontawesome.com/cf1c3caa39.js" crossorigin="anonymous"></script>
+
+  <!-- Academicons (matches main site) -->
+  <link rel="stylesheet" href="./css/academicons.min.css">
+
+  <!-- Bootstrap CSS (matches main site) -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <!-- ── KaTeX (Math Rendering) ─────────────────────────────────────────── -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+    integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+
+  <!-- ── Highlight.js (Syntax Highlighting) ────────────────────────────── -->
+  <!-- Theme: GitHub to stay clean and academic -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/github.min.css">
+
+  <style>
+    /* ── Design Tokens ───────────────────────────────────────────────── */
+    :root {
+      --color-text:       #444;
+      --color-text-dark:  #333;
+      --color-link:       #003d83;
+      --color-link-hover: #1f62cc;
+      --color-accent:     #007bff;
+      --color-bg:         #fbfbfb;
+      --color-bg-card:    #ffffff;
+      --color-border:     #e5e7eb;
+      --color-code-bg:    #f6f8fa;
+      --color-muted:      #888;
+      --font-body:        'Roboto', sans-serif;
+      --font-prose:       'Inter', sans-serif;
+      --font-mono:        'JetBrains Mono', 'Consolas', monospace;
+      --radius:           6px;
+      --shadow-card:      0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    /* ── Base ────────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      font-weight: 300;
+      color: var(--color-text);
+      background-color: var(--color-bg);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* ── Top Navigation Bar ──────────────────────────────────────────── */
+    .blog-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(251, 251, 251, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--color-border);
+      padding: 0.75rem 0;
+    }
+
+    .blog-nav .nav-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .blog-nav .nav-home {
+      color: var(--color-link);
+      font-weight: 400;
+      font-size: 0.95rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+    .blog-nav .nav-home:hover { color: var(--color-link-hover); text-decoration: none; }
+
+    .blog-nav .nav-sep {
+      color: var(--color-border);
+      font-size: 1.1rem;
+      user-select: none;
+    }
+
+    .blog-nav .nav-breadcrumb {
+      color: var(--color-muted);
+      font-size: 0.88rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ── Page Layout ─────────────────────────────────────────────────── */
+    .blog-wrapper {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem;
+    }
+
+    /* ── Loading Spinner ─────────────────────────────────────────────── */
+    #loading-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem 0;
+      gap: 1.2rem;
+      color: var(--color-muted);
+      font-size: 0.9rem;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--color-border);
+      border-top-color: var(--color-accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Error / Not Found State ─────────────────────────────────────── */
+    #error-container {
+      display: none;
+      text-align: center;
+      padding: 5rem 1rem;
+    }
+    #error-container .error-code {
+      font-size: 4rem;
+      font-weight: 700;
+      color: var(--color-border);
+      line-height: 1;
+    }
+    #error-container .error-msg {
+      font-size: 1.2rem;
+      color: var(--color-muted);
+      margin: 0.5rem 0 1.5rem;
+    }
+    #error-container a {
+      color: var(--color-link);
+      font-weight: 400;
+    }
+
+    /* ── Article Container ───────────────────────────────────────────── */
+    #content {
+      display: none; /* shown once render is complete */
+      animation: fadeIn 0.35s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; } }
+
+    /* ── Post Header ─────────────────────────────────────────────────── */
+    .post-header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .post-header h1 {
+      font-family: var(--font-prose);
+      font-size: 2.1rem;
+      font-weight: 600;
+      color: var(--color-text-dark);
+      line-height: 1.3;
+      margin: 0 0 0.75rem;
+    }
+
+    .post-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem 1.2rem;
+      font-size: 0.82rem;
+      color: var(--color-muted);
+    }
+    .post-meta .meta-item { display: flex; align-items: center; gap: 0.3rem; }
+
+    /* ── Prose Typography ────────────────────────────────────────────── */
+    .prose {
+      font-family: var(--font-prose);
+      font-size: 1rem;
+      line-height: 1.85;
+      color: #3a3a3a;
+    }
+
+    .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+      font-family: var(--font-prose);
+      font-weight: 600;
+      color: var(--color-text-dark);
+      margin-top: 2em;
+      margin-bottom: 0.6em;
+      line-height: 1.3;
+    }
+
+    .prose h1 { font-size: 1.8rem; }
+    .prose h2 {
+      font-size: 1.4rem;
+      padding-bottom: 0.3em;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .prose h3 { font-size: 1.15rem; }
+    .prose h4 { font-size: 1rem; }
+
+    /* First heading right after header — less top margin */
+    .prose > h1:first-child,
+    .prose > h2:first-child,
+    .prose > h3:first-child { margin-top: 0; }
+
+    .prose p { margin: 0 0 1.25em; }
+
+    .prose a {
+      color: var(--color-link);
+      font-weight: 400;
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      transition: color 0.2s, text-decoration-color 0.2s;
+    }
+    .prose a:hover {
+      color: var(--color-link-hover);
+      text-decoration-color: var(--color-link-hover);
+      text-decoration: underline;
+    }
+
+    /* Lists */
+    .prose ul, .prose ol {
+      margin: 0 0 1.25em;
+      padding-left: 1.6em;
+    }
+    .prose li { margin-bottom: 0.35em; }
+    .prose li > ul, .prose li > ol { margin-top: 0.35em; margin-bottom: 0; }
+
+    /* Blockquotes */
+    .prose blockquote {
+      border-left: 3px solid var(--color-accent);
+      margin: 1.5em 0;
+      padding: 0.75em 1.25em;
+      background: rgba(0, 123, 255, 0.04);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      color: #555;
+      font-style: italic;
+    }
+    .prose blockquote p { margin: 0; }
+    .prose blockquote > p + p { margin-top: 0.75em; }
+
+    /* Horizontal rule */
+    .prose hr {
+      border: none;
+      border-top: 1px solid var(--color-border);
+      margin: 2.5em 0;
+    }
+
+    /* Images */
+    .prose img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--color-border);
+      display: block;
+      margin: 1.5em auto;
+    }
+
+    /* Image captions (alt text as figcaption via CSS) */
+    .prose figure {
+      margin: 1.5em 0;
+      text-align: center;
+    }
+    .prose figcaption {
+      font-size: 0.82rem;
+      color: var(--color-muted);
+      margin-top: 0.5em;
+    }
+
+    /* Tables */
+    .prose table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      margin: 1.5em 0;
+      overflow-x: auto;
+      display: block;
+    }
+    .prose th {
+      background: var(--color-code-bg);
+      font-weight: 600;
+      border: 1px solid var(--color-border);
+      padding: 0.55em 0.85em;
+      text-align: left;
+    }
+    .prose td {
+      border: 1px solid var(--color-border);
+      padding: 0.5em 0.85em;
+    }
+    .prose tr:nth-child(even) td { background: rgba(0,0,0,0.02); }
+
+    /* Inline Code */
+    .prose code:not([class]) {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: var(--color-code-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 3px;
+      padding: 0.15em 0.4em;
+      color: #c0392b;
+    }
+
+    /* Code Blocks */
+    .prose pre {
+      background: var(--color-code-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 1.1em 1.3em;
+      overflow-x: auto;
+      margin: 1.5em 0;
+      position: relative;
+    }
+    .prose pre code {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      background: none;
+      border: none;
+      padding: 0;
+      color: inherit;
+      border-radius: 0;
+    }
+
+    /* Language badge on code blocks */
+    .code-block-wrapper {
+      position: relative;
+      margin: 1.5em 0;
+    }
+    .code-block-wrapper pre { margin: 0; }
+    .lang-badge {
+      position: absolute;
+      top: 0.55rem;
+      right: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--color-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      pointer-events: none;
+    }
+
+    /* KaTeX Display Math */
+    .prose .katex-display {
+      overflow-x: auto;
+      padding: 0.25em 0;
+      margin: 1.5em 0;
+    }
+
+    /* ── Responsive ──────────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .post-header h1 { font-size: 1.6rem; }
+      .prose { font-size: 0.95rem; }
+      .blog-wrapper { padding: 1.5rem 1rem 4rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Navigation Bar ────────────────────────────────────────────────── -->
+  <nav class="blog-nav" aria-label="Blog navigation">
+    <div class="nav-inner">
+      <a class="nav-home" href="index.html">
+        <i class="fas fa-arrow-left" style="font-size:0.8em;"></i>
+        Sagalpreet Singh
+      </a>
+      <span class="nav-sep">›</span>
+      <span class="nav-breadcrumb" id="nav-breadcrumb">Blog</span>
+    </div>
+  </nav>
+
+  <!-- ── Main Content ───────────────────────────────────────────────────── -->
+  <div class="blog-wrapper">
+
+    <!-- Loading indicator (shown while fetching & rendering) -->
+    <div id="loading-indicator">
+      <div class="spinner" aria-hidden="true"></div>
+      <span>Loading post…</span>
+    </div>
+
+    <!-- Error / Not Found state -->
+    <div id="error-container" role="alert" aria-live="polite">
+      <div class="error-code">404</div>
+      <p class="error-msg" id="error-message">Post not found.</p>
+      <a href="blog.html">← Back to Blog</a>
+    </div>
+
+    <!-- Post output — hidden until fully rendered -->
+    <article id="content" aria-live="polite">
+      <!-- Post metadata header injected by blog.js -->
+      <header class="post-header" id="post-header"></header>
+      <!-- Rendered Markdown injected here -->
+      <div class="prose" id="post-body"></div>
+    </article>
+
+  </div>
+
+  <!-- ── CDN Scripts ────────────────────────────────────────────────────── -->
+
+  <!-- marked.js — Markdown parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+
+  <!-- KaTeX — Math rendering (core + auto-render extension) -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Highlight.js — Syntax highlighting -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/highlight.min.js"></script>
+
+  <!-- Blog engine -->
+  <script src="blog.js" defer></script>
+
+</body>
+
+</html>
