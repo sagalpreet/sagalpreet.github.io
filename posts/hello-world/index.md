@@ -6,7 +6,7 @@ tags: personal, reinforcement-learning, music, life
 readtime: 5 min read
 ---
 
-Welcome to my personal blog! After building out this site, I wanted a quiet, digital space to share my thoughts—ranging from research notes on machine learning and reinforcement learning, to write-ups on my hobby software projects, and even a bit about my creative side projects. 
+Welcome to my personal blog! After building out this site, I wanted a quiet, digital space to share my thoughts. Here, you'll find research notes on machine learning and reinforcement learning, write-ups on my hobby software projects, and details about my creative side projects. 
 
 To kick things off, I thought it would be fitting to write a short introduction about who I am, where I come from, and the philosophies that drive my work and hobbies.
 
@@ -18,11 +18,11 @@ I am originally from **Kapurthala**, a small, quiet, town-like city in Punjab, I
 
 Growing up, I didn't start with a clear plan to work on AI. In fact, my first exposure to **Reinforcement Learning (RL)** happened in my first year of college during a session in the robotics club, before I had even taken a basic probability or statistics course! There was something incredibly intuitive and elegant about the paradigm of teaching machines directly from experience rather than manually programming rules or labeling data. 
 
-That single session hooked me. I immediately dove into Andrew Ng's online courses on machine learning and deep learning. I didn't understand all the mathematics at first, but I built a strong intuition. Soon after, the COVID-19 pandemic hit. During the summer vacations of my first year, Dr. Shashi Shekhar Jha kindly allowed me to intern in his lab online. It was a fast-paced, rigorous period where I solidified my foundations in RL, probability, and statistics. I also completed Adam and Martha White's online Reinforcement Learning specialization. 
+That single session hooked me. I immediately dove into Andrew Ng's online courses on machine learning and deep learning. I didn't understand all the mathematics at first, but I built a strong intuition. Soon after, the COVID-19 pandemic hit. During the summer vacations of my first year, Dr. Shashi Shekhar Jha kindly agreed to let me intern in his lab online. It was a fast-paced, rigorous period where I solidified my foundations in RL, probability, and statistics. I also completed Adam and Martha White's online Reinforcement Learning specialization. 
 
 While I spent most of my undergraduate years building a solid machine learning foundation, I didn't get to do novel RL research or publish major RL projects back then. After graduating, I joined Oracle AI in the Speech team as a Member of Technical Staff. It was a great experience, but my passion for RL never faded. 
 
-Eventually, I made my way to **Google DeepMind** as a Pre-Doctoral Researcher in the Autonomous Agents team. Coming full circle, I now work on RL post-training algorithms for LLMs (like Gemini Thinking). Recently, I had the opportunity to present our team's work to **Satinder Singh** and **Doina Precup**, who closely supervise and collaborate with my team. Because they are such close collaborators and mentors, I wasn't nervous at all—just incredibly excited to share our progress.
+Eventually, I made my way to **Google DeepMind** as a Pre-Doctoral Researcher in the Autonomous Agents team. Coming full circle, I now work on RL post-training algorithms for LLMs (like Gemini Thinking). Recently, I had the opportunity to present our team's work to **Satinder Singh** and **Doina Precup**, who closely supervise and collaborate with my team. Because they are such close collaborators and mentors, I wasn't nervous at all; I was just incredibly excited to share our progress.
 
 ---
 
@@ -32,13 +32,13 @@ To me, Reinforcement Learning is not just another subfield of machine learning. 
 
 Unlike supervised learning, which relies on human-labeled datasets (and thus inherits human limitations, mistakes, and preconceptions), RL learns directly from interaction with an environment. It discovers solutions that humans might never have conceived. 
 
-If we can build realistic, high-fidelity simulators and environments for physical, chemical, and biological systems, RL can unlock monumental benefits for humanity. It has the potential to drastically accelerate discovery processes—such as material science and drug discovery—that currently take humans decades of trial and error.
+If we can build realistic, high-fidelity simulators and environments for physical, chemical, and biological systems, RL can unlock monumental benefits for humanity. It has the potential to drastically accelerate discovery processes, such as material science and drug discovery, which currently take humans decades of trial and error.
 
 ---
 
 ## Vibe-Coding and Automation
 
-When I'm not doing research, I love building small, helpful software tools. I call these my **vibe-coded projects**—most of them are born out of a personal need to automate a chore, solve a minor annoyance, or just make life a bit easier. 
+When I'm not doing research, I love building small, helpful software tools. I call these my **vibe-coded projects**. Most of them are born out of a personal need to automate a chore, solve a minor annoyance, or just make life a bit easier. 
 
 I keep a collection of these over on my projects page at [sagalpreet.github.io/projects](https://sagalpreet.github.io/projects). I build them primarily for myself, but I share them in the hope that they might be useful to someone else out there, too.
 
