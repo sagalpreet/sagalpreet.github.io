@@ -289,6 +289,27 @@ var POSTS = [
   }
 ];
 
+var RECOMMENDED_READS = [
+  {
+    title: 'The Bitter Lesson',
+    url: 'http://www.incompleteideas.net/IncIdeas/BitterLesson.html',
+    author: 'Rich Sutton',
+    date: '2019-03-13',
+    description: 'The biggest lesson that can be read from 70 years of AI research is that general methods that leverage computation are ultimately the most effective, and by a large margin.',
+    tags: ['ai', 'computation', 'philosophy'],
+    readtime: '5 min read'
+  }
+];
+
+function getDomain(urlStr) {
+  try {
+    var url = new URL(urlStr);
+    return url.hostname.replace(/^www\./, '');
+  } catch (_) {
+    return 'External Site';
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════════════════
    INDEX PAGE (no ?post= param)
    ═══════════════════════════════════════════════════════════════════════ */
@@ -300,7 +321,11 @@ function renderIndexPage() {
   $id('nav-breadcrumb').textContent = 'Blog';
   $id('post-header').innerHTML = '<h1>Blog</h1>';
 
-  var html = '<div class="post-list" style="margin-top: 2rem;">';
+  var html = '';
+
+  // 1. Writings Section
+  html += '<h2 style="font-family:var(--font-prose);font-size:1.6rem;font-weight:600;margin-top:2.5rem;margin-bottom:1.5rem;color:var(--color-text-dark);border-bottom:2px solid var(--color-border);padding-bottom:0.5rem;">Writings</h2>';
+  html += '<div class="post-list">';
   POSTS.forEach(function(post) {
     var tagsHtml = post.tags.map(function(t) {
       return '<span style="display:inline-block;font-size:.72rem;background:rgba(0,123,255,.06);' +
@@ -310,10 +335,10 @@ function renderIndexPage() {
 
     var postDate = formatDate(post.date);
 
-    html += '<article class="post-item" style="margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--color-border);">' +
-      '<h2 style="font-family:var(--font-prose);font-size:1.6rem;font-weight:600;margin-bottom:0.6rem;">' +
+    html += '<article class="post-item" style="margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-border);">' +
+      '<h3 style="font-family:var(--font-prose);font-size:1.35rem;font-weight:600;margin-bottom:0.6rem;">' +
         '<a href="blog.html?post=' + post.slug + '" style="color:var(--color-text-dark);text-decoration:none;transition:color 0.2s;">' + post.title + '</a>' +
-      '</h2>' +
+      '</h3>' +
       '<div class="post-meta" style="margin-bottom: 1rem; font-size:0.82rem; color:var(--color-muted); display:flex; flex-wrap:wrap; gap:0.5rem 1rem; align-items:center;">' +
         '<span class="meta-item"><i class="far fa-calendar-alt"></i> ' + postDate + '</span>' +
         '<span class="meta-item"><i class="far fa-clock"></i> ' + post.readtime + '</span>' +
@@ -325,10 +350,41 @@ function renderIndexPage() {
   });
   html += '</div>';
 
+  // 2. Recommended Reads Section
+  if (RECOMMENDED_READS && RECOMMENDED_READS.length > 0) {
+    html += '<h2 style="font-family:var(--font-prose);font-size:1.6rem;font-weight:600;margin-top:3.5rem;margin-bottom:1.5rem;color:var(--color-text-dark);border-bottom:2px solid var(--color-border);padding-bottom:0.5rem;">Recommended Reads</h2>';
+    html += '<div class="post-list">';
+    RECOMMENDED_READS.forEach(function(read) {
+      var tagsHtml = read.tags.map(function(t) {
+        return '<span style="display:inline-block;font-size:.72rem;background:rgba(0,123,255,.06);' +
+          'color:#003d83;border:1px solid rgba(0,123,255,.2);border-radius:3px;' +
+          'padding:1px 6px;font-family:\'JetBrains Mono\',monospace;margin-right:0.4rem;">' + t + '</span>';
+      }).join('');
+
+      var readDate = formatDate(read.date);
+      var domain = getDomain(read.url);
+
+      html += '<article class="post-item" style="margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-border);">' +
+        '<h3 style="font-family:var(--font-prose);font-size:1.35rem;font-weight:600;margin-bottom:0.6rem;">' +
+          '<a href="' + read.url + '" target="_blank" rel="noopener noreferrer" style="color:var(--color-text-dark);text-decoration:none;transition:color 0.2s;">' + read.title + ' ↗</a>' +
+        '</h3>' +
+        '<div class="post-meta" style="margin-bottom: 1rem; font-size:0.82rem; color:var(--color-muted); display:flex; flex-wrap:wrap; gap:0.5rem 1rem; align-items:center;">' +
+          '<span class="meta-item"><i class="fas fa-user-edit"></i> ' + read.author + '</span>' +
+          '<span class="meta-item"><i class="far fa-calendar-alt"></i> ' + readDate + '</span>' +
+          (read.readtime ? '<span class="meta-item"><i class="far fa-clock"></i> ' + read.readtime + '</span>' : '') +
+          '<span class="meta-item">' + tagsHtml + '</span>' +
+        '</div>' +
+        '<p style="color:#555;font-family:var(--font-prose);font-size:0.95rem;line-height:1.6;margin-bottom:1rem;">' + read.description + '</p>' +
+        '<a href="' + read.url + '" target="_blank" rel="noopener noreferrer" style="font-weight:500;text-decoration:none;color:var(--color-link);transition:color 0.2s;font-size:0.95rem;">Read on ' + domain + ' ↗</a>' +
+      '</article>';
+    });
+    html += '</div>';
+  }
+
   $id('post-body').innerHTML = html;
 
   // Add simple hover effect on post-item titles
-  $id('post-body').querySelectorAll('.post-item h2 a').forEach(function(link) {
+  $id('post-body').querySelectorAll('.post-item h3 a').forEach(function(link) {
     link.addEventListener('mouseenter', function() { link.style.color = 'var(--color-link)'; });
     link.addEventListener('mouseleave', function() { link.style.color = 'var(--color-text-dark)'; });
   });
