@@ -281,7 +281,7 @@ async function renderPost(slug) {
 var POSTS = [
   {
     slug: 'hello-world',
-    title: 'Hello World: Welcome to My Blog',
+    title: 'Hello World',
     date: '2026-06-26',
     description: 'An introduction to who I am, my journey into reinforcement learning, my perspective on the field, and the things that keep me busy outside of research.',
     tags: ['personal', 'reinforcement-learning', 'music', 'life'],
