@@ -1,5 +1,5 @@
 ---
-title: Hello World: Welcome to My Blog
+title: Hello World
 date: 2026-06-26
 description: An introduction to who I am, my journey into reinforcement learning, my perspective on the field, and the things that keep me busy outside of research.
 tags: personal, reinforcement-learning, music, life
@@ -38,7 +38,7 @@ If we can build realistic, high-fidelity simulators and environments for physica
 
 ## Vibe-Coding and Automation
 
-When I'm not doing research, I love building small, helpful software tools. I call these my **vibe-coded projects**. Most of them are born out of a personal need to automate a chore, solve a minor annoyance, or just make life a bit easier. 
+When I'm not doing research, I love building small, helpful software tools. I call these my **vibe-coded utilities**. Most of them are born out of a personal need to automate a chore, solve a minor annoyance, or just make life a bit easier. 
 
 I keep a collection of these over on my projects page at [sagalpreet.github.io/projects](https://sagalpreet.github.io/projects). I build them primarily for myself, but I share them in the hope that they might be useful to someone else out there, too.
 
