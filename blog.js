@@ -346,6 +346,23 @@ var RECOMMENDED_READS = [
   }
 ];
 
+var activeTags = [];
+
+function getAllUniqueTags() {
+  var tagSet = {};
+  POSTS.forEach(function(post) {
+    if (post.tags) {
+      post.tags.forEach(function(t) { tagSet[t] = true; });
+    }
+  });
+  RECOMMENDED_READS.forEach(function(read) {
+    if (read.tags) {
+      read.tags.forEach(function(t) { tagSet[t] = true; });
+    }
+  });
+  return Object.keys(tagSet).sort();
+}
+
 function getDomain(urlStr) {
   try {
     var url = new URL(urlStr);
@@ -368,65 +385,158 @@ function renderIndexPage() {
 
   var html = '';
 
+  // Render Tag Cloud Filter
+  var allTags = getAllUniqueTags();
+  if (allTags.length > 0) {
+    html += '<div class="tag-filter-section" style="margin-top: 1.5rem; margin-bottom: 2rem;">' +
+      '<div style="font-size: 0.85rem; color: var(--color-muted); margin-bottom: 0.6rem; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-prose);">' +
+        '<span>Filter by tag:</span>' +
+        (activeTags.length > 0 ? '<button id="clear-tags-btn" style="background:none; border:none; color:var(--color-link); cursor:pointer; padding:0; font-size:0.85rem; font-weight:500; font-family:var(--font-prose);">Clear active filters (' + activeTags.length + ')</button>' : '') +
+      '</div>' +
+      '<div class="tag-cloud" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">';
+    
+    allTags.forEach(function(t) {
+      var isActive = activeTags.indexOf(t) !== -1;
+      var bg = isActive ? 'rgba(0, 123, 255, 0.9)' : 'rgba(0, 123, 255, 0.05)';
+      var color = isActive ? '#fff' : '#003d83';
+      var border = isActive ? '1px solid rgba(0, 123, 255, 0.9)' : '1px solid rgba(0, 123, 255, 0.2)';
+      
+      html += '<button class="tag-pill-btn" data-tag="' + t + '" style="display:inline-block; font-size:.72rem; background:' + bg + ';' +
+        'color:' + color + '; border:' + border + '; border-radius:12px;' +
+        'padding:3px 10px; font-family:\'JetBrains Mono\',monospace; cursor:pointer; transition:all 0.15s; outline:none;">' + t + '</button>';
+    });
+    
+    html += '</div></div>';
+  }
+
+  // Filter Writings
+  var filteredPosts = POSTS;
+  if (activeTags.length > 0) {
+    filteredPosts = POSTS.filter(function(post) {
+      return post.tags && post.tags.some(function(t) {
+        return activeTags.indexOf(t) !== -1;
+      });
+    });
+  }
+
+  // Filter Recommended Reads
+  var filteredReads = RECOMMENDED_READS;
+  if (activeTags.length > 0) {
+    filteredReads = RECOMMENDED_READS.filter(function(read) {
+      return read.tags && read.tags.some(function(t) {
+        return activeTags.indexOf(t) !== -1;
+      });
+    });
+  }
+
   // 1. Writings Section
   html += '<h2 style="font-family:var(--font-prose);font-size:1.6rem;font-weight:600;margin-top:2.5rem;margin-bottom:1.5rem;color:var(--color-text-dark);border-bottom:2px solid var(--color-border);padding-bottom:0.5rem;">Writings</h2>';
-  html += '<div class="post-list">';
-  POSTS.forEach(function(post) {
-    var tagsHtml = post.tags.map(function(t) {
-      return '<span style="display:inline-block;font-size:.72rem;background:rgba(0,123,255,.06);' +
-        'color:#003d83;border:1px solid rgba(0,123,255,.2);border-radius:3px;' +
-        'padding:1px 6px;font-family:\'JetBrains Mono\',monospace;margin-right:0.4rem;">' + t + '</span>';
-    }).join('');
-
-    var postDate = formatDate(post.date);
-
-    html += '<article class="post-item" style="margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-border);">' +
-      '<h3 style="font-family:var(--font-prose);font-size:1.35rem;font-weight:600;margin-bottom:0.6rem;">' +
-        '<a href="blog.html?post=' + post.slug + '" style="color:var(--color-text-dark);text-decoration:none;transition:color 0.2s;">' + post.title + '</a>' +
-      '</h3>' +
-      '<div class="post-meta" style="margin-bottom: 1rem; font-size:0.82rem; color:var(--color-muted); display:flex; flex-wrap:wrap; gap:0.5rem 1rem; align-items:center;">' +
-        '<span class="meta-item"><i class="far fa-calendar-alt"></i> ' + postDate + '</span>' +
-        '<span class="meta-item"><i class="far fa-clock"></i> ' + post.readtime + '</span>' +
-        '<span class="meta-item">' + tagsHtml + '</span>' +
-      '</div>' +
-      '<p style="color:#555;font-family:var(--font-prose);font-size:0.95rem;line-height:1.6;margin-bottom:1rem;">' + post.description + '</p>' +
-      '<a href="blog.html?post=' + post.slug + '" style="font-weight:500;text-decoration:none;color:var(--color-link);transition:color 0.2s;font-size:0.95rem;">Read post →</a>' +
-    '</article>';
-  });
-  html += '</div>';
-
-  // 2. Recommended Reads Section
-  if (RECOMMENDED_READS && RECOMMENDED_READS.length > 0) {
-    html += '<h2 style="font-family:var(--font-prose);font-size:1.6rem;font-weight:600;margin-top:3.5rem;margin-bottom:1.5rem;color:var(--color-text-dark);border-bottom:2px solid var(--color-border);padding-bottom:0.5rem;">Recommended Reads</h2>';
+  
+  if (filteredPosts.length === 0) {
+    html += '<p style="color:var(--color-muted);font-family:var(--font-prose);font-size:0.95rem;margin-bottom:2.5rem;font-style:italic;">No writings match the selected tags.</p>';
+  } else {
     html += '<div class="post-list">';
-    RECOMMENDED_READS.forEach(function(read) {
-      var tagsHtml = read.tags.map(function(t) {
-        return '<span style="display:inline-block;font-size:.72rem;background:rgba(0,123,255,.06);' +
-          'color:#003d83;border:1px solid rgba(0,123,255,.2);border-radius:3px;' +
+    filteredPosts.forEach(function(post) {
+      var tagsHtml = post.tags.map(function(t) {
+        var isFilterActive = activeTags.indexOf(t) !== -1;
+        var borderStyle = isFilterActive ? '1px solid rgba(0,123,255,0.7)' : '1px solid rgba(0,123,255,.2)';
+        var bgStyle = isFilterActive ? 'rgba(0,123,255,0.15)' : 'rgba(0,123,255,.06)';
+        return '<span style="display:inline-block;font-size:.72rem;background:' + bgStyle + ';' +
+          'color:#003d83;border:' + borderStyle + ';border-radius:3px;' +
           'padding:1px 6px;font-family:\'JetBrains Mono\',monospace;margin-right:0.4rem;">' + t + '</span>';
       }).join('');
 
-      var readDate = formatDate(read.date);
-      var domain = getDomain(read.url);
+      var postDate = formatDate(post.date);
 
       html += '<article class="post-item" style="margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-border);">' +
         '<h3 style="font-family:var(--font-prose);font-size:1.35rem;font-weight:600;margin-bottom:0.6rem;">' +
-          '<a href="' + read.url + '" target="_blank" rel="noopener noreferrer" style="color:var(--color-text-dark);text-decoration:none;transition:color 0.2s;">' + read.title + '</a>' +
+          '<a href="blog.html?post=' + post.slug + '" style="color:var(--color-text-dark);text-decoration:none;transition:color 0.2s;">' + post.title + '</a>' +
         '</h3>' +
         '<div class="post-meta" style="margin-bottom: 1rem; font-size:0.82rem; color:var(--color-muted); display:flex; flex-wrap:wrap; gap:0.5rem 1rem; align-items:center;">' +
-          '<span class="meta-item"><i class="fas fa-user-edit"></i> ' + read.author + '</span>' +
-          '<span class="meta-item"><i class="far fa-calendar-alt"></i> ' + readDate + '</span>' +
-          (read.readtime ? '<span class="meta-item"><i class="far fa-clock"></i> ' + read.readtime + '</span>' : '') +
+          '<span class="meta-item"><i class="far fa-calendar-alt"></i> ' + postDate + '</span>' +
+          '<span class="meta-item"><i class="far fa-clock"></i> ' + post.readtime + '</span>' +
           '<span class="meta-item">' + tagsHtml + '</span>' +
         '</div>' +
-        '<p style="color:#555;font-family:var(--font-prose);font-size:0.95rem;line-height:1.6;margin-bottom:1rem;">' + read.description + '</p>' +
-        '<a href="' + read.url + '" target="_blank" rel="noopener noreferrer" style="font-weight:500;text-decoration:none;color:var(--color-link);transition:color 0.2s;font-size:0.95rem;">Read on ' + domain + ' ↗</a>' +
+        '<p style="color:#555;font-family:var(--font-prose);font-size:0.95rem;line-height:1.6;margin-bottom:1rem;">' + post.description + '</p>' +
+        '<a href="blog.html?post=' + post.slug + '" style="font-weight:500;text-decoration:none;color:var(--color-link);transition:color 0.2s;font-size:0.95rem;">Read post →</a>' +
       '</article>';
     });
     html += '</div>';
   }
 
+  // 2. Recommended Reads Section
+  if (RECOMMENDED_READS && RECOMMENDED_READS.length > 0) {
+    html += '<h2 style="font-family:var(--font-prose);font-size:1.6rem;font-weight:600;margin-top:3.5rem;margin-bottom:1.5rem;color:var(--color-text-dark);border-bottom:2px solid var(--color-border);padding-bottom:0.5rem;">Recommended Reads</h2>';
+    
+    if (filteredReads.length === 0) {
+      html += '<p style="color:var(--color-muted);font-family:var(--font-prose);font-size:0.95rem;margin-bottom:2.5rem;font-style:italic;">No recommended reads match the selected tags.</p>';
+    } else {
+      html += '<div class="post-list">';
+      filteredReads.forEach(function(read) {
+        var tagsHtml = read.tags.map(function(t) {
+          var isFilterActive = activeTags.indexOf(t) !== -1;
+          var borderStyle = isFilterActive ? '1px solid rgba(0,123,255,0.7)' : '1px solid rgba(0,123,255,.2)';
+          var bgStyle = isFilterActive ? 'rgba(0,123,255,0.15)' : 'rgba(0,123,255,.06)';
+          return '<span style="display:inline-block;font-size:.72rem;background:' + bgStyle + ';' +
+            'color:#003d83;border:' + borderStyle + ';border-radius:3px;' +
+            'padding:1px 6px;font-family:\'JetBrains Mono\',monospace;margin-right:0.4rem;">' + t + '</span>';
+        }).join('');
+
+        var readDate = formatDate(read.date);
+        var domain = getDomain(read.url);
+
+        html += '<article class="post-item" style="margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-border);">' +
+          '<h3 style="font-family:var(--font-prose);font-size:1.35rem;font-weight:600;margin-bottom:0.6rem;">' +
+            '<a href="' + read.url + '" target="_blank" rel="noopener noreferrer" style="color:var(--color-text-dark);text-decoration:none;transition:color 0.2s;">' + read.title + '</a>' +
+          '</h3>' +
+          '<div class="post-meta" style="margin-bottom: 1rem; font-size:0.82rem; color:var(--color-muted); display:flex; flex-wrap:wrap; gap:0.5rem 1rem; align-items:center;">' +
+            '<span class="meta-item"><i class="fas fa-user-edit"></i> ' + read.author + '</span>' +
+            '<span class="meta-item"><i class="far fa-calendar-alt"></i> ' + readDate + '</span>' +
+            (read.readtime ? '<span class="meta-item"><i class="far fa-clock"></i> ' + read.readtime + '</span>' : '') +
+            '<span class="meta-item">' + tagsHtml + '</span>' +
+          '</div>' +
+          '<p style="color:#555;font-family:var(--font-prose);font-size:0.95rem;line-height:1.6;margin-bottom:1rem;">' + read.description + '</p>' +
+          '<a href="' + read.url + '" target="_blank" rel="noopener noreferrer" style="font-weight:500;text-decoration:none;color:var(--color-link);transition:color 0.2s;font-size:0.95rem;">Read on ' + domain + ' ↗</a>' +
+        '</article>';
+      });
+      html += '</div>';
+    }
+  }
+
   $id('post-body').innerHTML = html;
+
+  // Add click handlers for tag pills in the filter cloud
+  $id('post-body').querySelectorAll('.tag-pill-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var tag = btn.getAttribute('data-tag');
+      var idx = activeTags.indexOf(tag);
+      if (idx === -1) {
+        activeTags.push(tag);
+      } else {
+        activeTags.splice(idx, 1);
+      }
+      renderIndexPage();
+    });
+    btn.addEventListener('mouseenter', function() {
+      if (activeTags.indexOf(btn.getAttribute('data-tag')) === -1) {
+        btn.style.background = 'rgba(0, 123, 255, 0.12)';
+      }
+    });
+    btn.addEventListener('mouseleave', function() {
+      if (activeTags.indexOf(btn.getAttribute('data-tag')) === -1) {
+        btn.style.background = 'rgba(0, 123, 255, 0.05)';
+      }
+    });
+  });
+
+  // Add click handler for clear button
+  var clearBtn = $id('clear-tags-btn');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function() {
+      activeTags = [];
+      renderIndexPage();
+    });
+  }
 
   // Add simple hover effect on post-item titles
   $id('post-body').querySelectorAll('.post-item h3 a').forEach(function(link) {
