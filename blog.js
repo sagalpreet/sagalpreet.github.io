@@ -391,7 +391,7 @@ function renderIndexPage() {
     html += '<div class="tag-filter-section" style="margin-top: 1.5rem; margin-bottom: 2rem;">' +
       '<div style="font-size: 0.85rem; color: var(--color-muted); margin-bottom: 0.6rem; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-prose);">' +
         '<span>Filter by tag:</span>' +
-        (activeTags.length > 0 ? '<button id="clear-tags-btn" style="background:none; border:none; color:var(--color-link); cursor:pointer; padding:0; font-size:0.85rem; font-weight:500; font-family:var(--font-prose);">Clear active filters (' + activeTags.length + ')</button>' : '') +
+        '<button id="clear-tags-btn" style="background:none; border:none; color:var(--color-link); cursor:pointer; padding:0; font-size:0.85rem; font-weight:500; font-family:var(--font-prose);' + (activeTags.length === 0 ? 'visibility:hidden;' : '') + '">Clear active filters (' + activeTags.length + ')</button>' +
       '</div>' +
       '<div class="tag-cloud" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">';
     
