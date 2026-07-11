@@ -411,7 +411,7 @@ function renderIndexPage() {
 
       html += '<article class="post-item" style="margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-border);">' +
         '<h3 style="font-family:var(--font-prose);font-size:1.35rem;font-weight:600;margin-bottom:0.6rem;">' +
-          '<a href="' + read.url + '" target="_blank" rel="noopener noreferrer" style="color:var(--color-text-dark);text-decoration:none;transition:color 0.2s;">' + read.title + ' ↗</a>' +
+          '<a href="' + read.url + '" target="_blank" rel="noopener noreferrer" style="color:var(--color-text-dark);text-decoration:none;transition:color 0.2s;">' + read.title + '</a>' +
         '</h3>' +
         '<div class="post-meta" style="margin-bottom: 1rem; font-size:0.82rem; color:var(--color-muted); display:flex; flex-wrap:wrap; gap:0.5rem 1rem; align-items:center;">' +
           '<span class="meta-item"><i class="fas fa-user-edit"></i> ' + read.author + '</span>' +
