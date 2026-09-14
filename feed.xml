@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sagalpreet Singh — Writing</title>
+    <link>https://sagalpreet.github.io/blog.html</link>
+    <description>Research notes, essays and write-ups by Sagalpreet Singh.</description>
+    <language>en-us</language>
+    <managingEditor>sagalpreet60@gmail.com (Sagalpreet Singh)</managingEditor>
+    <lastBuildDate>Mon, 14 Sep 2026 18:55:50 +0000</lastBuildDate>
+    <atom:link href="https://sagalpreet.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Structuring the World for Applied AI</title>
+      <link>https://sagalpreet.github.io/blog.html?post=structuring-the-world-for-ai</link>
+      <guid isPermaLink="true">https://sagalpreet.github.io/blog.html?post=structuring-the-world-for-ai</guid>
+      <pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate>
+      <description>A perspective on why we should adapt our physical and digital environments to suit AI constraints rather than trying to build agents that solve arbitrary, unstructured environments.</description>
+      <category>artificial-intelligence</category>
+      <category>robotics</category>
+      <category>philosophy</category>
+      <category>technology</category>
+    </item>
+    <item>
+      <title>Hello World</title>
+      <link>https://sagalpreet.github.io/blog.html?post=hello-world</link>
+      <guid isPermaLink="true">https://sagalpreet.github.io/blog.html?post=hello-world</guid>
+      <pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate>
+      <description>An introduction to who I am, my journey into reinforcement learning, my perspective on the field, and the things that keep me busy outside of research.</description>
+      <category>personal</category>
+      <category>reinforcement-learning</category>
+      <category>music</category>
+      <category>life</category>
+    </item>
+  </channel>
+</rss>

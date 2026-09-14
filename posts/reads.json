@@ -1,0 +1,59 @@
+{
+  "_comment": "Hand-maintained shelf of other people's writing, shown under 'Recommended reads' on /blog.html. Newest additions first is fine; order here is the order shown.",
+  "reads": [
+    {
+      "title": "The Bitter Lesson",
+      "url": "http://www.incompleteideas.net/IncIdeas/BitterLesson.html",
+      "author": "Rich Sutton",
+      "date": "2019-03-13",
+      "description": "The biggest lesson that can be read from 70 years of AI research is that general methods that leverage computation are ultimately the most effective, and by a large margin.",
+      "tags": ["ai", "computation", "philosophy"],
+      "readtime": "5 min read"
+    },
+    {
+      "title": "Creative Thinking",
+      "url": "https://fs.blog/great-talks/creative-thinking-claude-shannon/",
+      "author": "Claude Shannon",
+      "date": "1952-03-20",
+      "description": "A lecture on the traits of creative minds, the importance of curiosity, and the techniques Claude Shannon used to solve complex problems and generate breakthrough ideas.",
+      "tags": ["creativity", "problem-solving", "philosophy"],
+      "readtime": "13 min read"
+    },
+    {
+      "title": "You and Your Research",
+      "url": "https://fs.blog/great-talks/richard-hamming-your-research/",
+      "author": "Richard Hamming",
+      "date": "1986-03-07",
+      "description": "Richard Hamming's famous talk on how to do first-class research, why some scientists succeed and others fail, and how to work on the most important problems in your field.",
+      "tags": ["research", "science", "career", "productivity"],
+      "readtime": "58 min read"
+    },
+    {
+      "title": "Be less scared of overconfidence",
+      "url": "https://www.benkuhn.net/overconfidence/",
+      "author": "Ben Kuhn",
+      "date": "2022-11-30",
+      "description": "A critique of using low-information heuristics (like market efficiency or deference to experts) in high-stakes personal decisions, arguing that underconfidence can prevent you from chasing high-upside outlier opportunities.",
+      "tags": ["decision-making", "heuristics", "philosophy", "career"],
+      "readtime": "8 min read"
+    },
+    {
+      "title": "How to Create Luck",
+      "url": "https://swyx.io/create-luck",
+      "author": "Shawn Wang (swyx)",
+      "date": "2020-08-29",
+      "description": "An exploration of the different models of luck, showing how to actively build the optimal conditions for lucky events and opportunities to seek you out.",
+      "tags": ["luck", "career", "mindset", "philosophy"],
+      "readtime": "5 min read"
+    },
+    {
+      "title": "How to win a best paper award",
+      "url": "https://nicholas.carlini.com/writing/2026/how-to-win-a-best-paper-award.html",
+      "author": "Nicholas Carlini",
+      "date": "2026-03-09",
+      "description": "An opinionated and highly practical guide on how to choose research problems with good taste, execute good technical work, and write clear, impactful papers.",
+      "tags": ["research", "academia", "writing", "career"],
+      "readtime": "15 min read"
+    }
+  ]
+}
