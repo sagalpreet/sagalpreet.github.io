@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Projects</title>
+	<meta name="description" content="Index of projects" />
+	<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📁</text></svg>">
+	<style>
+		:root {
+			--bg: #0f1724;
+			--card: #0b1220;
+			--muted: #9aa4b2;
+			--accent: #7c3aed;
+			--glass: rgba(255, 255, 255, 0.03);
+			color-scheme: dark;
+			font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+		}
+
+		html,
+		body {
+			height: 100%;
+			margin: 0;
+			background: linear-gradient(180deg, #071026 0%, #07182a 100%);
+			color: #e6eef8
+		}
+
+		.wrap {
+			max-width: 1100px;
+			margin: 32px auto;
+			padding: 24px
+		}
+
+		header {
+			Display: flex;
+			gap: 16px;
+			align-items: center;
+			justify-content: space-between
+		}
+
+		h1 {
+			margin: 0;
+			font-size: 1.6rem;
+			letter-spacing: -0.02em
+		}
+
+		p.lead {
+			margin: 4px 0 0;
+			color: var(--muted);
+			font-size: 0.95rem;
+			hyphens: auto;
+			-webkit-hyphens: auto;
+			-ms-hyphens: auto
+		}
+
+		.controls {
+			display: flex;
+			gap: 12px;
+			align-items: center
+		}
+
+		input.search {
+			background: var(--glass);
+			border: 1px solid rgba(255, 255, 255, 0.04);
+			padding: 10px 12px;
+			border-radius: 10px;
+			color: inherit;
+			min-width: 220px
+		}
+
+		.grid {
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 16px;
+			margin-top: 20px
+		}
+
+		.card {
+			background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+			border: 1px solid rgba(255, 255, 255, 0.04);
+			padding: 16px;
+			border-radius: 12px;
+			display: flex;
+			gap: 12px;
+			align-items: center;
+			transition: transform .18s, box-shadow .18s;
+			text-decoration: none;
+			color: inherit;
+			cursor: pointer
+		}
+
+		.card:hover {
+			transform: translateY(-6px);
+			box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6)
+		}
+
+		/* prevent anchors inside the card from showing as links */
+		.card,
+		.card * {
+			text-decoration: none;
+			color: inherit
+		}
+
+		.logo {
+			width: 56px;
+			height: 56px;
+			border-radius: 10px;
+			flex: 0 0 56px;
+			display: grid;
+			place-items: center;
+			font-weight: 700;
+			font-size: 1.2rem;
+			color: white;
+			background: linear-gradient(135deg, var(--accent), #5b21b6)
+		}
+
+		.meta {
+			flex: 1
+		}
+
+		.meta h3 {
+			margin: 0;
+			font-size: 1rem;
+			hyphens: auto;
+			-webkit-hyphens: auto;
+			-moz-hyphens: auto;
+			-ms-hyphens: auto;
+			overflow-wrap: break-word;
+			word-break: break-word
+		}
+
+		.meta p {
+			margin: 6px 0 0;
+			color: var(--muted);
+			font-size: 0.9rem;
+			hyphens: auto;
+			-webkit-hyphens: auto;
+			-moz-hyphens: auto;
+			-ms-hyphens: auto;
+			overflow-wrap: anywhere;
+			word-break: break-word
+		}
+
+		.actions {
+			display: flex;
+			gap: 8px;
+			align-items: center
+		}
+
+		.btn {
+			display: inline-block;
+			padding: 8px 12px;
+			border-radius: 8px;
+			background: var(--accent);
+			color: white;
+			text-decoration: none;
+			font-weight: 600;
+			font-size: 0.9rem
+		}
+
+		a.ghost {
+			background: transparent;
+			border: 1px solid rgba(255, 255, 255, 0.04);
+			color: var(--muted);
+			padding: 6px 10px;
+			border-radius: 8px;
+			text-decoration: none;
+			font-size: 0.85rem;
+			white-space: nowrap;
+			flex: 0 0 auto
+		}
+
+		.empty {
+			padding: 48px;
+			border-radius: 12px;
+			text-align: center;
+			color: var(--muted);
+			background: rgba(255, 255, 255, 0.02)
+		}
+
+		@media (max-width:520px) {
+			header {
+				flex-direction: column;
+				align-items: flex-start
+			}
+
+			.controls {
+				width: 100%;
+				justify-content: space-between
+			}
+
+			input.search {
+				flex: 1
+			}
+		}
+	</style>
+
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-NW9K5W67KG"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-NW9K5W67KG');
+	</script>
+
+</head>
+
+<body>
+	<div class="wrap">
+		<header>
+			<div>
+				<h1>My Projects</h1>
+				<p class="lead">Quick links to project landing pages. Tap a card to open the project's main page.</p>
+			</div>
+			<div class="controls">
+				<br>
+				<input class="search" id="search" placeholder="Search projects..." aria-label="Search projects" />
+				<a class="ghost" href="#" onclick="showAll();return false;">Show all</a>
+			</div>
+		</header>
+
+		<main>
+			<div id="list" class="grid">
+				<!-- Project cards inserted by script -->
+			</div>
+			<div id="noresults" class="empty" style="display:none;margin-top:16px">No projects found.</div>
+		</main>
+	</div>
+
+	<script>
+		// Project data discovered from workspace
+		const projects = [
+			{ path: 'pomodoro', title: 'Pomodoro Focus Timer', desc: 'A beautiful focus timer with todo tracking, YouTube ambient music, and session history.' },
+			{ path: 'image_overlay', title: 'Image Overlay', desc: 'A macOS app that lets you overlay reference layouts, grids, mockups, or textures transparently over your screens.' },
+			{ path: 'night_vision', title: 'Night Vision', desc: 'A macOS app that reduces eye strain by smoothing flashes and adaptively dimming your screen.' },
+			{ path: 'nanakshahi_calendar', title: 'Nanakshahi Calendar', desc: 'A calendar project implementing the Nanakshahi system.' },
+			{ path: 'passport_photos', title: 'Passport Photos', desc: 'Crop, tile and print passport-sized photos on any page size.' },
+			{ path: 'image_tools', title: 'Image Tools', desc: 'Crop images to exact dimensions and compress to target file size.' },
+			{ path: 'freeflow_obsidian', title: 'FreeFlow Voice Notes', desc: 'Obsidian plugin for AI-powered voice dictation — record speech, transcribe with Groq Whisper, and save to your vault.' },
+			{ path: 'instagram_story_downloader', title: 'StorySaver', desc: 'Download Instagram stories in full 1080p HD before they vanish. Free Chrome extension.' },
+			{ path: 'pdf_editor', title: 'PDF Text Editor', desc: '100% client-side PDF editor that converts existing text into editable fields, format text, redact, and export.' }
+		];
+
+		const list = document.getElementById('list');
+		const noresults = document.getElementById('noresults');
+
+		function slugToTitle(s) {
+			return s.replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+		}
+
+		function render(items) {
+			list.innerHTML = '';
+			if (!items.length) { noresults.style.display = 'block'; return; }
+			noresults.style.display = 'none';
+			items.forEach(p => {
+				const title = p.title || slugToTitle(p.path);
+				const url = p.path.replace(/\/$/, '') + '/index.html';
+				const card = document.createElement('a');
+				card.className = 'card';
+				card.href = url;
+				card.target = '_self';
+				card.innerHTML = `<div class="logo">${title.charAt(0)}</div>
+					<div class="meta">
+						<h3>${title}</h3>
+						<p>${p.desc || ''}</p>
+					</div>
+					<div class="actions">
+						<span class="btn">Open</span>
+					</div>`;
+				list.appendChild(card);
+			});
+		}
+
+		render(projects);
+
+		// Search
+		const search = document.getElementById('search');
+		search.addEventListener('input', () => {
+			const q = search.value.trim().toLowerCase();
+			const filtered = projects.filter(p => (p.title || p.path).toLowerCase().includes(q) || (p.desc || '').toLowerCase().includes(q));
+			render(filtered);
+		});
+
+		function showAll() { search.value = ''; render(projects); }
+	</script>
+</body>
+
+</html>

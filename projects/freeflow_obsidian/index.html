@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeFlow Voice Notes - AI Dictation for Obsidian</title>
+    <meta name="description" content="Obsidian plugin for AI-powered voice dictation — record speech, transcribe with Groq Whisper, and post-process with an LLM direct to your vault.">
+    <style>
+        :root {
+            --bg: #0b0f19;
+            --accent: #10b981;
+            --accent-hover: #059669;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at top, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        header {
+            padding: 5rem 0 3rem;
+            text-align: center;
+        }
+
+        .logo-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            margin-bottom: 1rem;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .hero-image {
+            width: 100%;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 4rem;
+            transition: transform 0.4s ease;
+        }
+
+        .hero-image:hover {
+            transform: scale(1.02);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 5rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 24px;
+            transition: all 0.3s;
+            backdrop-filter: blur(20px);
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .install-guide {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 5rem;
+        }
+
+        .install-guide h2 {
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .install-steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .step-box {
+            background: rgba(0,0,0,0.2);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        code {
+            display: block;
+            background: #000;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #10b981;
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+            margin-top: 1rem;
+            overflow-x: auto;
+        }
+
+        footer {
+            padding: 4rem 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .cta-group { flex-direction: column; }
+            .install-steps { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <span class="logo-icon">🎙️</span>
+            <h1>FreeFlow Voice Notes</h1>
+            <p class="tagline">An Obsidian plugin for AI-powered voice dictation. Record your thoughts, transcribe at lightning speed with Groq Whisper, and let an LLM format your notes.</p>
+            
+            <img src="screenshot.png" alt="FreeFlow Obsidian Modal UI" class="hero-image">
+            
+            <div class="cta-group">
+                <a href="https://github.com/sagalpreet/freeflow-obsidian" class="btn btn-primary" target="_blank">View on GitHub</a>
+                <a href="../index.html" class="btn btn-secondary">Back to Projects</a>
+            </div>
+        </header>
+
+        <section class="features">
+            <div class="feature-card">
+                <span class="feature-icon">⚡</span>
+                <h3>Instant Transcription</h3>
+                <p>Powered by the Groq API and Whisper Large V3. Your speech is converted to text with sub-second latency, right inside your Obsidian vault.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🧠</span>
+                <h3>Smart Post-Processing</h3>
+                <p>Never worry about filler words again. Use built-in or custom LLM prompts to synthesize scattered thoughts, extract bullet points, and generate task lists.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">📂</span>
+                <h3>Seamless Integration</h3>
+                <p>Write directly to a new timestamped note, append to today's daily journal, inject at your active cursor, or use multi-burst recording for long thoughts.</p>
+            </div>
+        </section>
+
+        <section class="install-guide">
+            <h2>How to Install</h2>
+            <div class="install-steps">
+                <div class="step-box">
+                    <span class="step-number">1</span>
+                    <h3>Get a Groq API Key</h3>
+                    <p style="color: var(--text-muted); margin-top: 0.5rem;">FreeFlow uses Groq's insanely fast cloud API for Whisper and Llama models. You'll need to create a free account.</p>
+                    <a href="https://console.groq.com/keys" target="_blank" style="color: var(--accent); display: inline-block; margin-top: 1rem;">Get free API key &rarr;</a>
+                </div>
+                
+                <div class="step-box">
+                    <span class="step-number">2</span>
+                    <h3>Install in Obsidian</h3>
+                    <p style="color: var(--text-muted); margin-top: 0.5rem;">Download the latest `main.js`, `manifest.json`, and `styles.css` from the GitHub releases page into your plugins folder.</p>
+                    <code>git clone https://github.com/sagalpreet/freeflow-obsidian.git
+cd freeflow-obsidian
+npm install && npm run build</code>
+                </div>
+            </div>
+        </section>
+
+        <div style="display: flex; gap: 4rem; justify-content: center; flex-wrap: wrap; margin-bottom: 4rem; padding-top: 2rem;">
+            <div>
+                <h4 style="color: var(--accent);">Target</h4>
+                <p>Obsidian App</p>
+            </div>
+            <div>
+                <h4 style="color: var(--accent);">Tech</h4>
+                <p>TypeScript / esbuild</p>
+            </div>
+            <div>
+                <h4 style="color: var(--accent);">AI Service</h4>
+                <p>Groq API</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 FreeFlow Voice Notes. Open source.</p>
+        </footer>
+    </div>
+</body>
+</html>

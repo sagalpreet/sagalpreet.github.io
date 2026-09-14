@@ -1,0 +1,2267 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Pomodoro Focus Timer</title>
+	<link rel="icon"
+		href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22></text></svg>">
+	<meta name="description"
+		content="A beautiful Pomodoro focus timer with todo tracking, YouTube ambient music, and session history." />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+		rel="stylesheet" />
+	<style>
+		/* ───────────────────────── Design Tokens ───────────────────────── */
+		:root {
+			--bg: #0a0e1a;
+			--surface: rgba(255, 255, 255, 0.04);
+			--surface-hover: rgba(255, 255, 255, 0.07);
+			--glass: rgba(15, 20, 40, 0.55);
+			--glass-border: rgba(255, 255, 255, 0.08);
+			--glass-border-hover: rgba(255, 255, 255, 0.14);
+			--text: #e8ecf4;
+			--text-muted: #7a8599;
+			--text-dim: #4a5568;
+			--accent: #f59e0b;
+			--accent-glow: rgba(245, 158, 11, 0.25);
+			--accent-soft: rgba(245, 158, 11, 0.10);
+			--success: #34d399;
+			--success-soft: rgba(52, 211, 153, 0.12);
+			--danger: #f87171;
+			--danger-soft: rgba(248, 113, 113, 0.10);
+			--break-color: #60a5fa;
+			--break-glow: rgba(96, 165, 250, 0.25);
+			--radius: 16px;
+			--radius-sm: 10px;
+			--radius-xs: 6px;
+			color-scheme: dark;
+			font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+		}
+
+		/* ───────────────────────── Reset ───────────────────────── */
+		*,
+		*::before,
+		*::after {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		html,
+		body {
+			height: 100%;
+			background: var(--bg);
+			color: var(--text);
+			overflow-x: hidden;
+		}
+
+		body {
+			position: relative;
+		}
+
+		/* ───────────────────── Animated Aurora Background ───────────────────── */
+		.aurora {
+			position: fixed;
+			inset: 0;
+			z-index: 0;
+			overflow: hidden;
+			pointer-events: none;
+		}
+
+		.aurora-blob {
+			position: absolute;
+			border-radius: 50%;
+			filter: blur(120px);
+			opacity: 0.35;
+			will-change: transform;
+		}
+
+		.aurora-blob:nth-child(1) {
+			width: 600px;
+			height: 600px;
+			background: radial-gradient(circle, #7c3aed 0%, transparent 70%);
+			top: -10%;
+			left: -5%;
+			animation: aurora1 22s ease-in-out infinite alternate;
+		}
+
+		.aurora-blob:nth-child(2) {
+			width: 500px;
+			height: 500px;
+			background: radial-gradient(circle, #2563eb 0%, transparent 70%);
+			top: 30%;
+			right: -8%;
+			animation: aurora2 26s ease-in-out infinite alternate;
+		}
+
+		.aurora-blob:nth-child(3) {
+			width: 450px;
+			height: 450px;
+			background: radial-gradient(circle, #0d9488 0%, transparent 70%);
+			bottom: -5%;
+			left: 20%;
+			animation: aurora3 20s ease-in-out infinite alternate;
+		}
+
+		.aurora-blob:nth-child(4) {
+			width: 350px;
+			height: 350px;
+			background: radial-gradient(circle, #f59e0b 0%, transparent 70%);
+			top: 50%;
+			left: 50%;
+			opacity: 0.15;
+			animation: aurora4 28s ease-in-out infinite alternate;
+		}
+
+		@keyframes aurora1 {
+			0% {
+				transform: translate(0, 0) scale(1);
+			}
+
+			100% {
+				transform: translate(120px, 80px) scale(1.2);
+			}
+		}
+
+		@keyframes aurora2 {
+			0% {
+				transform: translate(0, 0) scale(1);
+			}
+
+			100% {
+				transform: translate(-100px, 60px) scale(1.15);
+			}
+		}
+
+		@keyframes aurora3 {
+			0% {
+				transform: translate(0, 0) scale(1);
+			}
+
+			100% {
+				transform: translate(80px, -60px) scale(1.25);
+			}
+		}
+
+		@keyframes aurora4 {
+			0% {
+				transform: translate(0, 0) scale(1);
+			}
+
+			100% {
+				transform: translate(-60px, -40px) scale(1.3);
+			}
+		}
+
+		/* ───────────────────── App Shell ───────────────────── */
+		.app-shell {
+			position: relative;
+			z-index: 1;
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 32px 20px 40px;
+		}
+
+		.app-header {
+			text-align: center;
+			margin-bottom: 32px;
+		}
+
+		.app-header h1 {
+			font-size: 1.5rem;
+			font-weight: 700;
+			letter-spacing: -0.02em;
+			background: linear-gradient(135deg, var(--text), var(--accent));
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+		}
+
+		.app-header p {
+			color: var(--text-muted);
+			font-size: 0.85rem;
+			margin-top: 4px;
+		}
+
+		/* ───────────────────── Glass Card ───────────────────── */
+		.glass {
+			background: var(--glass);
+			backdrop-filter: blur(24px);
+			-webkit-backdrop-filter: blur(24px);
+			border: 1px solid var(--glass-border);
+			border-radius: var(--radius);
+			padding: 24px;
+			transition: border-color 0.3s, box-shadow 0.3s;
+		}
+
+		.glass:hover {
+			border-color: var(--glass-border-hover);
+		}
+
+		/* ───────────────────── Layout Grid ───────────────────── */
+		.main-grid {
+			width: 100%;
+			max-width: 900px;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 20px;
+		}
+
+		.main-grid .timer-section {
+			grid-column: 1 / -1;
+		}
+
+		.main-grid .music-section {
+			grid-column: 1 / -1;
+		}
+
+		.main-grid .history-section {
+			grid-column: 1 / -1;
+		}
+
+		@media (max-width: 680px) {
+			.main-grid {
+				grid-template-columns: 1fr;
+			}
+		}
+
+		/* ───────────────────── Timer Section ───────────────────── */
+		.timer-section {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 40px 24px;
+		}
+
+		.timer-ring-wrap {
+			position: relative;
+			width: 240px;
+			height: 240px;
+			margin-bottom: 24px;
+		}
+
+		.timer-ring-svg {
+			width: 100%;
+			height: 100%;
+			transform: rotate(-90deg);
+		}
+
+		.timer-ring-bg {
+			fill: none;
+			stroke: var(--surface);
+			stroke-width: 6;
+		}
+
+		.timer-ring-progress {
+			fill: none;
+			stroke: var(--accent);
+			stroke-width: 6;
+			stroke-linecap: round;
+			transition: stroke-dashoffset 0.5s linear, stroke 0.4s;
+		}
+
+		.timer-ring-progress.break-mode {
+			stroke: var(--break-color);
+		}
+
+		.timer-display {
+			position: absolute;
+			inset: 0;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.timer-time {
+			font-size: 3.2rem;
+			font-weight: 300;
+			letter-spacing: 0.04em;
+			font-variant-numeric: tabular-nums;
+			line-height: 1;
+		}
+
+		.timer-label {
+			font-size: 0.75rem;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.12em;
+			color: var(--text-muted);
+			margin-top: 8px;
+		}
+
+		.timer-label .session-num {
+			color: var(--accent);
+		}
+
+		.timer-controls {
+			display: flex;
+			gap: 12px;
+			align-items: center;
+		}
+
+		/* ───────────────────── Buttons ───────────────────── */
+		.btn {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			gap: 6px;
+			padding: 10px 20px;
+			border-radius: var(--radius-sm);
+			font-family: inherit;
+			font-size: 0.85rem;
+			font-weight: 600;
+			border: none;
+			cursor: pointer;
+			transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
+		}
+
+		.btn:hover {
+			transform: translateY(-1px);
+		}
+
+		.btn:active {
+			transform: translateY(0);
+		}
+
+		.btn-primary {
+			background: var(--accent);
+			color: #000;
+			box-shadow: 0 4px 20px var(--accent-glow);
+		}
+
+		.btn-primary:hover {
+			box-shadow: 0 6px 28px var(--accent-glow);
+		}
+
+		.btn-primary.break-mode {
+			background: var(--break-color);
+			box-shadow: 0 4px 20px var(--break-glow);
+		}
+
+		.btn-ghost {
+			background: var(--surface);
+			color: var(--text-muted);
+			border: 1px solid var(--glass-border);
+		}
+
+		.btn-ghost:hover {
+			background: var(--surface-hover);
+			color: var(--text);
+		}
+
+		.btn-danger {
+			background: var(--danger-soft);
+			color: var(--danger);
+		}
+
+		.btn-danger:hover {
+			background: rgba(248, 113, 113, 0.18);
+		}
+
+		.btn-sm {
+			padding: 6px 12px;
+			font-size: 0.78rem;
+			border-radius: var(--radius-xs);
+		}
+
+		.btn-icon {
+			width: 36px;
+			height: 36px;
+			padding: 0;
+			border-radius: 50%;
+			font-size: 1rem;
+		}
+
+		/* ───────────────────── Settings Panel ───────────────────── */
+		.settings-section h2,
+		.todo-section h2,
+		.history-section h2 {
+			font-size: 0.9rem;
+			font-weight: 600;
+			margin-bottom: 16px;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		.section-icon {
+			font-size: 1rem;
+		}
+
+		.setting-row {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 10px 0;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+		}
+
+		.setting-row:last-child {
+			border-bottom: none;
+		}
+
+		.setting-label {
+			font-size: 0.85rem;
+			color: var(--text-muted);
+		}
+
+		.setting-input {
+			width: 72px;
+			padding: 6px 10px;
+			background: var(--surface);
+			border: 1px solid var(--glass-border);
+			border-radius: var(--radius-xs);
+			color: var(--text);
+			font-family: inherit;
+			font-size: 0.85rem;
+			text-align: center;
+			transition: border-color 0.2s;
+		}
+
+		.setting-input:focus {
+			outline: none;
+			border-color: var(--accent);
+		}
+
+		/* ───────────────────── Todo List ───────────────────── */
+		.todo-input-row {
+			display: flex;
+			gap: 8px;
+			margin-bottom: 16px;
+		}
+
+		.todo-input {
+			flex: 1;
+			padding: 10px 14px;
+			background: var(--surface);
+			border: 1px solid var(--glass-border);
+			border-radius: var(--radius-sm);
+			color: var(--text);
+			font-family: inherit;
+			font-size: 0.85rem;
+			transition: border-color 0.2s;
+		}
+
+		.todo-input:focus {
+			outline: none;
+			border-color: var(--accent);
+		}
+
+		.todo-input::placeholder {
+			color: var(--text-dim);
+		}
+
+		.todo-list {
+			list-style: none;
+			display: flex;
+			flex-direction: column;
+			gap: 6px;
+			max-height: 320px;
+			overflow-y: auto;
+		}
+
+		.todo-list::-webkit-scrollbar {
+			width: 4px;
+		}
+
+		.todo-list::-webkit-scrollbar-track {
+			background: transparent;
+		}
+
+		.todo-list::-webkit-scrollbar-thumb {
+			background: var(--glass-border);
+			border-radius: 2px;
+		}
+
+		.todo-item {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			padding: 10px 12px;
+			background: var(--surface);
+			border-radius: var(--radius-sm);
+			transition: background 0.2s, opacity 0.3s, transform 0.3s, border-color 0.2s;
+			animation: todoSlideIn 0.3s ease-out;
+			border: 2px solid transparent;
+		}
+
+		.todo-item.dragging {
+			opacity: 0.4;
+			background: var(--surface-hover);
+		}
+
+		.todo-item.drag-over {
+			border-top: 2px solid var(--accent);
+		}
+
+		.todo-item.done {
+			opacity: 0.5;
+		}
+
+		.todo-item.done .todo-text {
+			text-decoration: line-through;
+			color: var(--text-muted);
+		}
+
+		.todo-item.removing {
+			opacity: 0;
+			transform: translateX(20px);
+		}
+
+		@keyframes todoSlideIn {
+			from {
+				opacity: 0;
+				transform: translateY(-8px);
+			}
+
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.todo-check {
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			border: 2px solid var(--glass-border);
+			background: transparent;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: border-color 0.2s, background 0.2s;
+			flex-shrink: 0;
+			font-size: 0.7rem;
+			color: transparent;
+		}
+
+		.todo-check:hover {
+			border-color: var(--accent);
+		}
+
+		.todo-item.done .todo-check {
+			border-color: var(--success);
+			background: var(--success-soft);
+			color: var(--success);
+		}
+
+		.todo-text {
+			flex: 1;
+			font-size: 0.85rem;
+			line-height: 1.4;
+			word-break: break-word;
+		}
+
+		.todo-time {
+			font-size: 0.72rem;
+			color: var(--text-dim);
+			font-variant-numeric: tabular-nums;
+			white-space: nowrap;
+		}
+
+		.todo-active-indicator {
+			display: none;
+			width: 6px;
+			height: 6px;
+			border-radius: 50%;
+			background: var(--accent);
+			box-shadow: 0 0 8px var(--accent-glow);
+			animation: pulse 1.5s ease-in-out infinite;
+		}
+
+		.todo-item.active .todo-active-indicator {
+			display: block;
+		}
+
+		@keyframes pulse {
+
+			0%,
+			100% {
+				opacity: 1;
+			}
+
+			50% {
+				opacity: 0.4;
+			}
+		}
+
+		.todo-drag-handle {
+			width: 20px;
+			height: 20px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: var(--text-dim);
+			cursor: grab;
+			flex-shrink: 0;
+			font-size: 0.85rem;
+			opacity: 0;
+			transition: opacity 0.2s, color 0.2s;
+			user-select: none;
+		}
+
+		.todo-drag-handle:active {
+			cursor: grabbing;
+		}
+
+		.todo-item:hover .todo-drag-handle {
+			opacity: 0.6;
+		}
+
+		.todo-item:hover .todo-drag-handle:hover {
+			opacity: 1;
+			color: var(--text-muted);
+		}
+
+		.todo-actions {
+			display: flex;
+			gap: 4px;
+			opacity: 0;
+			transition: opacity 0.2s;
+		}
+
+		.todo-item:hover .todo-actions {
+			opacity: 1;
+		}
+
+		.todo-action-btn {
+			width: 28px;
+			height: 28px;
+			border-radius: 50%;
+			border: none;
+			background: transparent;
+			color: var(--text-dim);
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 0.8rem;
+			transition: color 0.2s, background 0.2s;
+		}
+
+		.todo-action-btn:hover {
+			color: var(--text);
+			background: var(--surface-hover);
+		}
+
+		.todo-action-btn.delete:hover {
+			color: var(--danger);
+			background: var(--danger-soft);
+		}
+
+		.todo-empty {
+			text-align: center;
+			padding: 24px;
+			color: var(--text-dim);
+			font-size: 0.85rem;
+		}
+
+		/* ───────────────────── Session History ───────────────────── */
+		.history-stats {
+			display: flex;
+			gap: 16px;
+			margin-bottom: 16px;
+			flex-wrap: wrap;
+		}
+
+		.stat-card {
+			flex: 1;
+			min-width: 120px;
+			padding: 14px 16px;
+			background: var(--surface);
+			border-radius: var(--radius-sm);
+			text-align: center;
+		}
+
+		.stat-value {
+			font-size: 1.5rem;
+			font-weight: 600;
+			background: linear-gradient(135deg, var(--accent), #fbbf24);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+		}
+
+		.stat-label {
+			font-size: 0.72rem;
+			color: var(--text-dim);
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			margin-top: 4px;
+		}
+
+		.history-list {
+			max-height: 200px;
+			overflow-y: auto;
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+		}
+
+		.history-list::-webkit-scrollbar {
+			width: 4px;
+		}
+
+		.history-list::-webkit-scrollbar-track {
+			background: transparent;
+		}
+
+		.history-list::-webkit-scrollbar-thumb {
+			background: var(--glass-border);
+			border-radius: 2px;
+		}
+
+		.history-item {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			padding: 8px 12px;
+			border-radius: var(--radius-xs);
+			font-size: 0.8rem;
+		}
+
+		.history-dot {
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			flex-shrink: 0;
+		}
+
+		.history-dot.work {
+			background: var(--accent);
+		}
+
+		.history-dot.break {
+			background: var(--break-color);
+		}
+
+		.history-dot.task_added {
+			background: var(--success);
+		}
+
+		.history-dot.task_done {
+			background: #a78bfa;
+		}
+
+		.history-dot.task_reopened {
+			background: #fbbf24;
+		}
+
+		.history-dot.task_deleted {
+			background: var(--danger);
+		}
+
+		.history-type {
+			color: var(--text-muted);
+			min-width: 48px;
+		}
+
+		.history-duration {
+			color: var(--text);
+			font-weight: 500;
+		}
+
+		.history-time {
+			color: var(--text-dim);
+			margin-left: auto;
+			font-size: 0.72rem;
+		}
+
+		.history-footer {
+			display: flex;
+			justify-content: flex-end;
+			gap: 8px;
+			margin-top: 16px;
+		}
+
+		.history-empty {
+			text-align: center;
+			padding: 24px;
+			color: var(--text-dim);
+			font-size: 0.85rem;
+		}
+
+		/* ───────────────────── Music Section (inline card) ───────────────────── */
+		/* ───────────────────── Music Section (Radio + YouTube) ───────────────────── */
+		.music-section h2 {
+			font-size: 0.9rem;
+			font-weight: 600;
+			margin-bottom: 16px;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		/* Tabs */
+		.music-tabs {
+			display: flex;
+			gap: 8px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+			margin-bottom: 16px;
+			padding-bottom: 8px;
+		}
+
+		.music-tab-btn {
+			background: transparent;
+			border: none;
+			color: var(--text-muted);
+			font-family: inherit;
+			font-size: 0.8rem;
+			font-weight: 600;
+			cursor: pointer;
+			padding: 4px 10px;
+			border-radius: var(--radius-xs);
+			transition: color 0.2s, background 0.2s;
+		}
+
+		.music-tab-btn:hover {
+			color: var(--text);
+			background: var(--surface);
+		}
+
+		.music-tab-btn.active {
+			color: var(--accent);
+			background: var(--accent-soft);
+		}
+
+		.music-panel {
+			display: none;
+		}
+
+		.music-panel.active {
+			display: block;
+		}
+
+		.music-row {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			flex-wrap: wrap;
+			margin-bottom: 12px;
+		}
+
+		.music-select {
+			padding: 10px 14px;
+			background: var(--surface);
+			border: 1px solid var(--glass-border);
+			border-radius: var(--radius-sm);
+			color: var(--text);
+			font-family: inherit;
+			font-size: 0.85rem;
+			outline: none;
+			transition: border-color 0.2s;
+			min-width: 200px;
+		}
+
+		.music-select:focus {
+			border-color: var(--accent);
+		}
+
+		.yt-url-input {
+			flex: 1;
+			min-width: 180px;
+			padding: 10px 14px;
+			background: var(--surface);
+			border: 1px solid var(--glass-border);
+			border-radius: var(--radius-sm);
+			color: var(--text);
+			font-family: inherit;
+			font-size: 0.85rem;
+			transition: border-color 0.2s;
+		}
+
+		.yt-url-input:focus {
+			outline: none;
+			border-color: var(--accent);
+		}
+
+		.yt-url-input::placeholder {
+			color: var(--text-dim);
+		}
+
+		.music-btn {
+			width: 36px;
+			height: 36px;
+			border-radius: 50%;
+			border: none;
+			background: var(--accent);
+			color: #000;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 0.95rem;
+			transition: transform 0.15s, box-shadow 0.2s;
+		}
+
+		.music-btn:hover {
+			transform: scale(1.08);
+			box-shadow: 0 4px 16px var(--accent-glow);
+		}
+
+		.music-btn.stop {
+			background: var(--danger-soft);
+			color: var(--danger);
+		}
+
+		.music-btn.stop:hover {
+			box-shadow: none;
+		}
+
+		.yt-ctrl-btn {
+			width: 36px;
+			height: 36px;
+			border-radius: 50%;
+			border: 1px solid var(--glass-border);
+			background: var(--surface);
+			color: var(--text-muted);
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 0.95rem;
+			transition: transform 0.15s, background 0.2s, color 0.2s;
+		}
+
+		.yt-ctrl-btn:hover {
+			background: var(--surface-hover);
+			color: var(--text);
+		}
+
+		.yt-ctrl-btn.active {
+			color: var(--accent);
+			border-color: var(--accent);
+		}
+
+		.yt-ctrl-btn.hidden {
+			display: none;
+		}
+
+		.volume-wrap {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			margin-left: auto;
+		}
+
+		.volume-icon {
+			font-size: 0.95rem;
+			color: var(--text-muted);
+			cursor: pointer;
+		}
+
+		.volume-slider {
+			width: 80px;
+			height: 4px;
+			-webkit-appearance: none;
+			appearance: none;
+			background: var(--surface);
+			border-radius: 2px;
+			outline: none;
+		}
+
+		.volume-slider::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 14px;
+			height: 14px;
+			border-radius: 50%;
+			background: var(--accent);
+			cursor: pointer;
+			box-shadow: 0 2px 8px var(--accent-glow);
+		}
+
+		.volume-slider::-moz-range-thumb {
+			width: 14px;
+			height: 14px;
+			border-radius: 50%;
+			background: var(--accent);
+			cursor: pointer;
+			border: none;
+		}
+
+		/* Radio stream custom input row */
+		.radio-custom-row {
+			margin-top: 10px;
+			display: flex;
+			gap: 8px;
+		}
+
+		/* YouTube iframe container */
+		.yt-iframe-wrap {
+			width: 100%;
+			height: 200px;
+			border-radius: var(--radius-sm);
+			overflow: hidden;
+			border: 1px solid var(--glass-border);
+			margin-top: 12px;
+		}
+
+		.yt-iframe-wrap.hidden {
+			display: none;
+		}
+
+		.yt-iframe-wrap iframe {
+			width: 100%;
+			height: 100%;
+		}
+
+		.yt-warning {
+			font-size: 0.72rem;
+			color: var(--text-dim);
+			margin-top: 8px;
+			line-height: 1.4;
+		}
+
+		@media (max-width: 680px) {
+			.music-row {
+				gap: 8px;
+			}
+
+			.volume-wrap {
+				margin-left: 0;
+				width: 100%;
+				justify-content: flex-end;
+			}
+
+			.yt-iframe-wrap {
+				height: 150px;
+			}
+		}
+
+		/* ───────────────────── Confirm Dialog ───────────────────── */
+		.confirm-overlay {
+			position: fixed;
+			inset: 0;
+			z-index: 200;
+			background: rgba(0, 0, 0, 0.6);
+			backdrop-filter: blur(6px);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.2s;
+		}
+
+		.confirm-overlay.active {
+			opacity: 1;
+			pointer-events: auto;
+		}
+
+		.confirm-dialog {
+			background: #141a2e;
+			border: 1px solid var(--glass-border);
+			border-radius: var(--radius);
+			padding: 28px;
+			max-width: 380px;
+			width: 90%;
+			text-align: center;
+		}
+
+		.confirm-dialog h3 {
+			font-size: 1rem;
+			margin-bottom: 8px;
+		}
+
+		.confirm-dialog p {
+			font-size: 0.85rem;
+			color: var(--text-muted);
+			margin-bottom: 20px;
+		}
+
+		.confirm-actions {
+			display: flex;
+			gap: 10px;
+			justify-content: center;
+		}
+
+		/* ───────────────────── Notification Toast ───────────────────── */
+		.toast {
+			position: fixed;
+			top: 20px;
+			right: 20px;
+			z-index: 150;
+			padding: 14px 20px;
+			background: var(--glass);
+			border: 1px solid var(--glass-border);
+			backdrop-filter: blur(16px);
+			-webkit-backdrop-filter: blur(16px);
+			border-radius: var(--radius-sm);
+			font-size: 0.85rem;
+			font-weight: 500;
+			transform: translateX(120%);
+			transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+		}
+
+		.toast.visible {
+			transform: translateX(0);
+		}
+
+		.toast.work {
+			border-left: 3px solid var(--accent);
+		}
+
+		.toast.break {
+			border-left: 3px solid var(--break-color);
+		}
+
+		/* ───────────────────── Utilities ───────────────────── */
+		.sr-only {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			margin: -1px;
+			overflow: hidden;
+			clip: rect(0, 0, 0, 0);
+			border: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Animated Aurora Background -->
+	<div class="aurora" aria-hidden="true">
+		<div class="aurora-blob"></div>
+		<div class="aurora-blob"></div>
+		<div class="aurora-blob"></div>
+		<div class="aurora-blob"></div>
+	</div>
+
+	<!-- Toast Notification -->
+	<div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+	<!-- Confirm Dialog -->
+	<div id="confirmOverlay" class="confirm-overlay">
+		<div class="confirm-dialog">
+			<h3 id="confirmTitle">Are you sure?</h3>
+			<p id="confirmMessage">This action cannot be undone.</p>
+			<div class="confirm-actions">
+				<button class="btn btn-ghost" id="confirmCancel">Cancel</button>
+				<button class="btn btn-danger" id="confirmOk">Confirm</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Main App -->
+	<div class="app-shell">
+		<header class="app-header">
+			<h1>Pomodoro Focus Timer</h1>
+			<p>Stay focused, one session at a time</p>
+		</header>
+
+		<div class="main-grid">
+			<!-- ── Timer ── -->
+			<section class="glass timer-section" id="timerSection">
+				<div class="timer-ring-wrap">
+					<svg class="timer-ring-svg" viewBox="0 0 240 240">
+						<circle class="timer-ring-bg" cx="120" cy="120" r="108" />
+						<circle class="timer-ring-progress" id="timerRing" cx="120" cy="120" r="108"
+							stroke-dasharray="678.58" stroke-dashoffset="0" />
+					</svg>
+					<div class="timer-display">
+						<div class="timer-time" id="timerTime">50:00</div>
+						<div class="timer-label" id="timerLabel">
+							Work · Session <span class="session-num" id="sessionNum">1</span>
+						</div>
+					</div>
+				</div>
+				<div class="timer-controls">
+					<button class="btn btn-primary" id="btnStartPause">▶ Start</button>
+					<button class="btn btn-ghost" id="btnReset">↻ Reset</button>
+					<button class="btn btn-ghost" id="btnSkip" title="Skip to next phase">⏭ Skip</button>
+				</div>
+			</section>
+
+			<!-- ── Settings ── -->
+			<section class="glass settings-section" id="settingsSection">
+				<h2><span class="section-icon">⚙</span> Settings</h2>
+				<div class="setting-row">
+					<span class="setting-label">Work duration (min)</span>
+					<input type="number" class="setting-input" id="settingWork" min="1" max="120" value="50" />
+				</div>
+				<div class="setting-row">
+					<span class="setting-label">Break duration (min)</span>
+					<input type="number" class="setting-input" id="settingBreak" min="1" max="60" value="10" />
+				</div>
+				<div class="setting-row" style="border-bottom: none; padding-top: 16px;">
+					<span class="setting-label"></span>
+					<button class="btn btn-danger btn-sm" id="btnClearAll">🗑 Clear All Data</button>
+				</div>
+			</section>
+
+			<!-- ── Todo List ── -->
+			<section class="glass todo-section" id="todoSection">
+				<h2><span class="section-icon">📋</span> Tasks</h2>
+				<div class="todo-input-row">
+					<input type="text" class="todo-input" id="todoInput" placeholder="What are you working on?"
+						maxlength="200" />
+					<button class="btn btn-primary btn-sm" id="btnAddTodo">+ Add</button>
+				</div>
+				<ul class="todo-list" id="todoList">
+					<!-- Todo items rendered by JS -->
+				</ul>
+				<div class="todo-empty" id="todoEmpty">
+					No tasks yet. Add one above to start tracking your work.
+				</div>
+			</section>
+
+			<!-- ── Session History ── -->
+			<section class="glass history-section" id="historySection">
+				<h2><span class="section-icon">📊</span> Session History</h2>
+				<div class="history-stats" id="historyStats">
+					<div class="stat-card">
+						<div class="stat-value" id="statSessions">0</div>
+						<div class="stat-label">Sessions Today</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-value" id="statFocusTime">0m</div>
+						<div class="stat-label">Focus Time Today</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-value" id="statTotalSessions">0</div>
+						<div class="stat-label">All Time Sessions</div>
+					</div>
+				</div>
+				<div class="history-list" id="historyList">
+					<!-- History items rendered by JS -->
+				</div>
+				<div class="history-empty" id="historyEmpty">
+					No sessions completed yet. Start your first Pomodoro!
+				</div>
+				<div class="history-footer" id="historyFooter" style="display:none;">
+					<button class="btn btn-danger btn-sm" id="btnClearHistory">Clear History</button>
+				</div>
+			</section>
+
+			<!-- ── Music ── -->
+			<section class="glass music-section" id="musicSection">
+				<h2><span class="section-icon">🎵</span> Background Music</h2>
+
+				<div class="music-tabs">
+					<button class="music-tab-btn active" id="tabRadioBtn">Lofi Radio (Default)</button>
+					<button class="music-tab-btn" id="tabYtBtn">YouTube Embed</button>
+				</div>
+
+				<!-- Panel: Radio -->
+				<div class="music-panel active" id="panelRadio">
+					<div class="music-row">
+						<select class="music-select" id="radioSelect">
+							<option value="https://streams.ilovemusic.de/iloveradio17.mp3" selected>🎧 Chill Lofi
+								(ILoveRadio)</option>
+							<option value="https://streaming.hotmixradio.com/hotmix-lofi-en-mp3">☕ Cozy Lofi
+								(HotmixRadio)</option>
+							<option value="https://streams.fluxfm.de/Chillhop/mp3-128/">🎷 Lofi Chillhop (FluxFM)
+							</option>
+							<option value="custom">✏️ Custom Stream URL...</option>
+						</select>
+
+						<button class="music-btn" id="radioPlayBtn" title="Play">▶</button>
+
+						<div class="volume-wrap">
+							<span class="volume-icon" id="radioVolIcon" title="Mute / Unmute">🔊</span>
+							<input type="range" class="volume-slider" id="radioVolume" min="0" max="100" value="50" />
+						</div>
+					</div>
+
+					<div class="radio-custom-row hidden" id="radioCustomRow">
+						<input type="text" class="yt-url-input" id="radioCustomUrl"
+							placeholder="Paste a direct streaming audio URL (e.g., http://.../stream.mp3)" />
+					</div>
+
+					<audio id="radioAudio" style="display:none;"></audio>
+				</div>
+
+				<!-- Panel: YouTube -->
+				<div class="music-panel" id="panelYt">
+					<div class="music-row">
+						<input type="text" class="yt-url-input" id="ytUrlInput"
+							placeholder="Paste a YouTube video or playlist URL..." />
+						<div class="yt-controls">
+							<button class="music-btn" id="ytPlayBtn" title="Load & Play">▶</button>
+							<button class="yt-ctrl-btn hidden" id="ytShuffleBtn"
+								title="Shuffle (reload with random start)">🔀</button>
+							<button class="yt-ctrl-btn hidden" id="ytNextBtn" title="Next track (random)">⏭</button>
+						</div>
+					</div>
+					<div class="yt-iframe-wrap hidden" id="ytIframeWrap"></div>
+					<div class="yt-warning">
+						⚠️ Note: YouTube embeds require a server or origin settings on some browsers. If they don't
+						load, use Lofi Radio mode instead.
+					</div>
+				</div>
+			</section>
+
+		</div>
+	</div>
+
+	<script>
+		/* ═══════════════════════════════════════════════════════════
+		   Storage Helper
+		   ═══════════════════════════════════════════════════════════ */
+		const Store = {
+			_prefix: 'pomodoro_',
+			get(key, fallback = null) {
+				try {
+					const raw = localStorage.getItem(this._prefix + key);
+					return raw ? JSON.parse(raw) : fallback;
+				} catch { return fallback; }
+			},
+			set(key, val) {
+				try { localStorage.setItem(this._prefix + key, JSON.stringify(val)); } catch { }
+			},
+			remove(key) {
+				try { localStorage.removeItem(this._prefix + key); } catch { }
+			},
+			clearAll() {
+				const keys = [];
+				for (let i = 0; i < localStorage.length; i++) {
+					const k = localStorage.key(i);
+					if (k.startsWith(this._prefix)) keys.push(k);
+				}
+				keys.forEach(k => localStorage.removeItem(k));
+			}
+		};
+
+		/* ═══════════════════════════════════════════════════════════
+		   Confirm Dialog
+		   ═══════════════════════════════════════════════════════════ */
+		function showConfirm(title, msg) {
+			return new Promise(resolve => {
+				const overlay = document.getElementById('confirmOverlay');
+				document.getElementById('confirmTitle').textContent = title;
+				document.getElementById('confirmMessage').textContent = msg;
+				overlay.classList.add('active');
+				const ok = document.getElementById('confirmOk');
+				const cancel = document.getElementById('confirmCancel');
+				function cleanup(result) {
+					overlay.classList.remove('active');
+					ok.removeEventListener('click', onOk);
+					cancel.removeEventListener('click', onCancel);
+					resolve(result);
+				}
+				function onOk() { cleanup(true); }
+				function onCancel() { cleanup(false); }
+				ok.addEventListener('click', onOk);
+				cancel.addEventListener('click', onCancel);
+			});
+		}
+
+		/* ═══════════════════════════════════════════════════════════
+		   Toast
+		   ═══════════════════════════════════════════════════════════ */
+		let toastTimer = null;
+		function showToast(text, type = 'work') {
+			const el = document.getElementById('toast');
+			el.textContent = text;
+			el.className = 'toast visible ' + type;
+			clearTimeout(toastTimer);
+			toastTimer = setTimeout(() => el.classList.remove('visible'), 4000);
+		}
+
+		/* ═══════════════════════════════════════════════════════════
+		   Timer Engine
+		   ═══════════════════════════════════════════════════════════ */
+		const RING_CIRCUMFERENCE = 2 * Math.PI * 108; // ~678.58
+
+		const timerState = {
+			mode: 'work', // 'work' | 'break'
+			isRunning: false,
+			timeRemaining: 50 * 60, // seconds
+			totalTime: 50 * 60,
+			sessionCount: 1,
+			intervalId: null,
+		};
+
+		// DOM refs
+		const timerTimeEl = document.getElementById('timerTime');
+		const timerLabelEl = document.getElementById('timerLabel');
+		const sessionNumEl = document.getElementById('sessionNum');
+		const timerRing = document.getElementById('timerRing');
+		const btnStartPause = document.getElementById('btnStartPause');
+		const btnReset = document.getElementById('btnReset');
+		const btnSkip = document.getElementById('btnSkip');
+		const settingWork = document.getElementById('settingWork');
+		const settingBreak = document.getElementById('settingBreak');
+
+		function loadSettings() {
+			const s = Store.get('settings', { work: 50, break: 10 });
+			settingWork.value = s.work;
+			settingBreak.value = s.break;
+			return s;
+		}
+
+		function saveSettings() {
+			const w = Math.max(1, Math.min(120, parseInt(settingWork.value) || 50));
+			const b = Math.max(1, Math.min(60, parseInt(settingBreak.value) || 10));
+			settingWork.value = w;
+			settingBreak.value = b;
+			Store.set('settings', { work: w, break: b });
+			return { work: w, break: b };
+		}
+
+		function formatTime(sec) {
+			const m = Math.floor(sec / 60);
+			const s = sec % 60;
+			return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+		}
+
+		function updateTimerDisplay() {
+			timerTimeEl.textContent = formatTime(timerState.timeRemaining);
+			sessionNumEl.textContent = timerState.sessionCount;
+
+			const isBreak = timerState.mode === 'break';
+			timerLabelEl.innerHTML = `${isBreak ? 'Break' : 'Work'} · Session <span class="session-num" id="sessionNum">${timerState.sessionCount}</span>`;
+
+			// Progress ring
+			const progress = 1 - (timerState.timeRemaining / timerState.totalTime);
+			const offset = RING_CIRCUMFERENCE * (1 - progress);
+			timerRing.style.strokeDashoffset = offset;
+			timerRing.classList.toggle('break-mode', isBreak);
+
+			// Button styling
+			btnStartPause.classList.toggle('break-mode', isBreak);
+
+			// Document title - context-aware updates
+			const emoji = isBreak ? '☕' : '🍅';
+			const modeText = isBreak ? 'Break' : 'Focus';
+			const timeStr = formatTime(timerState.timeRemaining);
+
+			if (!timerState.isRunning && timerState.timeRemaining === timerState.totalTime) {
+				document.title = '🍅 Pomodoro Focus Timer';
+			} else if (timerState.isRunning) {
+				document.title = `(${timeStr}) ${emoji} ${modeText}`;
+			} else {
+				document.title = `⏸ (${timeStr}) ${emoji} ${modeText}`;
+			}
+		}
+
+		function initTimer() {
+			const s = loadSettings();
+			timerState.mode = 'work';
+			timerState.timeRemaining = s.work * 60;
+			timerState.totalTime = s.work * 60;
+			timerState.isRunning = false;
+			timerState.sessionCount = 1;
+			clearInterval(timerState.intervalId);
+			btnStartPause.textContent = '▶ Start';
+			updateTimerDisplay();
+		}
+
+		function startTimer() {
+			if (timerState.isRunning) return;
+			timerState.isRunning = true;
+			btnStartPause.textContent = '⏸ Pause';
+			updateTimerDisplay();
+			timerState.intervalId = setInterval(tick, 1000);
+		}
+
+		function pauseTimer() {
+			timerState.isRunning = false;
+			clearInterval(timerState.intervalId);
+			btnStartPause.textContent = '▶ Resume';
+			pauseAllMusic();
+			updateTimerDisplay();
+		}
+
+		function resetTimer() {
+			pauseTimer();
+			const s = saveSettings();
+			timerState.mode = 'work';
+			timerState.timeRemaining = s.work * 60;
+			timerState.totalTime = s.work * 60;
+			timerState.sessionCount = 1;
+			btnStartPause.textContent = '▶ Start';
+			updateTimerDisplay();
+		}
+
+		function skipPhase() {
+			pauseTimer();
+			completePhase();
+		}
+
+		function pauseAllMusic() {
+			if (radioIsPlaying) stopRadio();
+			if (ytIsPlaying) stopYouTube();
+		}
+
+		function completePhase() {
+			const s = saveSettings();
+
+			// Log completed session
+			logSession(timerState.mode, timerState.totalTime - timerState.timeRemaining);
+
+			if (timerState.mode === 'work') {
+				// Pause all music when transitioning from work → break
+				pauseAllMusic();
+
+				// Switch to break
+				timerState.mode = 'break';
+				timerState.timeRemaining = s.break * 60;
+				timerState.totalTime = s.break * 60;
+				playNotificationSound();
+				showToast('☕ Work session complete! Take a break.', 'work');
+			} else {
+				// Switch to work
+				timerState.mode = 'work';
+				timerState.sessionCount++;
+				timerState.timeRemaining = s.work * 60;
+				timerState.totalTime = s.work * 60;
+				playNotificationSound();
+				showToast('🍅 Break over! Time to focus.', 'break');
+			}
+
+			updateTimerDisplay();
+			// Auto-start next phase
+			startTimer();
+		}
+
+		function tick() {
+			if (timerState.timeRemaining <= 0) {
+				completePhase();
+				return;
+			}
+			timerState.timeRemaining--;
+
+			// Update active todo elapsed time
+			tickActiveTodo();
+
+			updateTimerDisplay();
+		}
+
+		// Event listeners
+		btnStartPause.addEventListener('click', () => {
+			if (timerState.isRunning) pauseTimer();
+			else startTimer();
+		});
+		btnReset.addEventListener('click', resetTimer);
+		btnSkip.addEventListener('click', skipPhase);
+
+		function onSettingsChange() {
+			const s = saveSettings();
+			// If timer is idle (not running and at full time), live-update the display
+			const isIdle = !timerState.isRunning && timerState.timeRemaining === timerState.totalTime;
+			if (isIdle) {
+				if (timerState.mode === 'work') {
+					timerState.timeRemaining = s.work * 60;
+					timerState.totalTime = s.work * 60;
+				} else {
+					timerState.timeRemaining = s.break * 60;
+					timerState.totalTime = s.break * 60;
+				}
+				updateTimerDisplay();
+			}
+		}
+		settingWork.addEventListener('change', onSettingsChange);
+		settingBreak.addEventListener('change', onSettingsChange);
+
+		/* ═══════════════════════════════════════════════════════════
+		   Notification Sound (Web Audio API)
+		   ═══════════════════════════════════════════════════════════ */
+		let audioCtx = null;
+		function playNotificationSound() {
+			try {
+				if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+				const osc = audioCtx.createOscillator();
+				const gain = audioCtx.createGain();
+				osc.connect(gain);
+				gain.connect(audioCtx.destination);
+				osc.type = 'sine';
+
+				// Play a pleasant two-tone chime
+				const now = audioCtx.currentTime;
+				osc.frequency.setValueAtTime(587.33, now);       // D5
+				osc.frequency.setValueAtTime(880, now + 0.15);   // A5
+				gain.gain.setValueAtTime(0.3, now);
+				gain.gain.exponentialRampToValueAtTime(0.01, now + 0.6);
+				osc.start(now);
+				osc.stop(now + 0.6);
+			} catch { }
+		}
+
+		/* ═══════════════════════════════════════════════════════════
+		   Todo List
+		   ═══════════════════════════════════════════════════════════ */
+		let todos = Store.get('todos', []);
+
+		const todoListEl = document.getElementById('todoList');
+		const todoEmptyEl = document.getElementById('todoEmpty');
+		const todoInput = document.getElementById('todoInput');
+		const btnAddTodo = document.getElementById('btnAddTodo');
+
+		function generateId() {
+			return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+		}
+
+		function logTaskEvent(type, taskText) {
+			sessions.push({
+				type,
+				taskText: taskText.length > 40 ? taskText.slice(0, 37) + '…' : taskText,
+				completedAt: Date.now(),
+			});
+			Store.set('sessions', sessions);
+			renderHistory();
+		}
+
+		function addTodo(text) {
+			text = text.trim();
+			if (!text) return;
+			todos.push({
+				id: generateId(),
+				text,
+				createdAt: Date.now(),
+				completedAt: null,
+				elapsedSeconds: 0,
+				isActive: false,
+				isDone: false,
+			});
+			logTaskEvent('task_added', text);
+			saveTodos();
+			renderTodos();
+		}
+
+		function toggleTodoDone(id) {
+			const t = todos.find(t => t.id === id);
+			if (!t) return;
+			t.isDone = !t.isDone;
+			t.completedAt = t.isDone ? Date.now() : null;
+			if (t.isDone) t.isActive = false;
+			logTaskEvent(t.isDone ? 'task_done' : 'task_reopened', t.text);
+			saveTodos();
+			renderTodos();
+		}
+
+		function toggleTodoActive(id) {
+			todos.forEach(t => t.isActive = false);
+			const t = todos.find(t => t.id === id);
+			if (t && !t.isDone) t.isActive = true;
+			saveTodos();
+			renderTodos();
+		}
+
+		function deleteTodo(id) {
+			const t = todos.find(t => t.id === id);
+			const el = document.querySelector(`[data-todo-id="${id}"]`);
+			if (t) logTaskEvent('task_deleted', t.text);
+			if (el) {
+				el.classList.add('removing');
+				setTimeout(() => {
+					todos = todos.filter(t => t.id !== id);
+					saveTodos();
+					renderTodos();
+				}, 300);
+			} else {
+				todos = todos.filter(t => t.id !== id);
+				saveTodos();
+				renderTodos();
+			}
+		}
+
+		function tickActiveTodo() {
+			const active = todos.find(t => t.isActive && !t.isDone);
+			if (active) {
+				active.elapsedSeconds++;
+				// Update inline — avoid full re-render for performance
+				const timeEl = document.querySelector(`[data-todo-id="${active.id}"] .todo-time`);
+				if (timeEl) timeEl.textContent = formatElapsed(active.elapsedSeconds);
+				// Save every 30 seconds to avoid excessive writes
+				if (active.elapsedSeconds % 30 === 0) saveTodos();
+			}
+		}
+
+		function formatElapsed(sec) {
+			if (sec < 60) return `${sec}s`;
+			const m = Math.floor(sec / 60);
+			const s = sec % 60;
+			if (m < 60) return `${m}m ${s}s`;
+			const h = Math.floor(m / 60);
+			const rm = m % 60;
+			return `${h}h ${rm}m`;
+		}
+
+		function saveTodos() {
+			Store.set('todos', todos);
+		}
+
+		function renderTodos() {
+			todoListEl.innerHTML = '';
+			const activeTodos = todos.filter(t => !t.isDone);
+			const doneTodos = todos.filter(t => t.isDone);
+			const sorted = [...activeTodos, ...doneTodos];
+
+			todoEmptyEl.style.display = sorted.length ? 'none' : 'block';
+
+			sorted.forEach(t => {
+				const li = document.createElement('li');
+				li.className = 'todo-item' + (t.isDone ? ' done' : '') + (t.isActive ? ' active' : '');
+				li.dataset.todoId = t.id;
+				li.draggable = !t.isDone;
+				li.innerHTML = `
+					${!t.isDone ? '<span class="todo-drag-handle" title="Drag to reorder">⠿</span>' : ''}
+					<button class="todo-check" onclick="toggleTodoDone('${t.id}')" title="${t.isDone ? 'Mark as incomplete' : 'Mark as done'}">
+						${t.isDone ? '✓' : ''}
+					</button>
+					<span class="todo-active-indicator"></span>
+					<span class="todo-text">${escapeHtml(t.text)}</span>
+					<span class="todo-time">${t.elapsedSeconds > 0 ? formatElapsed(t.elapsedSeconds) : ''}</span>
+					<div class="todo-actions">
+						${!t.isDone ? `<button class="todo-action-btn" onclick="toggleTodoActive('${t.id}')" title="Focus on this task">🎯</button>` : ''}
+						<button class="todo-action-btn delete" onclick="deleteTodo('${t.id}')" title="Delete task">✕</button>
+					</div>
+				`;
+				todoListEl.appendChild(li);
+			});
+		}
+
+		function escapeHtml(str) {
+			const d = document.createElement('div');
+			d.textContent = str;
+			return d.innerHTML;
+		}
+
+		btnAddTodo.addEventListener('click', () => {
+			addTodo(todoInput.value);
+			todoInput.value = '';
+			todoInput.focus();
+		});
+		todoInput.addEventListener('keydown', e => {
+			if (e.key === 'Enter') {
+				addTodo(todoInput.value);
+				todoInput.value = '';
+			}
+		});
+
+		/* ── Drag and Drop for Todo List ── */
+		let draggedTodoId = null;
+
+		todoListEl.addEventListener('dragstart', (e) => {
+			const item = e.target.closest('.todo-item');
+			if (!item || item.classList.contains('done')) { e.preventDefault(); return; }
+			draggedTodoId = item.dataset.todoId;
+			item.classList.add('dragging');
+			e.dataTransfer.effectAllowed = 'move';
+			e.dataTransfer.setData('text/plain', draggedTodoId);
+		});
+
+		todoListEl.addEventListener('dragend', (e) => {
+			const item = e.target.closest('.todo-item');
+			if (item) item.classList.remove('dragging');
+			draggedTodoId = null;
+			todoListEl.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+		});
+
+		todoListEl.addEventListener('dragover', (e) => {
+			e.preventDefault();
+			e.dataTransfer.dropEffect = 'move';
+			const target = e.target.closest('.todo-item');
+			if (!target || target.classList.contains('done') || target.dataset.todoId === draggedTodoId) return;
+			todoListEl.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+			target.classList.add('drag-over');
+		});
+
+		todoListEl.addEventListener('dragleave', (e) => {
+			const target = e.target.closest('.todo-item');
+			if (target) target.classList.remove('drag-over');
+		});
+
+		todoListEl.addEventListener('drop', (e) => {
+			e.preventDefault();
+			const targetItem = e.target.closest('.todo-item');
+			if (!targetItem || targetItem.classList.contains('done')) return;
+
+			const fromId = draggedTodoId;
+			const toId = targetItem.dataset.todoId;
+			if (!fromId || !toId || fromId === toId) return;
+
+			// Reorder within the incomplete todos only
+			const fromIdx = todos.findIndex(t => t.id === fromId);
+			const toIdx = todos.findIndex(t => t.id === toId);
+			if (fromIdx === -1 || toIdx === -1) return;
+
+			const [moved] = todos.splice(fromIdx, 1);
+			const newToIdx = todos.findIndex(t => t.id === toId);
+			todos.splice(newToIdx, 0, moved);
+
+			saveTodos();
+			renderTodos();
+			todoListEl.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+		});
+
+		/* ═══════════════════════════════════════════════════════════
+		   Session History
+		   ═══════════════════════════════════════════════════════════ */
+		let sessions = Store.get('sessions', []);
+
+		const historyListEl = document.getElementById('historyList');
+		const historyEmptyEl = document.getElementById('historyEmpty');
+		const historyFooter = document.getElementById('historyFooter');
+		const statSessions = document.getElementById('statSessions');
+		const statFocusTime = document.getElementById('statFocusTime');
+		const statTotalSessions = document.getElementById('statTotalSessions');
+
+		function logSession(type, durationSeconds) {
+			if (durationSeconds < 5) return; // ignore very short sessions
+			sessions.push({
+				type,
+				durationSeconds,
+				completedAt: Date.now(),
+			});
+			Store.set('sessions', sessions);
+			renderHistory();
+		}
+
+		function getToday() {
+			return new Date().toDateString();
+		}
+
+		function renderHistory() {
+			const today = getToday();
+			const todaySessions = sessions.filter(s => new Date(s.completedAt).toDateString() === today);
+			const todayWorkSessions = todaySessions.filter(s => s.type === 'work');
+			const todayFocusSec = todayWorkSessions.reduce((sum, s) => sum + s.durationSeconds, 0);
+
+			statSessions.textContent = todayWorkSessions.length;
+			statTotalSessions.textContent = sessions.filter(s => s.type === 'work').length;
+
+			if (todayFocusSec < 60) {
+				statFocusTime.textContent = `${todayFocusSec}s`;
+			} else {
+				const h = Math.floor(todayFocusSec / 3600);
+				const m = Math.floor((todayFocusSec % 3600) / 60);
+				statFocusTime.textContent = h > 0 ? `${h}h ${m}m` : `${m}m`;
+			}
+
+			// Render recent sessions (last 20)
+			historyListEl.innerHTML = '';
+			const recent = [...sessions].reverse().slice(0, 20);
+
+			historyEmptyEl.style.display = recent.length ? 'none' : 'block';
+			historyFooter.style.display = sessions.length ? 'flex' : 'none';
+
+			const taskTypeLabels = {
+				task_added: '＋ Added',
+				task_done: '✓ Done',
+				task_reopened: '↺ Reopened',
+				task_deleted: '✕ Deleted',
+			};
+
+			recent.forEach(s => {
+				const div = document.createElement('div');
+				div.className = 'history-item';
+				const timeStr = new Date(s.completedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+				const dateStr = new Date(s.completedAt).toDateString() === today ? '' : new Date(s.completedAt).toLocaleDateString([], { month: 'short', day: 'numeric' }) + ' · ';
+
+				if (s.type === 'work' || s.type === 'break') {
+					// Timer session entry
+					const m = Math.floor(s.durationSeconds / 60);
+					const sec = s.durationSeconds % 60;
+					const durStr = m > 0 ? `${m}m ${sec}s` : `${sec}s`;
+					div.innerHTML = `
+						<span class="history-dot ${s.type}"></span>
+						<span class="history-type">${s.type === 'work' ? 'Work' : 'Break'}</span>
+						<span class="history-duration">${durStr}</span>
+						<span class="history-time">${dateStr}${timeStr}</span>
+					`;
+				} else {
+					// Task lifecycle event
+					const label = taskTypeLabels[s.type] || s.type;
+					div.innerHTML = `
+						<span class="history-dot ${s.type}"></span>
+						<span class="history-type">${label}</span>
+						<span class="history-duration" style="opacity:0.7">${escapeHtml(s.taskText || '')}</span>
+						<span class="history-time">${dateStr}${timeStr}</span>
+					`;
+				}
+				historyListEl.appendChild(div);
+			});
+		}
+
+		document.getElementById('btnClearHistory').addEventListener('click', async () => {
+			const ok = await showConfirm('Clear History?', 'All session history will be permanently deleted.');
+			if (ok) {
+				sessions = [];
+				Store.remove('sessions');
+				renderHistory();
+				showToast('Session history cleared', 'work');
+			}
+		});
+
+		document.getElementById('btnClearAll').addEventListener('click', async () => {
+			const ok = await showConfirm('Clear All Data?', 'All settings, tasks, and session history will be permanently deleted.');
+			if (ok) {
+				Store.clearAll();
+				todos = [];
+				sessions = [];
+				renderTodos();
+				renderHistory();
+				loadSettings();
+				resetTimer();
+				clearYtState();
+				showToast('All data cleared', 'work');
+			}
+		});
+
+		/* ═══════════════════════════════════════════════════════════
+		   Music Integration (Radio Mode + YouTube Mode)
+		   ═══════════════════════════════════════════════════════════ */
+		const DEFAULT_PLAYLIST_URL = 'https://youtu.be/9TMVk2koA2A?si=cP-9bsLsNu5cLeEk';
+
+		// DOM Elements - Tabs & General
+		const tabRadioBtn = document.getElementById('tabRadioBtn');
+		const tabYtBtn = document.getElementById('tabYtBtn');
+		const panelRadio = document.getElementById('panelRadio');
+		const panelYt = document.getElementById('panelYt');
+
+		// DOM Elements - Radio
+		const radioSelect = document.getElementById('radioSelect');
+		const radioPlayBtn = document.getElementById('radioPlayBtn');
+		const radioVolume = document.getElementById('radioVolume');
+		const radioVolIcon = document.getElementById('radioVolIcon');
+		const radioCustomRow = document.getElementById('radioCustomRow');
+		const radioCustomUrl = document.getElementById('radioCustomUrl');
+		const radioAudio = document.getElementById('radioAudio');
+
+		// DOM Elements - YouTube
+		const ytUrlInput = document.getElementById('ytUrlInput');
+		const ytPlayBtn = document.getElementById('ytPlayBtn');
+		const ytShuffleBtn = document.getElementById('ytShuffleBtn');
+		const ytNextBtn = document.getElementById('ytNextBtn');
+		const ytIframeWrap = document.getElementById('ytIframeWrap');
+
+		// Radio State Variables
+		let radioIsPlaying = false;
+		let radioMuted = false;
+		let radioSavedVolume = 0.5;
+
+		// YouTube State Variables
+		let ytCurrentParsed = null;
+		let ytIsPlaylist = false;
+		let ytShuffleOn = true;
+		let ytIsPlaying = false;
+
+		/* --- Tab Switch Control --- */
+		function switchMusicTab(mode) {
+			if (mode === 'radio') {
+				tabRadioBtn.classList.add('active');
+				tabYtBtn.classList.remove('active');
+				panelRadio.classList.add('active');
+				panelYt.classList.remove('active');
+			} else {
+				tabRadioBtn.classList.remove('active');
+				tabYtBtn.classList.add('active');
+				panelRadio.classList.remove('active');
+				panelYt.classList.add('active');
+			}
+			Store.set('music_tab', mode);
+		}
+
+		tabRadioBtn.addEventListener('click', () => switchMusicTab('radio'));
+		tabYtBtn.addEventListener('click', () => switchMusicTab('yt'));
+
+		/* ── Radio Engine (HTML5 Audio) ── */
+		function initRadio() {
+			// Load saved values
+			const savedVol = Store.get('radio_volume', 50);
+			radioVolume.value = savedVol;
+			radioAudio.volume = savedVol / 100;
+			radioSavedVolume = savedVol / 100;
+
+			const savedSelect = Store.get('radio_selected', 'https://streams.ilovemusic.de/iloveradio17.mp3');
+			radioSelect.value = savedSelect;
+
+			const savedCustom = Store.get('radio_custom_url', '');
+			radioCustomUrl.value = savedCustom;
+
+			toggleRadioCustomRow(savedSelect === 'custom');
+		}
+
+		function toggleRadioCustomRow(show) {
+			radioCustomRow.classList.toggle('hidden', !show);
+		}
+
+		radioSelect.addEventListener('change', () => {
+			const isCustom = radioSelect.value === 'custom';
+			toggleRadioCustomRow(isCustom);
+			Store.set('radio_selected', radioSelect.value);
+
+			if (radioIsPlaying) {
+				// Re-trigger playback with new stream
+				playRadio();
+			}
+		});
+
+		radioCustomUrl.addEventListener('change', () => {
+			Store.set('radio_custom_url', radioCustomUrl.value.trim());
+			if (radioIsPlaying && radioSelect.value === 'custom') {
+				playRadio();
+			}
+		});
+
+		function getActiveRadioUrl() {
+			if (radioSelect.value === 'custom') {
+				return radioCustomUrl.value.trim();
+			}
+			return radioSelect.value;
+		}
+
+		function playRadio() {
+			const url = getActiveRadioUrl();
+			if (!url) {
+				showToast('Please specify a valid stream URL.', 'break');
+				return;
+			}
+
+			// Stop YouTube playing first to prevent overlaps
+			stopYouTube();
+
+			try {
+				// To force a fresh connection on live streams, append a timestamp
+				const cleanUrl = url.includes('?') ? `${url}&_t=${Date.now()}` : `${url}?_t=${Date.now()}`;
+				radioAudio.src = cleanUrl;
+				radioAudio.load();
+
+				// Play audio element
+				const playPromise = radioAudio.play();
+
+				if (playPromise !== undefined) {
+					playPromise.then(() => {
+						radioIsPlaying = true;
+						radioPlayBtn.textContent = '⏹';
+						radioPlayBtn.classList.add('stop');
+					}).catch(err => {
+						console.error("Audio playback blocked or failed:", err);
+						showToast("Playback failed. Stream might be offline.", "break");
+						stopRadio();
+					});
+				}
+			} catch (e) {
+				console.error(e);
+				stopRadio();
+			}
+		}
+
+		function stopRadio() {
+			radioAudio.pause();
+			radioAudio.src = '';
+			radioIsPlaying = false;
+			radioPlayBtn.textContent = '▶';
+			radioPlayBtn.classList.remove('stop');
+		}
+
+		radioPlayBtn.addEventListener('click', () => {
+			if (radioIsPlaying) {
+				stopRadio();
+			} else {
+				playRadio();
+			}
+		});
+
+		// Radio Volume control
+		radioVolume.addEventListener('input', () => {
+			const val = parseInt(radioVolume.value);
+			radioAudio.volume = val / 100;
+			radioSavedVolume = val / 100;
+			radioVolIcon.textContent = val === 0 ? '🔇' : '🔊';
+			Store.set('radio_volume', val);
+		});
+
+		radioVolIcon.addEventListener('click', () => {
+			if (radioMuted) {
+				radioMuted = false;
+				radioAudio.volume = radioSavedVolume;
+				radioVolIcon.textContent = Math.round(radioSavedVolume * 100) === 0 ? '🔇' : '🔊';
+			} else {
+				radioMuted = true;
+				radioSavedVolume = radioAudio.volume;
+				radioAudio.volume = 0;
+				radioVolIcon.textContent = '🔇';
+			}
+		});
+
+
+		/* ── YouTube Engine (Fallback mode) ── */
+
+		function extractVideoId(url) {
+			if (!url) return null;
+			const patterns = [
+				/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/)([a-zA-Z0-9_-]{11})/,
+				/^([a-zA-Z0-9_-]{11})$/,
+			];
+			for (const p of patterns) {
+				const m = url.match(p);
+				if (m) return m[1];
+			}
+			return null;
+		}
+
+		function extractPlaylistId(url) {
+			if (!url) return null;
+			const m = url.match(/[?&]list=([a-zA-Z0-9_-]+)/);
+			return m ? m[1] : null;
+		}
+
+		function parseYouTubeUrl(url) {
+			if (!url) return null;
+			const listId = extractPlaylistId(url);
+			if (listId) return { type: 'playlist', id: listId };
+			const videoId = extractVideoId(url);
+			if (videoId) return { type: 'video', id: videoId };
+			return null;
+		}
+
+		function updatePlaylistControls(isPlaylist) {
+			ytIsPlaylist = isPlaylist;
+			ytShuffleBtn.classList.toggle('hidden', !isPlaylist);
+			ytNextBtn.classList.toggle('hidden', !isPlaylist);
+			ytShuffleBtn.classList.toggle('active', isPlaylist && ytShuffleOn);
+		}
+
+		function buildEmbedUrl(parsed, startIndex) {
+			if (parsed.type === 'playlist') {
+				let url = `https://www.youtube-nocookie.com/embed/videoseries?list=${parsed.id}&autoplay=1&loop=1&rel=0&modestbranding=1`;
+				if (typeof startIndex === 'number') url += `&index=${startIndex}`;
+				return url;
+			} else {
+				return `https://www.youtube-nocookie.com/embed/${parsed.id}?autoplay=1&loop=1&playlist=${parsed.id}&rel=0&modestbranding=1`;
+			}
+		}
+
+		function embedYouTube(parsed, startIndex) {
+			// Stop Radio playback to prevent overlapping sounds
+			stopRadio();
+
+			ytCurrentParsed = parsed;
+			updatePlaylistControls(parsed.type === 'playlist');
+
+			let idx = startIndex;
+			if (parsed.type === 'playlist' && ytShuffleOn && idx === undefined) {
+				idx = Math.floor(Math.random() * 50);
+			}
+
+			const src = buildEmbedUrl(parsed, idx);
+
+			ytIframeWrap.innerHTML = '';
+			ytIframeWrap.classList.remove('hidden');
+
+			const iframe = document.createElement('iframe');
+			iframe.src = src;
+			iframe.width = '100%';
+			iframe.height = '100%';
+			iframe.frameBorder = '0';
+			iframe.allow = 'autoplay; encrypted-media';
+			iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+			iframe.allowFullscreen = false;
+			iframe.style.borderRadius = 'inherit';
+			ytIframeWrap.appendChild(iframe);
+
+			ytIsPlaying = true;
+			ytPlayBtn.textContent = '⏹';
+			ytPlayBtn.classList.add('stop');
+
+			Store.set('youtube', { url: ytUrlInput.value });
+		}
+
+		function stopYouTube() {
+			ytIframeWrap.innerHTML = '';
+			ytIframeWrap.classList.add('hidden');
+			ytIsPlaying = false;
+			ytPlayBtn.textContent = '▶';
+			ytPlayBtn.classList.remove('stop');
+			updatePlaylistControls(false);
+		}
+
+		function handleYtUrlInput() {
+			const url = ytUrlInput.value.trim();
+			const parsed = parseYouTubeUrl(url);
+			if (parsed) embedYouTube(parsed);
+		}
+
+		ytUrlInput.addEventListener('paste', () => setTimeout(handleYtUrlInput, 100));
+
+		ytPlayBtn.addEventListener('click', () => {
+			if (ytIsPlaying) {
+				stopYouTube();
+			} else {
+				handleYtUrlInput();
+			}
+		});
+
+		ytShuffleBtn.addEventListener('click', () => {
+			ytShuffleOn = !ytShuffleOn;
+			ytShuffleBtn.classList.toggle('active', ytShuffleOn);
+			if (ytIsPlaying && ytCurrentParsed && ytCurrentParsed.type === 'playlist') {
+				embedYouTube(ytCurrentParsed);
+			}
+		});
+
+		ytNextBtn.addEventListener('click', () => {
+			if (ytIsPlaying && ytCurrentParsed && ytCurrentParsed.type === 'playlist') {
+				embedYouTube(ytCurrentParsed, Math.floor(Math.random() * 50));
+			}
+		});
+
+		function restoreYtState() {
+			const state = Store.get('youtube', null);
+			if (state) {
+				ytUrlInput.value = state.url || DEFAULT_PLAYLIST_URL;
+			} else {
+				ytUrlInput.value = DEFAULT_PLAYLIST_URL;
+			}
+		}
+
+		function clearYtState() {
+			stopYouTube();
+			ytUrlInput.value = DEFAULT_PLAYLIST_URL;
+			Store.remove('youtube');
+		}
+
+		/* ── Setup Music States on Load ── */
+		function restoreMusicState() {
+			initRadio();
+			restoreYtState();
+
+			const tab = Store.get('music_tab', 'radio');
+			switchMusicTab(tab);
+		}
+
+		/* ═══════════════════════════════════════════════════════════
+		   Keyboard Shortcuts
+		   ═══════════════════════════════════════════════════════════ */
+		document.addEventListener('keydown', (e) => {
+			// Don't trigger shortcuts when typing in inputs
+			if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+
+			if (e.code === 'Space') {
+				e.preventDefault();
+				if (timerState.isRunning) pauseTimer();
+				else startTimer();
+			} else if (e.code === 'KeyR' && !e.metaKey && !e.ctrlKey) {
+				resetTimer();
+			} else if (e.code === 'KeyS' && !e.metaKey && !e.ctrlKey) {
+				skipPhase();
+			} else if (e.code === 'KeyN') {
+				if (ytIsPlaying && ytCurrentParsed && ytCurrentParsed.type === 'playlist') {
+					embedYouTube(ytCurrentParsed, Math.floor(Math.random() * 50));
+				}
+			}
+		});
+
+		/* ═══════════════════════════════════════════════════════════
+		   Initialize
+		   ═══════════════════════════════════════════════════════════ */
+		initTimer();
+		renderTodos();
+		renderHistory();
+		restoreMusicState();
+	</script>
+</body>
+
+</html>

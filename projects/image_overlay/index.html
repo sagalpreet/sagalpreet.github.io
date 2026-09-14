@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Overlay - Visual Reference Utility</title>
+    <meta name="description" content="A macOS app that lets you overlay reference layouts, grids, mockups, or textures transparently over your screens.">
+    <style>
+        :root {
+            --bg: #070a13;
+            --accent: #8b5cf6;
+            --accent-hover: #7c3aed;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --border: rgba(255, 255, 255, 0.06);
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            background-image: radial-gradient(circle at top, rgba(139, 92, 246, 0.15), transparent 60%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        header {
+            padding: 5rem 0 3rem;
+            text-align: center;
+        }
+
+        .logo-icon {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.3));
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            margin-bottom: 1rem;
+            background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 3rem;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1.25rem;
+            justify-content: center;
+            margin-bottom: 5rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(139, 92, 246, 0.5);
+        }
+
+        .btn-secondary {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 24px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: #f8fafc;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .install-guide {
+            margin-bottom: 5rem;
+        }
+
+        footer {
+            padding: 4rem 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        code {
+            display: block;
+            background: #020617;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            color: #38bdf8;
+            font-size: 0.85rem;
+            border: 1px solid var(--border);
+            margin-bottom: 1rem;
+            text-align: left;
+            overflow-x: auto;
+        }
+
+        /* Custom Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
+            transition: .2s ease;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .2s ease;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .cta-group { flex-direction: column; }
+            .install-guide { padding: 1rem; }
+            .interactive-grain-card { padding: 1.5rem 1rem !important; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Live paper grain overlay div -->
+    <div id="grain-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; background-image: url('assets/paper_grain.png'); background-repeat: repeat; opacity: 0; transition: opacity 0.15s ease;"></div>
+
+    <div class="container">
+        <header>
+            <h1>Image Overlay</h1>
+            <p class="tagline" style="margin-bottom: 2rem;">Overlay grids, reference layouts, UI mockups, or textures seamlessly over your workspace with precision controls.</p>
+        </header>
+
+        <!-- Interactive Grain Simulation Widget -->
+        <div class="interactive-grain-card" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(236, 72, 153, 0.08)); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 24px; padding: 2.5rem; text-align: center; margin-bottom: 2.5rem; backdrop-filter: blur(10px);">
+            <h3 style="font-size: 1.6rem; margin-bottom: 0.75rem; color: #fff;">📄 Live Paper Grain Preview</h3>
+            <p style="color: var(--text-muted); font-size: 1rem; max-width: 650px; margin: 0 auto 1.5rem; line-height: 1.6;">
+                While Image Overlay is a general purpose utility, one of its main purposes is giving your entire macOS screen a warm, tactile, analog <b>paper grain finish</b> by using <code>assets/paper_grain.png</code>. Toggle the preview below to experience the effect on this webpage!
+            </p>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 1.5rem; background: var(--bg); border: 1px solid var(--border); padding: 1rem 1.5rem; border-radius: 16px; flex-wrap: wrap; max-width: 480px; margin: 0 auto;">
+                <label style="display: flex; align-items: center; gap: 0.75rem; font-weight: 600; cursor: pointer; user-select: none;">
+                    <span style="font-size: 0.95rem;">Paper Grain Preview</span>
+                    <span class="switch">
+                        <input type="checkbox" id="grain-toggle">
+                        <span class="toggle-slider"></span>
+                    </span>
+                </label>
+                <div id="slider-container" style="display: flex; align-items: center; gap: 0.75rem; opacity: 0.4; pointer-events: none; transition: opacity 0.2s;">
+                    <span style="font-size: 0.9rem; color: var(--text-muted);">Intensity:</span>
+                    <input type="range" id="grain-intensity" min="1" max="50" value="15" style="accent-color: var(--accent); cursor: pointer; width: 120px;">
+                    <span id="intensity-val" style="font-size: 0.9rem; color: var(--text); font-family: monospace; min-width: 2.5rem; text-align: left;">15%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-group" style="margin-bottom: 5rem;">
+            <a href="ImageOverlay.dmg" class="btn btn-primary" id="download-btn">Download for macOS (.dmg)</a>
+            <a href="../index.html" class="btn btn-secondary">Back to Projects</a>
+        </div>
+
+        <section class="features">
+            <div class="feature-card">
+                <span class="feature-icon">✨</span>
+                <h3>Tactile Paper Grain</h3>
+                <p>One of the primary use cases: load the included <code>assets/paper_grain.png</code> overlay in cover/tile mode with low opacity to give your screen a comfortable, analog paper texture.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🎨</span>
+                <h3>Multiple Display Modes</h3>
+                <p>Support for Letterbox Fit, Cover Fill, 1:1 Pixel Tile, Custom Zoom Tile, and Stretch modes. Customize how your layout overlays the canvas.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">⚙️</span>
+                <h3>Fine-Tuned Controls</h3>
+                <p>Control overlay opacity and zoom directly from the settings panel. Enable or disable overlays with a single menu bar toggle or hotkey.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🖥️</span>
+                <h3>Multi-Screen Native</h3>
+                <p>Automatically scales and creates transparent overlay panels across all connected displays. Customize configuration per active viewport.</p>
+            </div>
+        </section>
+
+        <section class="install-guide">
+            <h2 style="text-align: center; margin-bottom: 2.5rem; font-size: 2rem;">Setup & Installation Instructions</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; text-align: left;">
+                <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; backdrop-filter: blur(10px);">
+                    <h3 style="margin-bottom: 1.25rem; color: #f8fafc; font-size: 1.2rem;">1. Standard Install</h3>
+                    <ul style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.8; padding-left: 1.2rem;">
+                        <li>Open the downloaded <b>ImageOverlay.dmg</b> file.</li>
+                        <li>Drag the <b>Image Overlay.app</b> icon into your <b>Applications</b> shortcut folder.</li>
+                        <li>Launch the app from Applications or Spotlight.</li>
+                    </ul>
+                </div>
+                
+                <div style="background: rgba(239, 68, 68, 0.02); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 20px; padding: 2rem; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: #ef4444;"></div>
+                    <h3 style="margin-bottom: 0.75rem; color: #ef4444; font-size: 1.2rem;">⚠️ "App is damaged" Warning</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+                        As this is a self-compiled utility without Apple Developer signature, macOS Gatekeeper may restrict it on first launch.
+                    </p>
+                    <b style="color: var(--text); font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">Quick Fix via Terminal (Recommended):</b>
+                    <code>xattr -cr /Applications/Image\ Overlay.app</code>
+                    <b style="color: var(--text); font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">Alternative Fix:</b>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">
+                        Control-click (or right-click) the application, select <b>Open</b> from the context menu, then confirm.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div style="display: flex; gap: 4rem; justify-content: center; flex-wrap: wrap; margin: 3rem 0; padding-top: 3rem; border-top: 1px solid var(--border);">
+            <div>
+                <h4 style="color: var(--accent); margin-bottom: 0.25rem;">Compatibility</h4>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">macOS 13.0+</p>
+            </div>
+            <div>
+                <h4 style="color: var(--accent); margin-bottom: 0.25rem;">Architecture</h4>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">Apple Silicon & Intel</p>
+            </div>
+            <div>
+                <h4 style="color: var(--accent); margin-bottom: 0.25rem;">Built With</h4>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">Swift & Cocoa (AppKit)</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Image Overlay Utility. Free & Open Source.</p>
+        </footer>
+    </div>
+
+    <!-- Live Paper Grain script logic -->
+    <script>
+        const grainToggle = document.getElementById('grain-toggle');
+        const grainIntensity = document.getElementById('grain-intensity');
+        const intensityVal = document.getElementById('intensity-val');
+        const grainOverlay = document.getElementById('grain-overlay');
+        const sliderContainer = document.getElementById('slider-container');
+
+        function updateGrain() {
+            if (grainToggle.checked) {
+                const opacity = grainIntensity.value / 100;
+                grainOverlay.style.opacity = opacity;
+                sliderContainer.style.opacity = '1';
+                sliderContainer.style.pointerEvents = 'auto';
+            } else {
+                grainOverlay.style.opacity = '0';
+                sliderContainer.style.opacity = '0.4';
+                sliderContainer.style.pointerEvents = 'none';
+            }
+            intensityVal.textContent = grainIntensity.value + '%';
+        }
+
+        grainToggle.addEventListener('change', updateGrain);
+        grainIntensity.addEventListener('input', updateGrain);
+    </script>
+</body>
+</html>

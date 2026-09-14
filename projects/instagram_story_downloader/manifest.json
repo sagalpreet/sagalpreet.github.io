@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "StorySaver - Instagram Story Downloader",
+  "version": "1.0.0",
+  "description": "Save Instagram stories in full 1080p HD before they vanish in 24 hours. A lightweight, privacy-respecting Chrome extension.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "downloads",
+    "scripting",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://www.instagram.com/*",
+    "https://*.fbcdn.net/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.instagram.com/*"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "utils/parser.js",
+        "utils/downloader.js",
+        "utils/observer.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "inject.js",
+        "icons/*"
+      ],
+      "matches": [
+        "https://www.instagram.com/*"
+      ]
+    }
+  ]
+}
