@@ -94,10 +94,8 @@ def collect() -> list[dict]:
 
 
 def write_index(posts: list[dict]) -> None:
-    payload = {
-        "generated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "posts": posts,
-    }
+    # No build timestamp: re-running with unchanged posts must produce no diff.
+    payload = {"posts": posts}
     out = POSTS_DIR / "index.json"
     out.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"  wrote {out.relative_to(ROOT)} ({len(posts)} posts)")
@@ -129,7 +127,9 @@ def write_feed(posts: list[dict]) -> None:
             "    </item>"
         )
 
-    built = format_datetime(datetime.now(timezone.utc))
+    # Derived from the newest post rather than "now", so an unchanged blog
+    # regenerates byte-for-byte and doesn't show up as a spurious git diff.
+    built = rfc822(posts[0]["date"]) if posts else format_datetime(datetime.now(timezone.utc))
     feed = (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n'
