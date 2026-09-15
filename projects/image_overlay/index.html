@@ -247,11 +247,19 @@
   </footer>
 
   <!-- Live paper grain overlay div -->
-  <div id="grain-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; background-image: url('assets/paper_grain.png'); background-repeat: repeat; opacity: 0; transition: opacity 0.15s ease;"></div>
+  <div id="grain-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; background-repeat: repeat; opacity: 0; transition: opacity 0.15s ease;"></div>
 
   <!-- Live Paper Grain script logic -->
   <script>
     const grainToggle = document.getElementById('grain-toggle');
+    // The texture is 8.2 MB, so it is only fetched the first time someone
+    // actually turns the preview on rather than on every page load.
+    let grainLoaded = false;
+    function ensureGrain(el) {
+      if (grainLoaded) return;
+      grainLoaded = true;
+      el.style.backgroundImage = "url('assets/paper_grain.png')";
+    }
     const grainIntensity = document.getElementById('grain-intensity');
     const intensityVal = document.getElementById('intensity-val');
     const grainOverlay = document.getElementById('grain-overlay');
@@ -259,6 +267,7 @@
 
     function updateGrain() {
         if (grainToggle.checked) {
+            ensureGrain(grainOverlay);
             const opacity = grainIntensity.value / 100;
             grainOverlay.style.opacity = opacity;
             sliderContainer.style.opacity = '1';

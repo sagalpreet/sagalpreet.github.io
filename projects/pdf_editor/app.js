@@ -142,7 +142,7 @@ function showToast(message, type = 'info') {
   const toast = document.createElement('div');
   toast.className = 'toast';
   toast.innerHTML = `
-    <span style="color: ${type === 'error' ? '#ef4444' : type === 'success' ? '#10b981' : '#6366f1'}">•</span>
+    <span style="color: ${type === 'error' ? 'var(--critical)' : type === 'success' ? 'var(--positive)' : 'var(--accent)'}">•</span>
     <span>${message}</span>
   `;
   elements.toastContainer.appendChild(toast);
@@ -815,7 +815,7 @@ function addNewTextBox() {
     pdfHeight: 16,
     fontSize: 14,
     fontFamily: 'Helvetica',
-    textColor: '#6366f1',
+    textColor: '#000000',
     bgColor: '#ffffff',
     isEdited: true,
     isCustom: true,

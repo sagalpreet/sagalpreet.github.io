@@ -227,7 +227,10 @@
       .result-preview img { max-height: 14rem; }
       .stats { gap: var(--sp-4); }
     }
-  </style>
+
+    /* the cropper <img> starts with an empty src — don't show a broken-image icon */
+    #crop-image:not([src]), #crop-image[src=""] { visibility: hidden; }
+</style>
 </head>
 
 <body>
