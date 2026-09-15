@@ -282,7 +282,7 @@ var POSTS = [
   {
     slug: 'structuring-the-world-for-ai',
     title: 'Structuring the World for Applied AI',
-    date: '2026-06-26',
+    date: '2026-09-15',
     description: 'A perspective on why we should adapt our physical and digital environments to suit AI constraints rather than trying to build agents that solve arbitrary, unstructured environments.',
     tags: ['artificial-intelligence', 'robotics', 'philosophy', 'technology'],
     readtime: '3 min read'

@@ -4,21 +4,21 @@
 
 @font-face {
   font-family: 'Roboto';
-  src: url('/assets/fonts/roboto-300.woff') format('woff');
+  src: url('roboto-300.woff') format('woff');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Roboto';
-  src: url('/assets/fonts/roboto-400.woff') format('woff');
+  src: url('roboto-400.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Roboto';
-  src: url('/assets/fonts/roboto-700.woff') format('woff');
+  src: url('roboto-700.woff') format('woff');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -27,8 +27,8 @@
 /* Inter is shipped as a variable font, so 300–600 all come from one file. */
 @font-face {
   font-family: 'Inter';
-  src: url('/assets/fonts/inter-var.woff') format('woff-variations'),
-       url('/assets/fonts/inter-var.woff') format('woff');
+  src: url('inter-var.woff') format('woff-variations'),
+       url('inter-var.woff') format('woff');
   font-weight: 300 700;
   font-style: normal;
   font-display: swap;
@@ -36,14 +36,14 @@
 
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('/assets/fonts/mono-400.woff') format('woff');
+  src: url('mono-400.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('/assets/fonts/mono-500.woff') format('woff');
+  src: url('mono-500.woff') format('woff');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
