@@ -213,15 +213,15 @@ body {
 
   /* Paper-scoped palette. These do NOT follow the theme, by design: they sit
      on a white document page, so they are pinned to the light-theme values of
-     --accent (#00397a), --critical (#a52318) and --positive (#15704a). */
+     --accent (#003d83), --critical (#a52318) and --positive (#15704a). */
   --paper:            #ffffff;
   --paper-ink:        #000000;
-  --paper-mark:       #00397a;
-  --paper-mark-07:    rgba(0, 57, 122, 0.07);
-  --paper-mark-18:    rgba(0, 57, 122, 0.18);
-  --paper-mark-35:    rgba(0, 57, 122, 0.35);
-  --paper-mark-60:    rgba(0, 57, 122, 0.60);
-  --paper-ring:       rgba(0, 57, 122, 0.30);
+  --paper-mark:       #003d83;
+  --paper-mark-07:    rgba(0, 61, 131, 0.07);
+  --paper-mark-18:    rgba(0, 61, 131, 0.18);
+  --paper-mark-35:    rgba(0, 61, 131, 0.35);
+  --paper-mark-60:    rgba(0, 61, 131, 0.60);
+  --paper-ring:       rgba(0, 61, 131, 0.30);
   --paper-danger:     #a52318;
   --paper-danger-45:  rgba(165, 35, 24, 0.45);
   --paper-danger-bg:  #fbeae8;
