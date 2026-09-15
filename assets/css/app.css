@@ -1,0 +1,358 @@
+/* ==========================================================================
+   app.css — patterns shared by /projects: landing pages and tool interfaces.
+   Loaded after site.css. Everything here is built from site.css tokens so a
+   utility page and the personal site read as one thing.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Page shell
+   -------------------------------------------------------------------------- */
+.app-page { padding-block: var(--sp-8) var(--sp-9); }
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+.hero {
+  text-align: center;
+  padding-block: var(--sp-7) var(--sp-8);
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.hero__mark {
+  display: inline-grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: var(--sp-5);
+  border-radius: var(--r-lg);
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-br);
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.hero h1 {
+  font-size: var(--fs-3xl);
+  letter-spacing: -0.035em;
+  margin-bottom: var(--sp-4);
+}
+
+.hero__tagline {
+  font-size: var(--fs-lg);
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 34rem;
+  margin-inline: auto;
+  text-wrap: pretty;
+}
+
+.hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  justify-content: center;
+  margin-top: var(--sp-6);
+}
+
+.hero__shot {
+  margin-top: var(--sp-8);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-2);
+  background: var(--surface);
+  overflow: hidden;
+}
+.hero__shot img { width: 100%; display: block; }
+
+.hero__note { margin-top: var(--sp-4); font-size: var(--fs-sm); color: var(--muted); }
+
+/* --------------------------------------------------------------------------
+   Feature grid
+   -------------------------------------------------------------------------- */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--sp-4);
+  margin-top: var(--sp-8);
+}
+
+.feature {
+  padding: var(--sp-5);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+}
+.feature__icon {
+  display: block;
+  font-size: 1.25rem;
+  line-height: 1;
+  margin-bottom: var(--sp-3);
+}
+.feature h3 {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  margin-bottom: var(--sp-2);
+}
+.feature p { font-size: var(--fs-base); color: var(--text-2); margin: 0; }
+
+/* --------------------------------------------------------------------------
+   Numbered steps
+   -------------------------------------------------------------------------- */
+.steps { display: grid; gap: var(--sp-4); margin-top: var(--sp-5); counter-reset: step; }
+
+.step {
+  display: grid;
+  grid-template-columns: 1.6rem minmax(0, 1fr);
+  gap: var(--sp-4);
+  align-items: start;
+  padding: var(--sp-4) var(--sp-5);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  background: var(--surface);
+}
+.step::before {
+  counter-increment: step;
+  content: counter(step);
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-br);
+  color: var(--accent);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.step h3 { font-size: var(--fs-base); font-weight: 600; margin-bottom: var(--sp-1); }
+.step p, .step ul, .step ol { font-size: var(--fs-base); color: var(--text-2); margin-bottom: 0; }
+.step ul, .step ol { padding-left: 1.1rem; margin-top: var(--sp-2); }
+
+/* --------------------------------------------------------------------------
+   Panels — the workhorse container for tool UIs
+   -------------------------------------------------------------------------- */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.panel__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+.panel__title {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.panel__body { padding: var(--sp-5); }
+.panel__foot {
+  padding: var(--sp-3) var(--sp-4);
+  border-top: 1px solid var(--border);
+  background: var(--surface-2);
+  display: flex;
+  gap: var(--sp-2);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* two-column tool layout: settings rail + working area */
+.workbench {
+  display: grid;
+  grid-template-columns: minmax(0, 19rem) minmax(0, 1fr);
+  gap: var(--sp-5);
+  align-items: start;
+}
+.workbench__rail { position: sticky; top: calc(52px + var(--sp-4)); }
+@media (max-width: 62rem) {
+  .workbench { grid-template-columns: 1fr; }
+  .workbench__rail { position: static; }
+}
+
+/* --------------------------------------------------------------------------
+   Drop zone
+   -------------------------------------------------------------------------- */
+.dropzone {
+  display: grid;
+  place-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-9) var(--sp-5);
+  text-align: center;
+  border: 1.5px dashed var(--border-strong);
+  border-radius: var(--r-lg);
+  background: var(--surface-2);
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color var(--t), background var(--t), color var(--t);
+}
+.dropzone:hover, .dropzone.is-over {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+.dropzone strong { color: var(--text); font-weight: 550; display: block; }
+.dropzone svg { width: 28px; height: 28px; opacity: .6; }
+
+/* --------------------------------------------------------------------------
+   Segmented control
+   -------------------------------------------------------------------------- */
+.seg {
+  display: inline-flex;
+  padding: 2px;
+  gap: 2px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+}
+.seg button {
+  border: 0;
+  background: transparent;
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  padding: 0.3rem 0.7rem;
+  border-radius: calc(var(--r) - 3px);
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.seg button:hover { color: var(--text); }
+.seg button[aria-selected='true'], .seg button.is-active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-1);
+}
+
+/* --------------------------------------------------------------------------
+   Stats / readouts
+   -------------------------------------------------------------------------- */
+.stats { display: flex; flex-wrap: wrap; gap: var(--sp-5); }
+.stat__label {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.stat__value {
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* --------------------------------------------------------------------------
+   Toast / inline status
+   -------------------------------------------------------------------------- */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+.status--ok { color: var(--positive); }
+.status--warn { color: var(--caution); }
+.status--error { color: var(--critical); }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: var(--sp-6);
+  transform: translateX(-50%) translateY(1rem);
+  z-index: 120;
+  padding: var(--sp-3) var(--sp-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-full);
+  box-shadow: var(--shadow-2);
+  font-size: var(--fs-sm);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t), transform var(--t);
+}
+.toast.is-visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* --------------------------------------------------------------------------
+   Project index cards
+   -------------------------------------------------------------------------- */
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: var(--sp-4);
+}
+
+.proj {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-5);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  color: inherit;
+  transition: border-color var(--t), box-shadow var(--t), transform var(--t);
+}
+.proj:hover {
+  color: inherit;
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-2);
+  transform: translateY(-2px);
+}
+.proj__mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r);
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-br);
+  font-size: 1rem;
+  line-height: 1;
+}
+.proj__name { font-size: var(--fs-md); font-weight: 600; letter-spacing: -0.015em; }
+.proj__desc { font-size: var(--fs-base); color: var(--text-2); flex: 1 1 auto; }
+.proj__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+.proj__open { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--accent); font-weight: 500; }
+.proj__open svg { width: 13px; height: 13px; transition: transform var(--t-fast); }
+.proj:hover .proj__open svg { transform: translateX(2px); }
+
+/* --------------------------------------------------------------------------
+   Misc
+   -------------------------------------------------------------------------- */
+.prose-lite { max-width: 42rem; }
+.prose-lite p { color: var(--text-2); }
+.prose-lite h2 { font-size: var(--fs-xl); margin: var(--sp-8) 0 var(--sp-4); }
+.prose-lite h3 { font-size: var(--fs-md); margin: var(--sp-5) 0 var(--sp-2); }
+.prose-lite ul, .prose-lite ol { color: var(--text-2); }
+.prose-lite code {
+  font-size: 0.85em;
+  padding: 0.1em 0.35em;
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+.kbd {
+  font-size: 0.78em;
+  padding: 0.1em 0.4em;
+  border: 1px solid var(--border-strong);
+  border-bottom-width: 2px;
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  font-family: var(--font-sans);
+}
+
+canvas { max-width: 100%; }

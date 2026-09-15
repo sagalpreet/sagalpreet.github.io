@@ -1,304 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreeFlow Voice Notes - AI Dictation for Obsidian</title>
-    <meta name="description" content="Obsidian plugin for AI-powered voice dictation — record speech, transcribe with Groq Whisper, and post-process with an LLM direct to your vault.">
-    <style>
-        :root {
-            --bg: #0b0f19;
-            --accent: #10b981;
-            --accent-hover: #059669;
-            --text: #f8fafc;
-            --text-muted: #94a3b8;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-            background-image: radial-gradient(circle at top, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        header {
-            padding: 5rem 0 3rem;
-            text-align: center;
-        }
-
-        .logo-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            display: inline-block;
-            background: linear-gradient(135deg, var(--accent), #3b82f6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            letter-spacing: -0.04em;
-            margin-bottom: 1rem;
-        }
-
-        .tagline {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 2.5rem;
-        }
-
-        .hero-image {
-            width: 100%;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            margin-bottom: 4rem;
-            transition: transform 0.4s ease;
-        }
-
-        .hero-image:hover {
-            transform: scale(1.02);
-            border-color: rgba(16, 185, 129, 0.4);
-        }
-
-        .cta-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 5rem;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            padding: 1rem 2.5rem;
-            border-radius: 12px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
-            font-size: 1.1rem;
-        }
-
-        .btn-primary {
-            background-color: var(--accent);
-            color: white;
-            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
-        }
-
-        .btn-secondary {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border);
-            color: var(--text);
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-secondary:hover {
-            background-color: rgba(255, 255, 255, 0.08);
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 5rem;
-        }
-
-        .feature-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 2.5rem;
-            border-radius: 24px;
-            transition: all 0.3s;
-            backdrop-filter: blur(20px);
-        }
-
-        .feature-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .feature-card h3 {
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
-        }
-
-        .feature-card p {
-            color: var(--text-muted);
-            line-height: 1.7;
-        }
-
-        .install-guide {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 3rem;
-            margin-bottom: 5rem;
-        }
-
-        .install-guide h2 {
-            margin-bottom: 2rem;
-            font-size: 2rem;
-            text-align: center;
-        }
-
-        .install-steps {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .step-box {
-            background: rgba(0,0,0,0.2);
-            padding: 2rem;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-        }
-
-        .step-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            background: var(--accent);
-            color: white;
-            border-radius: 50%;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        code {
-            display: block;
-            background: #000;
-            padding: 1rem;
-            border-radius: 8px;
-            font-family: monospace;
-            color: #10b981;
-            font-size: 0.9rem;
-            border: 1px solid var(--border);
-            margin-top: 1rem;
-            overflow-x: auto;
-        }
-
-        footer {
-            padding: 4rem 0;
-            border-top: 1px solid var(--border);
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .cta-group { flex-direction: column; }
-            .install-steps { grid-template-columns: 1fr; }
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FreeFlow Voice Notes | Sagalpreet Singh</title>
+  <meta name="description" content="Obsidian plugin for AI-powered voice dictation — record speech, transcribe with Groq Whisper, and post-process with an LLM direct to your vault.">
+  <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1113" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/images/nicons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/nicons/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="/images/nicons/apple-touch-icon.png">
+  <script>
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
+  <link rel="preload" href="/assets/fonts/inter-var.woff" as="font" type="font/woff" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <script src="/assets/js/site.js" defer></script>
+  <style>
+    /* Page-specific: a shell command block, built from the shared tokens. */
+    .cmd {
+      display: block;
+      margin: var(--sp-3) 0 0;
+      padding: var(--sp-3) var(--sp-4);
+      background: var(--bg-sunken);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: var(--fs-xs);
+      line-height: var(--lh-snug);
+      white-space: pre;
+      overflow-x: auto;
+    }
+    /* screenshot.png is a tall portrait (1122x1448) — keep it from swallowing the page. */
+    .hero__shot { max-width: 24rem; margin-inline: auto; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <span class="logo-icon">🎙️</span>
-            <h1>FreeFlow Voice Notes</h1>
-            <p class="tagline">An Obsidian plugin for AI-powered voice dictation. Record your thoughts, transcribe at lightning speed with Groq Whisper, and let an LLM format your notes.</p>
-            
-            <img src="screenshot.png" alt="FreeFlow Obsidian Modal UI" class="hero-image">
-            
-            <div class="cta-group">
-                <a href="https://github.com/sagalpreet/freeflow-obsidian" class="btn btn-primary" target="_blank">View on GitHub</a>
-                <a href="../index.html" class="btn btn-secondary">Back to Projects</a>
-            </div>
-        </header>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-        <section class="features">
-            <div class="feature-card">
-                <span class="feature-icon">⚡</span>
-                <h3>Instant Transcription</h3>
-                <p>Powered by the Groq API and Whisper Large V3. Your speech is converted to text with sub-second latency, right inside your Obsidian vault.</p>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon">🧠</span>
-                <h3>Smart Post-Processing</h3>
-                <p>Never worry about filler words again. Use built-in or custom LLM prompts to synthesize scattered thoughts, extract bullet points, and generate task lists.</p>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon">📂</span>
-                <h3>Seamless Integration</h3>
-                <p>Write directly to a new timestamped note, append to today's daily journal, inject at your active cursor, or use multi-burst recording for long thoughts.</p>
-            </div>
-        </section>
+  <header class="site-bar">
+    <div class="site-bar__inner">
+      <a class="site-bar__home" href="/">Sagalpreet Singh</a>
+      <span class="site-bar__sep">/</span>
+      <a class="site-bar__crumb" href="/projects/" style="color:var(--muted)">Utilities</a>
+      <nav class="site-bar__nav" aria-label="Primary">
+        <a class="site-bar__link" href="/blog.html">Blog</a>
+        <a class="site-bar__link" href="/projects/">All utilities</a>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
 
-        <section class="install-guide">
-            <h2>How to Install</h2>
-            <div class="install-steps">
-                <div class="step-box">
-                    <span class="step-number">1</span>
-                    <h3>Get a Groq API Key</h3>
-                    <p style="color: var(--text-muted); margin-top: 0.5rem;">FreeFlow uses Groq's insanely fast cloud API for Whisper and Llama models. You'll need to create a free account.</p>
-                    <a href="https://console.groq.com/keys" target="_blank" style="color: var(--accent); display: inline-block; margin-top: 1rem;">Get free API key &rarr;</a>
-                </div>
-                
-                <div class="step-box">
-                    <span class="step-number">2</span>
-                    <h3>Install in Obsidian</h3>
-                    <p style="color: var(--text-muted); margin-top: 0.5rem;">Download the latest `main.js`, `manifest.json`, and `styles.css` from the GitHub releases page into your plugins folder.</p>
-                    <code>git clone https://github.com/sagalpreet/freeflow-obsidian.git
-cd freeflow-obsidian
-npm install && npm run build</code>
-                </div>
-            </div>
-        </section>
+  <main id="main" class="wrap app-page">
 
-        <div style="display: flex; gap: 4rem; justify-content: center; flex-wrap: wrap; margin-bottom: 4rem; padding-top: 2rem;">
-            <div>
-                <h4 style="color: var(--accent);">Target</h4>
-                <p>Obsidian App</p>
-            </div>
-            <div>
-                <h4 style="color: var(--accent);">Tech</h4>
-                <p>TypeScript / esbuild</p>
-            </div>
-            <div>
-                <h4 style="color: var(--accent);">AI Service</h4>
-                <p>Groq API</p>
-            </div>
+    <section class="hero">
+      <span class="hero__mark" aria-hidden="true">🎙️</span>
+      <h1>FreeFlow Voice Notes</h1>
+      <p class="hero__tagline">An Obsidian plugin for AI-powered voice dictation. Record your thoughts, transcribe at lightning speed with Groq Whisper, and let an LLM format your notes.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary btn--lg" href="https://github.com/sagalpreet/freeflow-obsidian" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+        <a class="btn btn--lg" href="/projects/">All utilities</a>
+      </div>
+      <p class="hero__note">Open source · Obsidian desktop and mobile · Groq Whisper Large V3</p>
+      <div class="hero__shot">
+        <img src="screenshot.png" alt="The FreeFlow recording modal open inside Obsidian, showing the transcript and post-processing controls." width="1122" height="1448" decoding="async">
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="features-h">
+      <h2 class="section-title" id="features-h">What it does</h2>
+      <div class="features">
+        <div class="feature">
+          <span class="feature__icon" aria-hidden="true">⚡</span>
+          <h3>Instant Transcription</h3>
+          <p>Powered by the Groq API and Whisper Large V3. Your speech is converted to text with sub-second latency, right inside your Obsidian vault.</p>
+        </div>
+        <div class="feature">
+          <span class="feature__icon" aria-hidden="true">🧠</span>
+          <h3>Smart Post-Processing</h3>
+          <p>Never worry about filler words again. Use built-in or custom LLM prompts to synthesize scattered thoughts, extract bullet points, and generate task lists.</p>
+        </div>
+        <div class="feature">
+          <span class="feature__icon" aria-hidden="true">📂</span>
+          <h3>Seamless Integration</h3>
+          <p>Write directly to a new timestamped note, append to today's daily journal, inject at your active cursor, or use multi-burst recording for long thoughts.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="install-h">
+      <h2 class="section-title" id="install-h">How to install</h2>
+      <div class="steps">
+
+        <div class="step">
+          <div>
+            <h3>Get a Groq API Key</h3>
+            <p>FreeFlow uses Groq's insanely fast cloud API for Whisper and Llama models. You'll need to create a free account.</p>
+            <p style="margin-top:var(--sp-3)"><a href="https://console.groq.com/keys" target="_blank" rel="noopener">Get free API key &rarr;</a></p>
+          </div>
         </div>
 
-        <footer>
-            <p>&copy; 2026 FreeFlow Voice Notes. Open source.</p>
-        </footer>
+        <div class="step">
+          <div>
+            <h3>Install in Obsidian</h3>
+            <p>Download the latest <code>main.js</code>, <code>manifest.json</code>, and <code>styles.css</code> from the GitHub releases page into your plugins folder.</p>
+            <code class="cmd">git clone https://github.com/sagalpreet/freeflow-obsidian.git
+cd freeflow-obsidian
+npm install &amp;&amp; npm run build</code>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="prompt-h">
+      <h2 class="section-title" id="prompt-h">The post-processing prompt</h2>
+      <div class="prose-lite">
+        <p>After a recording is transcribed, FreeFlow hands the raw text to an LLM together with a
+        prompt you control. That prompt is where the plugin earns its keep: it decides whether you
+        get a tidied paragraph, a cheat-sheet of bullets, or something more structured.</p>
+        <p>The prompt I actually use turns several bursts of rambling speech into Obsidian revision
+        notes — <code>##</code> headings, bolded key terms, LaTeX for maths, and atomic
+        <code>[!CARD]</code> flashcards pulled out of the facts worth remembering. It is written to
+        stay faithful to what was said and to add nothing that wasn't.</p>
+        <p><a href="my_post_processing_prompt.md">Read the full prompt &rarr;</a> — copy it into the
+        plugin's settings as a starting point and edit it to taste.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="specs-h">
+      <h2 class="section-title" id="specs-h">Details</h2>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat__label">Target</div>
+          <div class="stat__value">Obsidian App</div>
+        </div>
+        <div class="stat">
+          <div class="stat__label">Tech</div>
+          <div class="stat__value">TypeScript / esbuild</div>
+        </div>
+        <div class="stat">
+          <div class="stat__label">AI Service</div>
+          <div class="stat__value">Groq API</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-foot">
+    <div class="site-foot__inner">
+      <span>© 2026 Sagalpreet Singh</span>
+      <span class="row" style="gap:var(--sp-4)">
+        <a href="/">Home</a>
+        <a href="/projects/">Utilities</a>
+        <a href="/blog.html">Blog</a>
+      </span>
     </div>
+  </footer>
 </body>
 </html>

@@ -4,198 +4,256 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nanakshahi Calendar Subscription</title>
-    <style>
-        :root {
-            --bg-color: #fcfcfd;
-            --card-bg: #ffffff;
-            --text-main: #1a1a1a;
-            --text-muted: #5f6368;
-            --border-color: #e0e0e0;
-            --apple-red: #ff3b30;
-        }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nanakshahi Calendar | Sagalpreet Singh</title>
+  <meta name="description" content="Subscribe to the Nanakshahi calendar from Apple Calendar, Google Calendar or any app that reads an .ics feed. Gurpurabs and significant Sikh historical dates, kept in sync.">
+  <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1113" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/images/nicons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/nicons/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="/images/nicons/apple-touch-icon.png">
+  <script>
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
+  <link rel="preload" href="/assets/fonts/inter-var.woff" as="font" type="font/woff" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <script src="/assets/js/site.js" defer></script>
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-        }
+  <style>
+    /* Page-specific: a list of subscribe options and a copyable feed URL.
+       Everything below is built from site.css / app.css tokens. */
+    .opts { list-style: none; margin: 0; padding: 0; }
 
-        .card {
-            background: var(--card-bg);
-            max-width: 440px;
-            width: 90%;
-            padding: 48px 32px;
-            border-radius: 24px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03), 0 4px 12px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            border: 1px solid rgba(0, 0, 0, 0.03);
-        }
+    .opt {
+      display: grid;
+      grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--sp-4);
+      margin: 0;
+      padding: var(--sp-4) var(--sp-5);
+      border-top: 1px solid var(--border);
+    }
+    .opt:first-child { border-top: 0; }
 
-        h1 {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin: 0 0 16px 0;
-        }
+    .opt__icon {
+      display: grid;
+      place-items: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: var(--r);
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-br);
+      color: var(--accent);
+    }
+    .opt__icon svg { width: 17px; height: 17px; }
 
-        p {
-            font-size: 16px;
-            color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 40px;
-        }
+    .opt__name { display: block; font-size: var(--fs-base); font-weight: 600; letter-spacing: -0.01em; }
+    .opt__desc { margin: 0.1rem 0 0; font-size: var(--fs-sm); color: var(--muted); }
 
-        .button-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
+    @media (max-width: 34rem) {
+      .opt { grid-template-columns: 2.25rem minmax(0, 1fr); row-gap: var(--sp-3); padding-inline: var(--sp-4); }
+      .opt .btn { grid-column: 1 / -1; width: 100%; }
+    }
 
-        .btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 52px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 500;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid var(--border-color);
-        }
-
-        /* Google Style */
-        .btn-google {
-            background: #ffffff;
-            color: #3c4043;
-        }
-
-        .btn-google:hover {
-            background: #f8f9fa;
-            border-color: #d2d2d2;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Apple Style */
-        .btn-apple {
-            background: #000000;
-            color: #ffffff;
-            border: none;
-        }
-
-        .btn-apple:hover {
-            background: #1d1d1f;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .icon {
-            width: 22px;
-            height: 22px;
-            margin-right: 12px;
-        }
-
-        .footer {
-            margin-top: 40px;
-            padding-top: 24px;
-            border-top: 1px solid #f0f0f0;
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        .footer a {
-            color: #0066cc;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 480px) {
-            .card {
-                padding: 32px 20px;
-                box-shadow: none;
-                background: transparent;
-                border: none;
-            }
-        }
-    </style>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DS09DWHV44"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-DS09DWHV44');
-    </script>
-
+    .urlbox {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+      margin-top: var(--sp-3);
+      padding: var(--sp-2);
+      padding-left: var(--sp-3);
+      background: var(--bg-sunken);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+    }
+    .urlbox code {
+      display: block;
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow-x: auto;
+      white-space: nowrap;
+      font-size: var(--fs-xs);
+      color: var(--text-2);
+    }
+  </style>
 </head>
 
 <body>
 
-    <div class="card">
-        <h1>Nanakshahi Calendar</h1>
-        <p>Subscribe for free to automatically sync Gurpurabs and significant Sikh historical dates with your calendar.</p>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-        <div class="button-stack">
-            <!-- Apple Calendar -->
-            <a href="webcal://gist.githubusercontent.com/sagalpreet/217c93d8b3c4361e594230f739650447/raw/Nanakshahi.ics"
-                class="btn btn-apple">
-                <svg class="icon" viewBox="0 0 512 512">
-                    <rect x="32" y="112" width="448" height="368" rx="64" fill="#ffffff" />
-                    <path d="M32 176h448V112c0-35.3-28.7-64-64-64H96c-35.3 0-64 28.7-64 64v64z" fill="#ff3b30" />
-                    <text x="50%" y="145" fill="white" font-size="60" font-weight="700" text-anchor="middle"
-                        font-family="sans-serif">JAN</text>
-                    <text x="50%" y="400" fill="#333" font-size="240" font-weight="600" text-anchor="middle"
-                        font-family="sans-serif">12</text>
-                </svg>
-                Subscribe on Apple Devices
-            </a>
-
-            <!-- Google Calendar -->
-            <a href="https://calendar.google.com/calendar/r?cid=webcal://gist.githubusercontent.com/sagalpreet/217c93d8b3c4361e594230f739650447/raw/Nanakshahi.ics"
-                class="btn btn-google" target="_blank">
-                <svg class="icon" viewBox="0 0 24 24">
-                    <path
-                        d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"
-                        fill="#4285F4" />
-                    <path d="M12.5 15.5h5V20h-5z" fill="#34A853" />
-                    <path d="M18 10h3v5h-3z" fill="#FBBC05" />
-                    <path d="M3 5h3v3H3z" fill="#EA4335" />
-                </svg>
-                Subscribe in Google Calendar*
-            </a>
-
-            <!-- Manual Download -->
-            <a href="https://gistcdn.githack.com/sagalpreet/217c93d8b3c4361e594230f739650447/raw/Nanakshahi.ics" class="btn btn-apple" download>
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 5v14" />
-                    <path d="M19 12l-7 7-7-7" />
-                    <path d="M5 19h14" />
-                </svg>
-                Manual (if above don't work)
-            </a>
-        </div>
-
-        <p><strong>*Note:</strong> Google Calendar only works via browser. After clicking the "Add" button, you may need to <a href="https://calendar.google.com/calendar/syncselect" target="_blank">enable sync for your mobile device here</a> for the events to appear in your Google Calendar app.</p>
-
-        <div class="footer">
-            Data Source: <a href="https://nanakshahi.net/calendar/" target="_blank">nanakshahi.net/calendar</a> |
-            Creator: <a href="https://sagalpreet.github.io" target="_blank">Sagalpreet Singh</a>
-        </div>
+  <header class="site-bar">
+    <div class="site-bar__inner">
+      <a class="site-bar__home" href="/">Sagalpreet Singh</a>
+      <span class="site-bar__sep">/</span>
+      <a class="site-bar__crumb" href="/projects/" style="color:var(--muted)">Utilities</a>
+      <nav class="site-bar__nav" aria-label="Primary">
+        <a class="site-bar__link" href="/blog.html">Blog</a>
+        <a class="site-bar__link" href="/projects/">All utilities</a>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+      </nav>
     </div>
+  </header>
+
+  <main id="main" class="wrap wrap--narrow app-page">
+
+    <section class="hero">
+      <span class="hero__mark" aria-hidden="true">📅</span>
+      <h1>Nanakshahi Calendar</h1>
+      <p class="hero__tagline">Subscribe once and Gurpurabs and other significant Sikh historical dates appear in the
+        calendar you already use. Free, read-only, and it keeps itself up to date.</p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Subscribe</h2>
+
+      <div class="panel">
+        <ul class="opts">
+
+          <li class="opt">
+            <span class="opt__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2.5"/><path d="M10.5 18.5h3"/></svg>
+            </span>
+            <div>
+              <span class="opt__name">Apple Calendar</span>
+              <p class="opt__desc">iPhone, iPad and Mac. Opens Calendar and asks you to confirm the subscription.</p>
+            </div>
+            <a class="btn btn--primary"
+              href="webcal://gist.githubusercontent.com/sagalpreet/217c93d8b3c4361e594230f739650447/raw/Nanakshahi.ics">Subscribe</a>
+          </li>
+
+          <li class="opt">
+            <span class="opt__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z"/></svg>
+            </span>
+            <div>
+              <span class="opt__name">Google Calendar</span>
+              <p class="opt__desc">Opens calendar.google.com in a browser. See the note below for phones.</p>
+            </div>
+            <a class="btn"
+              href="https://calendar.google.com/calendar/r?cid=webcal://gist.githubusercontent.com/sagalpreet/217c93d8b3c4361e594230f739650447/raw/Nanakshahi.ics"
+              target="_blank" rel="noopener">Subscribe</a>
+          </li>
+
+          <li class="opt">
+            <span class="opt__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M18 11l-6 6-6-6"/><path d="M5 20h14"/></svg>
+            </span>
+            <div>
+              <span class="opt__name">Download the .ics file</span>
+              <p class="opt__desc">A one-off import for when the links above don't work. It won't update itself.</p>
+            </div>
+            <a class="btn"
+              href="https://gistcdn.githack.com/sagalpreet/217c93d8b3c4361e594230f739650447/raw/Nanakshahi.ics"
+              download>Download</a>
+          </li>
+
+        </ul>
+      </div>
+
+      <div class="callout" style="margin-top:var(--sp-4)">
+        <strong>Google Calendar only accepts subscriptions in a browser.</strong> After you press <em>Add</em>, you may
+        also need to <a href="https://calendar.google.com/calendar/syncselect" target="_blank" rel="noopener">turn on
+          sync for your phone</a> before the events show up in the mobile app.
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Any other app</h2>
+
+      <div class="panel">
+        <div class="panel__body">
+          <p class="small" style="color:var(--text-2)">Outlook, Thunderbird, Fastmail and most others accept a calendar
+            feed by URL. Paste this one in.</p>
+          <div class="urlbox">
+            <code id="feed-url">https://gist.githubusercontent.com/sagalpreet/217c93d8b3c4361e594230f739650447/raw/Nanakshahi.ics</code>
+            <button class="btn btn--sm" type="button" id="copy-url">Copy</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="meta-row" style="margin-top:var(--sp-7)">
+      <span>Data source: <a href="https://nanakshahi.net/calendar/" target="_blank" rel="noopener">nanakshahi.net/calendar</a></span>
+    </p>
+
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <footer class="site-foot">
+    <div class="site-foot__inner">
+      <span>© 2026 Sagalpreet Singh</span>
+      <span class="row" style="gap:var(--sp-4)">
+        <a href="/">Home</a>
+        <a href="/projects/">Utilities</a>
+        <a href="/blog.html">Blog</a>
+      </span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var btn = document.getElementById('copy-url');
+      var src = document.getElementById('feed-url');
+      var toast = document.getElementById('toast');
+      if (!btn || !src) return;
+      var timer;
+
+      function flash(msg) {
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.classList.add('is-visible');
+        clearTimeout(timer);
+        timer = setTimeout(function () { toast.classList.remove('is-visible'); }, 1800);
+      }
+
+      function legacyCopy(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.top = '-1000px';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+        document.body.removeChild(ta);
+        flash(ok ? 'Calendar URL copied' : 'Press Ctrl/Cmd + C to copy');
+      }
+
+      btn.addEventListener('click', function () {
+        var text = src.textContent.trim();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(
+            function () { flash('Calendar URL copied'); },
+            function () { legacyCopy(text); }
+          );
+        } else {
+          legacyCopy(text);
+        }
+      });
+    })();
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DS09DWHV44"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+
+      gtag('config', 'G-DS09DWHV44');
+  </script>
 
 </body>
 

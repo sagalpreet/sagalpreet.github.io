@@ -1,291 +1,212 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width,initial-scale=1" />
-	<title>Projects</title>
-	<meta name="description" content="Index of projects" />
-	<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📁</text></svg>">
-	<style>
-		:root {
-			--bg: #0f1724;
-			--card: #0b1220;
-			--muted: #9aa4b2;
-			--accent: #7c3aed;
-			--glass: rgba(255, 255, 255, 0.03);
-			color-scheme: dark;
-			font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-		}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		html,
-		body {
-			height: 100%;
-			margin: 0;
-			background: linear-gradient(180deg, #071026 0%, #07182a 100%);
-			color: #e6eef8
-		}
+  <title>Utilities | Sagalpreet Singh</title>
+  <meta name="description" content="Small tools and apps I built for myself and put online in case they're useful to someone else. Everything runs in your browser.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1113" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://sagalpreet.github.io/projects/">
 
-		.wrap {
-			max-width: 1100px;
-			margin: 32px auto;
-			padding: 24px
-		}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Utilities | Sagalpreet Singh">
+  <meta property="og:description" content="Small tools and apps I built for myself and put online in case they're useful to someone else.">
+  <meta property="og:image" content="https://sagalpreet.github.io/images/sagalpreet.png">
 
-		header {
-			Display: flex;
-			gap: 16px;
-			align-items: center;
-			justify-content: space-between
-		}
+  <link rel="icon" href="/images/nicons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/nicons/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="/images/nicons/apple-touch-icon.png">
 
-		h1 {
-			margin: 0;
-			font-size: 1.6rem;
-			letter-spacing: -0.02em
-		}
+  <script>
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
 
-		p.lead {
-			margin: 4px 0 0;
-			color: var(--muted);
-			font-size: 0.95rem;
-			hyphens: auto;
-			-webkit-hyphens: auto;
-			-ms-hyphens: auto
-		}
+  <link rel="preload" href="/assets/fonts/inter-var.woff" as="font" type="font/woff" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <script src="/assets/js/site.js" defer></script>
 
-		.controls {
-			display: flex;
-			gap: 12px;
-			align-items: center
-		}
+  <style>
+    .intro { max-width: 40rem; margin-bottom: var(--sp-7); }
+    .intro h1 { font-size: var(--fs-3xl); letter-spacing: -0.035em; margin-bottom: var(--sp-3); }
+    .intro p { font-size: var(--fs-md); color: var(--text-2); line-height: var(--lh-loose); }
 
-		input.search {
-			background: var(--glass);
-			border: 1px solid rgba(255, 255, 255, 0.04);
-			padding: 10px 12px;
-			border-radius: 10px;
-			color: inherit;
-			min-width: 220px
-		}
+    .tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-3);
+      align-items: center;
+      margin-bottom: var(--sp-7);
+    }
+    .search-wrap { position: relative; flex: 1 1 16rem; max-width: 22rem; }
+    .search-wrap svg {
+      position: absolute;
+      left: 0.6rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 15px;
+      height: 15px;
+      color: var(--muted);
+      pointer-events: none;
+    }
+    .search-wrap .input { padding-left: 2rem; }
 
-		.grid {
-			display: grid;
-			grid-template-columns: 1fr;
-			gap: 16px;
-			margin-top: 20px
-		}
-
-		.card {
-			background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-			border: 1px solid rgba(255, 255, 255, 0.04);
-			padding: 16px;
-			border-radius: 12px;
-			display: flex;
-			gap: 12px;
-			align-items: center;
-			transition: transform .18s, box-shadow .18s;
-			text-decoration: none;
-			color: inherit;
-			cursor: pointer
-		}
-
-		.card:hover {
-			transform: translateY(-6px);
-			box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6)
-		}
-
-		/* prevent anchors inside the card from showing as links */
-		.card,
-		.card * {
-			text-decoration: none;
-			color: inherit
-		}
-
-		.logo {
-			width: 56px;
-			height: 56px;
-			border-radius: 10px;
-			flex: 0 0 56px;
-			display: grid;
-			place-items: center;
-			font-weight: 700;
-			font-size: 1.2rem;
-			color: white;
-			background: linear-gradient(135deg, var(--accent), #5b21b6)
-		}
-
-		.meta {
-			flex: 1
-		}
-
-		.meta h3 {
-			margin: 0;
-			font-size: 1rem;
-			hyphens: auto;
-			-webkit-hyphens: auto;
-			-moz-hyphens: auto;
-			-ms-hyphens: auto;
-			overflow-wrap: break-word;
-			word-break: break-word
-		}
-
-		.meta p {
-			margin: 6px 0 0;
-			color: var(--muted);
-			font-size: 0.9rem;
-			hyphens: auto;
-			-webkit-hyphens: auto;
-			-moz-hyphens: auto;
-			-ms-hyphens: auto;
-			overflow-wrap: anywhere;
-			word-break: break-word
-		}
-
-		.actions {
-			display: flex;
-			gap: 8px;
-			align-items: center
-		}
-
-		.btn {
-			display: inline-block;
-			padding: 8px 12px;
-			border-radius: 8px;
-			background: var(--accent);
-			color: white;
-			text-decoration: none;
-			font-weight: 600;
-			font-size: 0.9rem
-		}
-
-		a.ghost {
-			background: transparent;
-			border: 1px solid rgba(255, 255, 255, 0.04);
-			color: var(--muted);
-			padding: 6px 10px;
-			border-radius: 8px;
-			text-decoration: none;
-			font-size: 0.85rem;
-			white-space: nowrap;
-			flex: 0 0 auto
-		}
-
-		.empty {
-			padding: 48px;
-			border-radius: 12px;
-			text-align: center;
-			color: var(--muted);
-			background: rgba(255, 255, 255, 0.02)
-		}
-
-		@media (max-width:520px) {
-			header {
-				flex-direction: column;
-				align-items: flex-start
-			}
-
-			.controls {
-				width: 100%;
-				justify-content: space-between
-			}
-
-			input.search {
-				flex: 1
-			}
-		}
-	</style>
-
-	<!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-NW9K5W67KG"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag() { dataLayer.push(arguments); }
-		gtag('js', new Date());
-
-		gtag('config', 'G-NW9K5W67KG');
-	</script>
-
+    .group-title {
+      font-size: var(--fs-sm);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin: var(--sp-8) 0 var(--sp-4);
+    }
+    .group-title:first-of-type { margin-top: 0; }
+  </style>
 </head>
 
 <body>
-	<div class="wrap">
-		<header>
-			<div>
-				<h1>My Projects</h1>
-				<p class="lead">Quick links to project landing pages. Tap a card to open the project's main page.</p>
-			</div>
-			<div class="controls">
-				<br>
-				<input class="search" id="search" placeholder="Search projects..." aria-label="Search projects" />
-				<a class="ghost" href="#" onclick="showAll();return false;">Show all</a>
-			</div>
-		</header>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-		<main>
-			<div id="list" class="grid">
-				<!-- Project cards inserted by script -->
-			</div>
-			<div id="noresults" class="empty" style="display:none;margin-top:16px">No projects found.</div>
-		</main>
-	</div>
+  <header class="site-bar">
+    <div class="site-bar__inner">
+      <a class="site-bar__home" href="/">Sagalpreet Singh</a>
+      <span class="site-bar__sep">/</span>
+      <span class="site-bar__crumb">Utilities</span>
+      <nav class="site-bar__nav" aria-label="Primary">
+        <a class="site-bar__link" href="/blog.html">Blog</a>
+        <a class="site-bar__link" href="/projects/" aria-current="page">Utilities</a>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
 
-	<script>
-		// Project data discovered from workspace
-		const projects = [
-			{ path: 'pomodoro', title: 'Pomodoro Focus Timer', desc: 'A beautiful focus timer with todo tracking, YouTube ambient music, and session history.' },
-			{ path: 'image_overlay', title: 'Image Overlay', desc: 'A macOS app that lets you overlay reference layouts, grids, mockups, or textures transparently over your screens.' },
-			{ path: 'night_vision', title: 'Night Vision', desc: 'A macOS app that reduces eye strain by smoothing flashes and adaptively dimming your screen.' },
-			{ path: 'nanakshahi_calendar', title: 'Nanakshahi Calendar', desc: 'A calendar project implementing the Nanakshahi system.' },
-			{ path: 'passport_photos', title: 'Passport Photos', desc: 'Crop, tile and print passport-sized photos on any page size.' },
-			{ path: 'image_tools', title: 'Image Tools', desc: 'Crop images to exact dimensions and compress to target file size.' },
-			{ path: 'freeflow_obsidian', title: 'FreeFlow Voice Notes', desc: 'Obsidian plugin for AI-powered voice dictation — record speech, transcribe with Groq Whisper, and save to your vault.' },
-			{ path: 'instagram_story_downloader', title: 'StorySaver', desc: 'Download Instagram stories in full 1080p HD before they vanish. Free Chrome extension.' },
-			{ path: 'pdf_editor', title: 'PDF Text Editor', desc: '100% client-side PDF editor that converts existing text into editable fields, format text, redact, and export.' }
-		];
+  <main id="main" class="wrap app-page">
+    <div class="intro">
+      <h1>Utilities</h1>
+      <p>
+        Small things I built because I needed them — a timer that suits how I work, a way to print
+        passport photos without a trip to the shop, a PDF editor that doesn't upload my documents
+        anywhere. They're here in case they're useful to you too. The web tools run entirely in your
+        browser; nothing you open is sent to a server.
+      </p>
+    </div>
 
-		const list = document.getElementById('list');
-		const noresults = document.getElementById('noresults');
+    <div class="tools">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input class="input" type="search" id="search" placeholder="Search utilities…" aria-label="Search utilities" autocomplete="off">
+      </div>
+      <span class="muted small" id="count"></span>
+    </div>
 
-		function slugToTitle(s) {
-			return s.replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-		}
+    <div id="results"></div>
+    <p class="empty-state" id="noresults" hidden>Nothing matches that.</p>
+  </main>
 
-		function render(items) {
-			list.innerHTML = '';
-			if (!items.length) { noresults.style.display = 'block'; return; }
-			noresults.style.display = 'none';
-			items.forEach(p => {
-				const title = p.title || slugToTitle(p.path);
-				const url = p.path.replace(/\/$/, '') + '/index.html';
-				const card = document.createElement('a');
-				card.className = 'card';
-				card.href = url;
-				card.target = '_self';
-				card.innerHTML = `<div class="logo">${title.charAt(0)}</div>
-					<div class="meta">
-						<h3>${title}</h3>
-						<p>${p.desc || ''}</p>
-					</div>
-					<div class="actions">
-						<span class="btn">Open</span>
-					</div>`;
-				list.appendChild(card);
-			});
-		}
+  <footer class="site-foot">
+    <div class="site-foot__inner">
+      <span>© 2026 Sagalpreet Singh</span>
+      <span class="row" style="gap:var(--sp-4)">
+        <a href="/">Home</a>
+        <a href="/blog.html">Blog</a>
+        <a href="https://github.com/sagalpreet/sagalpreet.github.io" target="_blank" rel="noopener">Source</a>
+      </span>
+    </div>
+  </footer>
 
-		render(projects);
+  <script>
+    (function () {
+      var PROJECTS = [
+        { path: 'pomodoro', mark: '🍅', name: 'Pomodoro Focus Timer', kind: 'Web tool',
+          desc: 'A focus timer with a task list, ambient music, session history and everything kept in your browser.' },
+        { path: 'pdf_editor', mark: '📄', name: 'PDF Text Editor', kind: 'Web tool',
+          desc: 'Parses an existing PDF into editable text fields — edit, restyle, redact and export, all client-side.' },
+        { path: 'passport_photos', mark: '🪪', name: 'Passport Photos', kind: 'Web tool',
+          desc: 'Crop a photo to any country’s passport spec, then tile it onto A4 or A3 for printing.' },
+        { path: 'image_tools', mark: '🖼️', name: 'Image Tools', kind: 'Web tool',
+          desc: 'Crop to exact pixel or inch dimensions at a chosen DPI, or compress down to a target file size.' },
+        { path: 'nanakshahi_calendar', mark: '🗓️', name: 'Nanakshahi Calendar', kind: 'Web tool',
+          desc: 'Subscribe to Gurpurabs and Sikh historical dates from Google Calendar or Apple Calendar.' },
+        { path: 'night_vision', mark: '🌙', name: 'Night Vision', kind: 'macOS app',
+          desc: 'Reduces eye strain by smoothing flashes and adaptively dimming bright regions of your screen.' },
+        { path: 'image_overlay', mark: '🪟', name: 'Image Overlay', kind: 'macOS app',
+          desc: 'Overlays any image across every display with adjustable transparency — grids, mockups, references.' },
+        { path: 'freeflow_obsidian', mark: '🎙️', name: 'FreeFlow Voice Notes', kind: 'Obsidian plugin',
+          desc: 'AI voice dictation for Obsidian: record, transcribe with Whisper, tidy up with an LLM, save to your vault.' },
+        { path: 'instagram_story_downloader', mark: '⬇️', name: 'StorySaver', kind: 'Chrome extension',
+          desc: 'Saves Instagram stories in full 1080p before they disappear, with a four-tier media fallback.' }
+      ];
 
-		// Search
-		const search = document.getElementById('search');
-		search.addEventListener('input', () => {
-			const q = search.value.trim().toLowerCase();
-			const filtered = projects.filter(p => (p.title || p.path).toLowerCase().includes(q) || (p.desc || '').toLowerCase().includes(q));
-			render(filtered);
-		});
+      var ORDER = ['Web tool', 'macOS app', 'Obsidian plugin', 'Chrome extension'];
+      var PLURAL = {
+        'Web tool': 'In the browser',
+        'macOS app': 'macOS apps',
+        'Obsidian plugin': 'Obsidian plugins',
+        'Chrome extension': 'Browser extensions'
+      };
 
-		function showAll() { search.value = ''; render(projects); }
-	</script>
+      var ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+
+      var results = document.getElementById('results');
+      var noresults = document.getElementById('noresults');
+      var count = document.getElementById('count');
+      var search = document.getElementById('search');
+
+      function card(p) {
+        return '<a class="proj" href="' + p.path + '/">' +
+          '<span class="proj__mark" aria-hidden="true">' + p.mark + '</span>' +
+          '<span class="proj__name">' + p.name + '</span>' +
+          '<span class="proj__desc">' + p.desc + '</span>' +
+          '<span class="proj__foot"><span>' + p.kind + '</span>' +
+          '<span class="proj__open">Open' + ARROW + '</span></span>' +
+          '</a>';
+      }
+
+      function render(items) {
+        noresults.hidden = items.length > 0;
+        count.textContent = items.length === PROJECTS.length
+          ? PROJECTS.length + ' utilities'
+          : items.length + ' of ' + PROJECTS.length;
+
+        var html = '';
+        ORDER.forEach(function (kind) {
+          var group = items.filter(function (p) { return p.kind === kind; });
+          if (!group.length) return;
+          html += '<h2 class="group-title">' + PLURAL[kind] + '</h2>' +
+            '<div class="proj-grid">' + group.map(card).join('') + '</div>';
+        });
+        results.innerHTML = html;
+      }
+
+      render(PROJECTS);
+
+      search.addEventListener('input', function () {
+        var q = search.value.trim().toLowerCase();
+        if (!q) return render(PROJECTS);
+        render(PROJECTS.filter(function (p) {
+          return (p.name + ' ' + p.desc + ' ' + p.kind + ' ' + p.path).toLowerCase().indexOf(q) !== -1;
+        }));
+      });
+    })();
+  </script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NW9K5W67KG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-NW9K5W67KG');
+  </script>
 </body>
 
 </html>
