@@ -1,0 +1,50 @@
+/* Self-hosted replacements for the Google Fonts request the blog used to make.
+   Same families, same weights, subset to Latin + Latin Extended-A.
+   Roboto 300/400/700 · Inter 300–600 · JetBrains Mono 400/500 */
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/assets/fonts/roboto-300.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url('/assets/fonts/roboto-400.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url('/assets/fonts/roboto-700.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Inter is shipped as a variable font, so 300–600 all come from one file. */
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets/fonts/inter-var.woff') format('woff-variations'),
+       url('/assets/fonts/inter-var.woff') format('woff');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/assets/fonts/mono-400.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/assets/fonts/mono-500.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}

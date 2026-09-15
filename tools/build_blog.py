@@ -7,10 +7,8 @@ Run this after adding or editing a post:
     python3 tools/build_blog.py
 
 It reads the front matter of every posts/<slug>/index.md, sorts newest first,
-and writes:
-
-    posts/index.json   the list the blog index and pager read
-    feed.xml           an RSS 2.0 feed
+and writes feed.xml, an RSS 2.0 feed. The list the blog index renders from lives
+in the POSTS array in blog.js — keep the two in step when you add a post.
 
 Standard library only — no dependencies, no build toolchain.
 """
@@ -156,7 +154,6 @@ def main() -> int:
         return 1
     print("Building blog data…")
     posts = collect()
-    write_index(posts)
     write_feed(posts)
     print("Done.")
     return 0

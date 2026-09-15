@@ -2,106 +2,6 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title id="page-title">Blog | Sagalpreet Singh</title>
-  <meta name="description" id="page-description" content="Research notes, essays and write-ups by Sagalpreet Singh.">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0f1113" media="(prefers-color-scheme: dark)">
-
-  <meta name="google-site-verification" content="N2iS0YhlmknKU71fCZ22sqLumulgrJUVXjkkNR7ek6A">
-
-  <meta property="og:type" content="article">
-  <meta property="og:site_name" content="Sagalpreet Singh">
-  <meta property="og:title" id="og-title" content="Blog | Sagalpreet Singh">
-  <meta property="og:description" id="og-description" content="Research notes, essays and write-ups by Sagalpreet Singh.">
-  <meta property="og:image" content="https://sagalpreet.github.io/images/sagalpreet.png">
-  <meta name="twitter:card" content="summary">
-
-  <link rel="icon" href="/images/nicons/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/nicons/favicon-32x32.png">
-  <link rel="apple-touch-icon" href="/images/nicons/apple-touch-icon.png">
-  <link rel="alternate" type="application/rss+xml" title="Sagalpreet Singh — Blog" href="/feed.xml">
-
-  <script>
-    try {
-      var t = localStorage.getItem('theme');
-      if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
-    } catch (e) {}
-  </script>
-
-  <link rel="preload" href="/assets/fonts/inter-var.woff" as="font" type="font/woff" crossorigin>
-  <link rel="preload" href="/assets/fonts/serif-regular.woff" as="font" type="font/woff" crossorigin>
-  <link rel="stylesheet" href="/assets/css/site.css">
-  <link rel="stylesheet" href="/assets/css/prose.css">
-  <link rel="stylesheet" href="/assets/css/hljs.css">
-</head>
-
-<body class="is-reading">
-  <a class="skip-link" href="#main">Skip to content</a>
-
-  <header class="reader-bar" id="reader-bar">
-    <div class="reader-bar__inner">
-      <a class="reader-bar__back" id="back-link" href="/blog.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-        <span id="back-label">Home</span>
-      </a>
-      <span class="reader-bar__crumb" id="crumb">Blog</span>
-      <div class="reader-bar__tools">
-        <a class="btn btn--ghost btn--sm" href="/feed.xml" title="RSS feed" aria-label="RSS feed">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1.5" fill="currentColor" stroke="none"/></svg>
-        </a>
-        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme">
-          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-        </button>
-      </div>
-      <div class="progress" id="progress"></div>
-    </div>
-  </header>
-
-  <main id="main" class="reader">
-    <div class="loading" id="loading">
-      <span class="spinner" aria-hidden="true"></span>
-      <span>Loading…</span>
-    </div>
-
-    <div id="error" hidden>
-      <div class="empty-state">
-        <p style="font-size:2.5rem;font-weight:600;color:var(--border-strong);line-height:1;margin-bottom:var(--sp-3)" id="error-code">404</p>
-        <p id="error-message">That post doesn't exist.</p>
-        <p><a href="/blog.html">Back to all writing</a></p>
-      </div>
-    </div>
-
-    <article id="content" hidden>
-      <header class="post-head" id="post-head"></header>
-      <div class="prose" id="post-body"></div>
-      <footer class="post-foot" id="post-foot" hidden></footer>
-    </article>
-
-    <nav class="toc" id="toc" hidden aria-label="Table of contents">
-      <div class="toc__label">On this page</div>
-      <ol id="toc-list"></ol>
-    </nav>
-  </main>
-
-  <footer class="site-foot">
-    <div class="site-foot__inner">
-      <span>© 2026 Sagalpreet Singh</span>
-      <span class="row" style="gap:var(--sp-4)">
-        <a href="/">Home</a>
-        <a href="/projects/">Utilities</a>
-        <a href="/feed.xml">RSS</a>
-      </span>
-    </div>
-  </footer>
-
-  <script src="/assets/js/site.js" defer></script>
-  <script src="/assets/js/blog.js" defer></script>
-
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-71WGBZ8XFJ"></script>
   <script>
@@ -110,6 +10,448 @@
     gtag('js', new Date());
     gtag('config', 'G-71WGBZ8XFJ');
   </script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Primary Meta Tags -->
+  <link rel="alternate" type="application/rss+xml" title="Sagalpreet Singh — Blog" href="/feed.xml">
+  <title id="page-title">Blog | Sagalpreet Singh</title>
+  <meta name="description" id="page-description" content="Research notes, tutorials, and writings by Sagalpreet Singh.">
+  <meta name="robots" content="index, follow">
+
+  <!-- Google Verification -->
+  <meta name="google-site-verification" content="N2iS0YhlmknKU71fCZ22sqLumulgrJUVXjkkNR7ek6A" />
+
+  <!-- Open Graph -->
+  <meta property="og:image" content="https://sagalpreet.github.io/images/sagalpreet.png">
+
+  <!-- ── Fonts ─────────────────────────────────────────────────────────── -->
+  <!-- Roboto to match the main site; Inter for prose; JetBrains Mono for code -->
+  <link rel="stylesheet" href="/assets/fonts/fonts.css">
+
+  <!-- Font Awesome (matches main site) -->
+  <link rel="stylesheet" href="/assets/vendor/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="/assets/vendor/fontawesome/css/v4-shims.min.css">
+
+  <!-- Academicons (matches main site) -->
+  <link rel="stylesheet" href="./css/academicons.min.css">
+
+  <!-- Bootstrap CSS (matches main site) -->
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.min.css">
+
+  <!-- ── KaTeX (Math Rendering) ─────────────────────────────────────────── -->
+  <link rel="stylesheet" href="/assets/vendor/katex/katex.min.css">
+
+  <!-- ── Highlight.js (Syntax Highlighting) ────────────────────────────── -->
+  <!-- Theme: GitHub to stay clean and academic -->
+  <link rel="stylesheet" href="/assets/vendor/highlight/github.min.css">
+
+  <style>
+    /* ── Design Tokens ───────────────────────────────────────────────── */
+    :root {
+      --color-text:       #444;
+      --color-text-dark:  #333;
+      --color-link:       #003d83;
+      --color-link-hover: #1f62cc;
+      --color-accent:     #007bff;
+      --color-bg:         #fbfbfb;
+      --color-bg-card:    #ffffff;
+      --color-border:     #e5e7eb;
+      --color-code-bg:    #f6f8fa;
+      --color-muted:      #888;
+      --font-body:        'Roboto', sans-serif;
+      --font-prose:       'Inter', sans-serif;
+      --font-mono:        'JetBrains Mono', 'Consolas', monospace;
+      --radius:           6px;
+      --shadow-card:      0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    /* ── Base ────────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; scrollbar-gutter: stable; }
+
+    body {
+      font-family: var(--font-body);
+      font-weight: 300;
+      color: var(--color-text);
+      background-color: var(--color-bg);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* ── Top Navigation Bar ──────────────────────────────────────────── */
+    .blog-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(251, 251, 251, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--color-border);
+      padding: 0.75rem 0;
+    }
+
+    .blog-nav .nav-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .blog-nav .nav-home {
+      color: var(--color-link);
+      font-weight: 400;
+      font-size: 0.95rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+    .blog-nav .nav-home:hover { color: var(--color-link-hover); text-decoration: none; }
+
+    .blog-nav .nav-sep {
+      color: var(--color-border);
+      font-size: 1.1rem;
+      user-select: none;
+    }
+
+    .blog-nav .nav-breadcrumb {
+      color: var(--color-muted);
+      font-size: 0.88rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ── Page Layout ─────────────────────────────────────────────────── */
+    .blog-wrapper {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem;
+    }
+
+    /* ── Loading Spinner ─────────────────────────────────────────────── */
+    #loading-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem 0;
+      gap: 1.2rem;
+      color: var(--color-muted);
+      font-size: 0.9rem;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--color-border);
+      border-top-color: var(--color-accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Error / Not Found State ─────────────────────────────────────── */
+    #error-container {
+      display: none;
+      text-align: center;
+      padding: 5rem 1rem;
+    }
+    #error-container .error-code {
+      font-size: 4rem;
+      font-weight: 700;
+      color: var(--color-border);
+      line-height: 1;
+    }
+    #error-container .error-msg {
+      font-size: 1.2rem;
+      color: var(--color-muted);
+      margin: 0.5rem 0 1.5rem;
+    }
+    #error-container a {
+      color: var(--color-link);
+      font-weight: 400;
+    }
+
+    /* ── Article Container ───────────────────────────────────────────── */
+    #content {
+      display: none; /* shown once render is complete */
+      animation: fadeIn 0.35s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; } }
+
+    /* ── Post Header ─────────────────────────────────────────────────── */
+    .post-header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .post-header h1 {
+      font-family: var(--font-prose);
+      font-size: 2.1rem;
+      font-weight: 600;
+      color: var(--color-text-dark);
+      line-height: 1.3;
+      margin: 0 0 0.75rem;
+    }
+
+    .post-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem 1.2rem;
+      font-size: 0.82rem;
+      color: var(--color-muted);
+    }
+    .post-meta .meta-item { display: flex; align-items: center; gap: 0.3rem; }
+
+    /* ── Prose Typography ────────────────────────────────────────────── */
+    .prose {
+      font-family: var(--font-prose);
+      font-size: 1rem;
+      line-height: 1.85;
+      color: #3a3a3a;
+      text-align: justify;
+    }
+
+    .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+      font-family: var(--font-prose);
+      font-weight: 600;
+      color: var(--color-text-dark);
+      margin-top: 2em;
+      margin-bottom: 0.6em;
+      line-height: 1.3;
+    }
+
+    .prose h1 { font-size: 1.8rem; }
+    .prose h2 {
+      font-size: 1.4rem;
+      padding-bottom: 0.3em;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .prose h3 { font-size: 1.15rem; }
+    .prose h4 { font-size: 1rem; }
+
+    /* First heading right after header — less top margin */
+    .prose > h1:first-child,
+    .prose > h2:first-child,
+    .prose > h3:first-child { margin-top: 0; }
+
+    .prose p { margin: 0 0 1.25em; }
+
+    .prose a {
+      color: var(--color-link);
+      font-weight: 400;
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      transition: color 0.2s, text-decoration-color 0.2s;
+    }
+    .prose a:hover {
+      color: var(--color-link-hover);
+      text-decoration-color: var(--color-link-hover);
+      text-decoration: underline;
+    }
+
+    /* Lists */
+    .prose ul, .prose ol {
+      margin: 0 0 1.25em;
+      padding-left: 1.6em;
+    }
+    .prose li { margin-bottom: 0.35em; }
+    .prose li > ul, .prose li > ol { margin-top: 0.35em; margin-bottom: 0; }
+
+    /* Blockquotes */
+    .prose blockquote {
+      border-left: 3px solid var(--color-accent);
+      margin: 1.5em 0;
+      padding: 0.75em 1.25em;
+      background: rgba(0, 123, 255, 0.04);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      color: #555;
+      font-style: italic;
+    }
+    .prose blockquote p { margin: 0; }
+    .prose blockquote > p + p { margin-top: 0.75em; }
+
+    /* Horizontal rule */
+    .prose hr {
+      border: none;
+      border-top: 1px solid var(--color-border);
+      margin: 2.5em 0;
+    }
+
+    /* Images */
+    .prose img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--color-border);
+      display: block;
+      margin: 1.5em auto;
+    }
+
+    /* Image captions (alt text as figcaption via CSS) */
+    .prose figure {
+      margin: 1.5em 0;
+      text-align: center;
+    }
+    .prose figcaption {
+      font-size: 0.82rem;
+      color: var(--color-muted);
+      margin-top: 0.5em;
+    }
+
+    /* Tables */
+    .prose table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      margin: 1.5em 0;
+      overflow-x: auto;
+      display: block;
+    }
+    .prose th {
+      background: var(--color-code-bg);
+      font-weight: 600;
+      border: 1px solid var(--color-border);
+      padding: 0.55em 0.85em;
+      text-align: left;
+    }
+    .prose td {
+      border: 1px solid var(--color-border);
+      padding: 0.5em 0.85em;
+    }
+    .prose tr:nth-child(even) td { background: rgba(0,0,0,0.02); }
+
+    /* Inline Code */
+    .prose code:not([class]) {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: var(--color-code-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 3px;
+      padding: 0.15em 0.4em;
+      color: #c0392b;
+    }
+
+    /* Code Blocks */
+    .prose pre {
+      background: var(--color-code-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 1.1em 1.3em;
+      overflow-x: auto;
+      margin: 1.5em 0;
+      position: relative;
+    }
+    .prose pre code {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      background: none;
+      border: none;
+      padding: 0;
+      color: inherit;
+      border-radius: 0;
+    }
+
+    /* Language badge on code blocks */
+    .code-block-wrapper {
+      position: relative;
+      margin: 1.5em 0;
+    }
+    .code-block-wrapper pre { margin: 0; }
+    .lang-badge {
+      position: absolute;
+      top: 0.55rem;
+      right: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--color-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      pointer-events: none;
+    }
+
+    /* KaTeX Display Math */
+    .prose .katex-display {
+      overflow-x: auto;
+      padding: 0.25em 0;
+      margin: 1.5em 0;
+    }
+
+    /* ── Responsive ──────────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .post-header h1 { font-size: 1.6rem; }
+      .prose { font-size: 0.95rem; }
+      .blog-wrapper { padding: 1.5rem 1rem 4rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Navigation Bar ────────────────────────────────────────────────── -->
+  <nav class="blog-nav" aria-label="Blog navigation">
+    <div class="nav-inner">
+      <a class="nav-home" href="index.html">
+        <i class="fas fa-arrow-left" style="font-size:0.8em;"></i>
+        Sagalpreet Singh
+      </a>
+      <span class="nav-sep">›</span>
+      <span class="nav-breadcrumb" id="nav-breadcrumb">Blog</span>
+    </div>
+  </nav>
+
+  <!-- ── Main Content ───────────────────────────────────────────────────── -->
+  <div class="blog-wrapper">
+
+    <!-- Loading indicator (shown while fetching & rendering) -->
+    <div id="loading-indicator">
+      <div class="spinner" aria-hidden="true"></div>
+      <span>Loading post…</span>
+    </div>
+
+    <!-- Error / Not Found state -->
+    <div id="error-container" role="alert" aria-live="polite">
+      <div class="error-code">404</div>
+      <p class="error-msg" id="error-message">Post not found.</p>
+      <a href="blog.html">← Back to Blog</a>
+    </div>
+
+    <!-- Post output — hidden until fully rendered -->
+    <article id="content" aria-live="polite">
+      <!-- Post metadata header injected by blog.js -->
+      <header class="post-header" id="post-header"></header>
+      <!-- Rendered Markdown injected here -->
+      <div class="prose" id="post-body"></div>
+    </article>
+
+  </div>
+
+  <!-- ── CDN Scripts ────────────────────────────────────────────────────── -->
+
+  <!-- marked.js — Markdown parser -->
+  <script src="/assets/vendor/marked.min.js"></script>
+
+  <!-- KaTeX — Math rendering (core + auto-render extension) -->
+  <script src="/assets/vendor/katex/katex.min.js"></script>
+  <script src="/assets/vendor/katex/auto-render.min.js"></script>
+
+  <!-- Highlight.js — Syntax highlighting -->
+  <script src="/assets/vendor/highlight/highlight.min.js"></script>
+
+  <!-- Blog engine -->
+  <script src="blog.js" defer></script>
+
 </body>
 
 </html>
