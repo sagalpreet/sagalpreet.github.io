@@ -2,7 +2,7 @@
 title: Hello World
 date: 2026-06-26
 description: An introduction to who I am, my journey into reinforcement learning, my perspective on the field, and the things that keep me busy outside of research.
-tags: personal, reinforcement-learning, music, life
+tags: personal, rl, music, life
 readtime: 5 min read
 ---
 
@@ -12,9 +12,13 @@ To kick things off, I thought it would be fitting to write a short introduction 
 
 ---
 
-## How I Got Into Reinforcement Learning
+## Background
 
 I am originally from **Kapurthala**, a small, quiet, town-like city in Punjab, India. Kapurthala is very close to my heart. To me, it is the best city because it offers a peaceful, almost village-like quietness while still providing all modern facilities, thanks to its proximity to the larger city of Jalandhar. You truly get to experience the best of both worlds there.
+
+---
+
+## How I Got Into Reinforcement Learning
 
 Growing up, I didn't start with a clear plan to work on AI. In fact, my first exposure to **Reinforcement Learning (RL)** happened in my first year of college during a session in the robotics club, before I had even taken a basic probability or statistics course! There was something incredibly intuitive and elegant about the paradigm of teaching machines directly from experience rather than manually programming rules or labeling data. 
 

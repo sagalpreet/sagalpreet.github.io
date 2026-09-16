@@ -213,6 +213,8 @@
       color: var(--color-muted);
     }
     .post-meta .meta-item { display: flex; align-items: center; gap: 0.3rem; }
+    /* Tag groups hold many pills, so unlike .meta-item they must wrap. */
+    .post-meta .meta-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; min-width: 0; }
 
     /* ── Prose Typography ────────────────────────────────────────────── */
     .prose {

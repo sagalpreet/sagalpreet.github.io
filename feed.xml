@@ -14,10 +14,9 @@
       <guid isPermaLink="true">https://sagalpreet.github.io/blog.html?post=structuring-the-world-for-ai</guid>
       <pubDate>Tue, 15 Sep 2026 00:00:00 +0000</pubDate>
       <description>A perspective on why we should adapt our physical and digital environments to suit AI constraints rather than trying to build agents that solve arbitrary, unstructured environments.</description>
-      <category>artificial-intelligence</category>
+      <category>ai</category>
       <category>robotics</category>
       <category>philosophy</category>
-      <category>technology</category>
     </item>
     <item>
       <title>Hello World</title>
@@ -26,7 +25,7 @@
       <pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate>
       <description>An introduction to who I am, my journey into reinforcement learning, my perspective on the field, and the things that keep me busy outside of research.</description>
       <category>personal</category>
-      <category>reinforcement-learning</category>
+      <category>rl</category>
       <category>music</category>
       <category>life</category>
     </item>

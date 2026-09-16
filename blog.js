@@ -275,7 +275,7 @@ var POSTS = [
     title: 'Structuring the World for Applied AI',
     date: '2026-09-15',
     description: 'A perspective on why we should adapt our physical and digital environments to suit AI constraints rather than trying to build agents that solve arbitrary, unstructured environments.',
-    tags: ['artificial-intelligence', 'robotics', 'philosophy', 'technology'],
+    tags: ['ai', 'robotics', 'philosophy'],
     readtime: '3 min read'
   },
   {
@@ -283,7 +283,7 @@ var POSTS = [
     title: 'Hello World',
     date: '2026-06-26',
     description: 'An introduction to who I am, my journey into reinforcement learning, my perspective on the field, and the things that keep me busy outside of research.',
-    tags: ['personal', 'reinforcement-learning', 'music', 'life'],
+    tags: ['personal', 'rl', 'music', 'life'],
     readtime: '5 min read'
   }
 ];
@@ -322,7 +322,7 @@ var RECOMMENDED_READS = [
     author: 'Ben Kuhn',
     date: '2022-11-30',
     description: 'A critique of using low-information heuristics (like market efficiency or deference to experts) in high-stakes personal decisions, arguing that underconfidence can prevent you from chasing high-upside outlier opportunities.',
-    tags: ['decision-making', 'heuristics', 'philosophy', 'career'],
+    tags: ['decisions', 'heuristics', 'philosophy', 'career'],
     readtime: '8 min read'
   },
   {
@@ -442,7 +442,7 @@ function renderIndexPage() {
         var bgStyle = isFilterActive ? 'rgba(0,123,255,0.15)' : 'rgba(0,123,255,.06)';
         return '<span style="display:inline-block;font-size:.72rem;background:' + bgStyle + ';' +
           'color:#003d83;border:' + borderStyle + ';border-radius:3px;' +
-          'padding:1px 6px;font-family:\'JetBrains Mono\',monospace;margin-right:0.4rem;">' + t + '</span>';
+          'padding:1px 6px;font-family:\'JetBrains Mono\',monospace;">' + t + '</span>';
       }).join('');
 
       var postDate = formatDate(post.date);
@@ -454,7 +454,7 @@ function renderIndexPage() {
         '<div class="post-meta" style="margin-bottom: 1rem; font-size:0.82rem; color:var(--color-muted); display:flex; flex-wrap:wrap; gap:0.5rem 1rem; align-items:center;">' +
           '<span class="meta-item"><i class="far fa-calendar-alt"></i> ' + postDate + '</span>' +
           '<span class="meta-item"><i class="far fa-clock"></i> ' + post.readtime + '</span>' +
-          '<span class="meta-item">' + tagsHtml + '</span>' +
+          '<span class="meta-tags">' + tagsHtml + '</span>' +
         '</div>' +
         '<p style="color:#555;font-family:var(--font-prose);font-size:0.95rem;line-height:1.6;margin-bottom:1rem;">' + post.description + '</p>' +
         '<a href="blog.html?post=' + post.slug + '" style="font-weight:500;text-decoration:none;color:var(--color-link);transition:color 0.2s;font-size:0.95rem;">Read post →</a>' +
@@ -478,7 +478,7 @@ function renderIndexPage() {
           var bgStyle = isFilterActive ? 'rgba(0,123,255,0.15)' : 'rgba(0,123,255,.06)';
           return '<span style="display:inline-block;font-size:.72rem;background:' + bgStyle + ';' +
             'color:#003d83;border:' + borderStyle + ';border-radius:3px;' +
-            'padding:1px 6px;font-family:\'JetBrains Mono\',monospace;margin-right:0.4rem;">' + t + '</span>';
+            'padding:1px 6px;font-family:\'JetBrains Mono\',monospace;">' + t + '</span>';
         }).join('');
 
         var readDate = formatDate(read.date);
@@ -492,7 +492,7 @@ function renderIndexPage() {
             '<span class="meta-item"><i class="fas fa-user-edit"></i> ' + read.author + '</span>' +
             '<span class="meta-item"><i class="far fa-calendar-alt"></i> ' + readDate + '</span>' +
             (read.readtime ? '<span class="meta-item"><i class="far fa-clock"></i> ' + read.readtime + '</span>' : '') +
-            '<span class="meta-item">' + tagsHtml + '</span>' +
+            '<span class="meta-tags">' + tagsHtml + '</span>' +
           '</div>' +
           '<p style="color:#555;font-family:var(--font-prose);font-size:0.95rem;line-height:1.6;margin-bottom:1rem;">' + read.description + '</p>' +
           '<a href="' + read.url + '" target="_blank" rel="noopener noreferrer" style="font-weight:500;text-decoration:none;color:var(--color-link);transition:color 0.2s;font-size:0.95rem;">Read on ' + domain + ' ↗</a>' +
