@@ -60,6 +60,7 @@
       --color-border:     #e5e7eb;
       --color-code-bg:    #f6f8fa;
       --color-muted:      #888;
+      --color-menu-ink:   #002147;
       --font-body:        'Roboto', sans-serif;
       --font-prose:       'Inter', sans-serif;
       --font-mono:        'JetBrains Mono', 'Consolas', monospace;
@@ -107,7 +108,7 @@
       font-weight: 400;
       font-size: 0.95rem;
       text-decoration: none;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 0.4rem;
       transition: color 0.2s;
@@ -126,13 +127,39 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      min-width: 0;
+    }
+
+    .blog-nav .nav-links {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .blog-nav .nav-link {
+      color: var(--color-menu-ink);
+      font-size: 0.88rem;
+      font-weight: 300;
+      white-space: nowrap;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .blog-nav .nav-link:hover { color: var(--color-link-hover); text-decoration: none; }
+    .blog-nav .nav-link[aria-current='page'] { color: var(--color-muted); }
+
+    /* Below 34rem the crumb gives way to the section links, as on Utilities. */
+    @media (max-width: 34rem) {
+      .blog-nav .nav-inner { gap: 0.75rem; }
+      .blog-nav .nav-links { gap: 0.75rem; }
+      .blog-nav .nav-sep,
+      .blog-nav .nav-breadcrumb { display: none; }
     }
 
     /* ── Page Layout ─────────────────────────────────────────────────── */
     .blog-wrapper {
       max-width: 820px;
       margin: 0 auto;
-      padding: 2.5rem 1.5rem 5rem;
+      padding: 2.5rem 1.5rem 4rem;
     }
 
     /* ── Loading Spinner ─────────────────────────────────────────────── */
@@ -235,11 +262,7 @@
     }
 
     .prose h1 { font-size: 1.8rem; }
-    .prose h2 {
-      font-size: 1.4rem;
-      padding-bottom: 0.3em;
-      border-bottom: 1px solid var(--color-border);
-    }
+    .prose h2 { font-size: 1.4rem; }
     .prose h3 { font-size: 1.15rem; }
     .prose h4 { font-size: 1rem; }
 
@@ -390,11 +413,59 @@
       margin: 1.5em 0;
     }
 
+    /* ── Index Entries ───────────────────────────────────────────────── */
+    .post-item {
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+    /* The last entry needs no trailing rule or margin: the footer's own
+       border closes the page, as the card grid does on Utilities. */
+    .post-list:last-child .post-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    /* ── Bottom Navigation Bar ───────────────────────────────────────── */
+    .blog-foot {
+      margin-top: 4rem;
+      border-top: 1px solid var(--color-border);
+      padding: 1.5rem 0 2.5rem;
+      font-size: 0.82rem;
+      color: var(--color-muted);
+    }
+    .blog-foot .foot-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .blog-foot .foot-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+    }
+    .blog-foot a {
+      color: var(--color-menu-ink);
+      font-weight: 300;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .blog-foot a:hover { color: var(--color-link-hover); text-decoration: none; }
+
     /* ── Responsive ──────────────────────────────────────────────────── */
     @media (max-width: 640px) {
       .post-header h1 { font-size: 1.6rem; }
       .prose { font-size: 0.95rem; }
-      .blog-wrapper { padding: 1.5rem 1rem 4rem; }
+      .blog-wrapper { padding: 1.5rem 1rem 3rem; }
+      .blog-nav .nav-inner { padding: 0 1rem; }
+      .blog-foot .foot-inner { padding: 0 1rem; }
     }
   </style>
 </head>
@@ -402,16 +473,17 @@
 <body>
 
   <!-- ── Navigation Bar ────────────────────────────────────────────────── -->
-  <nav class="blog-nav" aria-label="Blog navigation">
+  <header class="blog-nav">
     <div class="nav-inner">
-      <a class="nav-home" href="index.html">
-        <i class="fas fa-arrow-left" style="font-size:0.8em;"></i>
-        Sagalpreet Singh
-      </a>
-      <span class="nav-sep">›</span>
+      <a class="nav-home" href="index.html">Sagalpreet Singh</a>
+      <span class="nav-sep">/</span>
       <span class="nav-breadcrumb" id="nav-breadcrumb">Blog</span>
+      <nav class="nav-links" aria-label="Primary">
+        <a class="nav-link" href="blog.html" aria-current="page">Blog</a>
+        <a class="nav-link" href="projects/">Utilities</a>
+      </nav>
     </div>
-  </nav>
+  </header>
 
   <!-- ── Main Content ───────────────────────────────────────────────────── -->
   <div class="blog-wrapper">
@@ -438,6 +510,18 @@
     </article>
 
   </div>
+
+  <!-- ── Bottom Navigation Bar ──────────────────────────────────────────── -->
+  <footer class="blog-foot">
+    <div class="foot-inner">
+      <span>&copy; 2026 Sagalpreet Singh</span>
+      <span class="foot-links">
+        <a href="index.html">Home</a>
+        <a href="projects/">Utilities</a>
+        <a href="https://github.com/sagalpreet/sagalpreet.github.io" target="_blank" rel="noopener">Source</a>
+      </span>
+    </div>
+  </footer>
 
   <!-- ── CDN Scripts ────────────────────────────────────────────────────── -->
 

@@ -447,7 +447,7 @@ function renderIndexPage() {
 
       var postDate = formatDate(post.date);
 
-      html += '<article class="post-item" style="margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-border);">' +
+      html += '<article class="post-item">' +
         '<h3 style="font-family:var(--font-prose);font-size:1.35rem;font-weight:600;margin-bottom:0.6rem;">' +
           '<a href="blog.html?post=' + post.slug + '" style="color:var(--color-text-dark);text-decoration:none;transition:color 0.2s;">' + post.title + '</a>' +
         '</h3>' +
@@ -484,7 +484,7 @@ function renderIndexPage() {
         var readDate = formatDate(read.date);
         var domain = getDomain(read.url);
 
-        html += '<article class="post-item" style="margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-border);">' +
+        html += '<article class="post-item">' +
           '<h3 style="font-family:var(--font-prose);font-size:1.35rem;font-weight:600;margin-bottom:0.6rem;">' +
             '<a href="' + read.url + '" target="_blank" rel="noopener noreferrer" style="color:var(--color-text-dark);text-decoration:none;transition:color 0.2s;">' + read.title + '</a>' +
           '</h3>' +
