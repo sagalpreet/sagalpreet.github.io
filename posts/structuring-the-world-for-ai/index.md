@@ -14,7 +14,7 @@ Instead of building increasingly complex AI to solve our chaotic world, we shoul
 
 ---
 
-## The Physical Constraint: From India's Streets to Planned Skies
+## Drone Delivery in Planned vs. Unplanned Airspace
 
 Consider the challenge of autonomous drone delivery. 
 
@@ -28,7 +28,7 @@ Contrast this with how drone delivery has actually become a reality in parts of 
 
 ---
 
-## The Digital Parallel: How "AI Slop" Structures Data
+## How AI-Generated Content Standardizes Data
 
 A similar, counter-intuitive transformation is quietly happening in the digital realm.
 
@@ -42,7 +42,7 @@ Because the vast majority of new textual data and code will be AI-generated, the
 
 ---
 
-## The Path Forward: Co-Designing the Environment
+## Designing Environments for Agents
 
 If we want applied AI to succeed, we must stop viewing the environment as a hostile, unchangeable terrain. 
 

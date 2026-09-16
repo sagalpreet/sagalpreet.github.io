@@ -12,7 +12,7 @@ To kick things off, I thought it would be fitting to write a short introduction 
 
 ---
 
-## Where It All Started: From Kapurthala to the Lab
+## How I Got Into Reinforcement Learning
 
 I am originally from **Kapurthala**, a small, quiet, town-like city in Punjab, India. Kapurthala is very close to my heart. To me, it is the best city because it offers a peaceful, almost village-like quietness while still providing all modern facilities, thanks to its proximity to the larger city of Jalandhar. You truly get to experience the best of both worlds there.
 
@@ -26,7 +26,7 @@ Eventually, I made my way to **Google DeepMind** as a Pre-Doctoral Researcher in
 
 ---
 
-## Why Reinforcement Learning Matters
+## Why RL and Not Supervised Learning
 
 To me, Reinforcement Learning is not just another subfield of machine learning. **I believe RL is the most important framework we currently have, and perhaps the only one capable of truly going beyond human bias.** 
 
@@ -36,7 +36,7 @@ If we can build realistic, high-fidelity simulators and environments for physica
 
 ---
 
-## Vibe-Coding and Automation
+## The Small Tools I Build
 
 When I'm not doing research, I love building small, helpful software tools. I call these my **vibe-coded utilities**. Most of them are born out of a personal need to automate a chore, solve a minor annoyance, or just make life a bit easier. 
 
@@ -44,7 +44,7 @@ I keep a collection of these over on my projects page at [sagalpreet.github.io/p
 
 ---
 
-## The Creative Side: Songwriting & AI Music
+## Songwriting and AI Music
 
 Music is another major part of my life. I grew up learning *Kirtan* (Sikh devotional music) and won singing competitions in school. Today, my creative outlet is songwriting. 
 
@@ -58,7 +58,7 @@ If you're curious, you can find a few of my songs at:
 
 ---
 
-## Life Outside the Lab
+## Outside Work
 
 Outside of research, music, and writing software, I'm actually a pretty quiet, self-proclaimed "boring" person! On weekends, you'll usually find me doing basic household chores, catching up with a few friends, having hour-long phone conversations with my family back home, watching a movie, falling down random YouTube rabbit holes to learn about something I'll probably never need, or just doom-scrolling. 
 

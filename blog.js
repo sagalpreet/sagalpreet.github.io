@@ -179,19 +179,10 @@ function renderPostHeader(meta, slug) {
 
   var date = meta.date ? formatDate(meta.date) : null;
   var rt   = meta.readtime || null;
-  var tags = meta.tags ? meta.tags.split(',').map(function(t) { return t.trim(); }).filter(Boolean) : [];
 
   var metaHtml = '';
   if (date) metaHtml += '<span class="meta-item"><i class="far fa-calendar-alt"></i> ' + date + '</span>';
   if (rt)   metaHtml += '<span class="meta-item"><i class="far fa-clock"></i> ' + rt + '</span>';
-  if (tags.length) {
-    var spans = tags.map(function(t) {
-      return '<span style="display:inline-block;font-size:.75rem;background:rgba(0,123,255,.08);' +
-        'color:#003d83;border:1px solid rgba(0,123,255,.25);border-radius:3px;' +
-        'padding:1px 7px;font-family:\'JetBrains Mono\',monospace">' + t + '</span>';
-    }).join(' ');
-    metaHtml += '<span class="meta-item">' + spans + '</span>';
-  }
 
   $id('post-header').innerHTML = '<h1>' + title + '</h1>' +
     (metaHtml ? '<div class="post-meta">' + metaHtml + '</div>' : '');
