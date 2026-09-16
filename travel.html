@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-71WGBZ8XFJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-71WGBZ8XFJ');
+  </script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Primary Meta Tags -->
+  <title>Travel | Sagalpreet Singh</title>
+  <meta name="description" content="Places I have been, pinned on a map, with a memoir for each trip.">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Travel | Sagalpreet Singh">
+  <meta property="og:description" content="Places I have been, pinned on a map, with a memoir for each trip.">
+
+  <!-- Roboto to match the main site; Inter for prose; JetBrains Mono for code -->
+  <link rel="stylesheet" href="assets/fonts/fonts.css">
+
+  <!-- Font Awesome (matches main site) -->
+  <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
+
+  <style>
+    :root {
+      --color-text:       #444;
+      --color-text-dark:  #333;
+      --color-link:       #003d83;
+      --color-link-hover: #1f62cc;
+      --color-accent:     #007bff;
+      --color-bg:         #fbfbfb;
+      --color-bg-card:    #ffffff;
+      --color-border:     #e5e7eb;
+      --color-muted:      #888;
+      --color-menu-ink:   #002147;
+      --font-body:        'Roboto', sans-serif;
+      --font-prose:       'Inter', sans-serif;
+      --font-mono:        'JetBrains Mono', 'Consolas', monospace;
+      --radius:           6px;
+      --shadow-card:      0 1px 4px rgba(0,0,0,0.06);
+
+      /* Map palette */
+      --map-sea:          #f7f9fb;
+      --map-land:         #dbe3ec;
+      --map-edge:         #bcc7d5;
+      --map-pin:          #003d83;
+      --map-pin-active:   #d1495b;
+      --map-pin-rec:      #b3701a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--color-link); text-decoration: none; }
+    a:hover { color: var(--color-link-hover); }
+
+    /* ── Top Navigation Bar ──────────────────────────────────────────── */
+    .page-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(251, 251, 251, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--color-border);
+      padding: 0.75rem 0;
+    }
+
+    .page-nav .nav-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .page-nav .nav-home {
+      color: var(--color-link);
+      font-weight: 400;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+
+    .page-nav .nav-sep {
+      color: var(--color-border);
+      font-size: 1.1rem;
+      user-select: none;
+    }
+
+    .page-nav .nav-breadcrumb {
+      color: var(--color-muted);
+      font-size: 0.88rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+    }
+
+    .page-nav .bar-links {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .page-nav .bar-link {
+      color: var(--color-menu-ink);
+      font-size: 0.88rem;
+      font-weight: 300;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .page-nav .bar-link:hover { color: var(--color-link-hover); }
+    .page-nav .bar-link[aria-current='page'] { color: var(--color-muted); }
+
+    /* Bootstrap ships its own .nav-link and .map, which is why these are .bar-*
+       and .worldmap. Below 34rem the crumb gives way to the section links. */
+    @media (max-width: 34rem) {
+      .page-nav .nav-inner { gap: 0.75rem; }
+      .page-nav .bar-links { gap: 0.75rem; }
+      .page-nav .nav-sep,
+      .page-nav .nav-breadcrumb { display: none; }
+    }
+
+    /* ── Page Layout ─────────────────────────────────────────────────── */
+    .page-wrapper {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    .page-head h1 {
+      font-family: var(--font-prose);
+      font-size: 2.1rem;
+      font-weight: 600;
+      color: var(--color-text-dark);
+      line-height: 1.3;
+      margin: 0 0 0.5rem;
+    }
+    .page-head p {
+      font-family: var(--font-prose);
+      font-size: 0.98rem;
+      color: #555;
+      margin: 0 0 2rem;
+      max-width: 44rem;
+    }
+
+    /* ── Map ─────────────────────────────────────────────────────────── */
+    .worldmap {
+      position: relative;
+      background: var(--map-sea);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+    .worldmap svg.world { display: block; width: 100%; height: auto; touch-action: inherit; }
+    .worldmap.is-zoomed svg.world { cursor: grab; }
+    .worldmap.is-zoomed svg.world:active { cursor: grabbing; }
+
+    .world__land path {
+      fill: var(--map-land);
+      stroke: var(--map-edge);
+      stroke-width: 0.6;
+      stroke-linejoin: round;
+      vector-effect: non-scaling-stroke;   /* borders stay hairlines when zoomed */
+    }
+
+    /* Route line joining the places of one trip, in the order listed */
+    .route {
+      fill: none;
+      stroke: var(--map-pin);
+      stroke-width: 1.4;
+      stroke-dasharray: 5 4;
+      stroke-linecap: round;
+      opacity: 0.3;
+      pointer-events: none;
+      transition: opacity 0.2s, stroke 0.2s;
+    }
+    .route.is-active { stroke: var(--map-pin-active); opacity: 0.85; }
+    .route.is-dimmed { opacity: 0.08; }
+
+    /* Pins are drawn at unit size; travel.js counter-scales them so they keep
+       their size on screen at any zoom. The dot is small, the hit area is not. */
+    .pin { cursor: pointer; outline: none; }
+    .pin__hit { fill: transparent; stroke: none; }
+    .pin__dot {
+      fill: var(--map-pin);
+      stroke: #fff;
+      stroke-width: 1.2;
+      vector-effect: non-scaling-stroke;
+      transition: fill 0.2s, opacity 0.2s;
+    }
+    .pin__dot--ring { fill: var(--map-sea); stroke: var(--map-pin); stroke-width: 2; }
+    .pin.is-recommended .pin__dot { fill: var(--map-pin-rec); }
+    .pin.is-recommended .pin__dot--ring { fill: var(--map-sea); stroke: var(--map-pin-rec); }
+    .pin--recommendation .pin__dot { fill: var(--map-pin-rec); }
+
+    .pin:hover .pin__dot,
+    .pin:focus-visible .pin__dot { fill: var(--map-pin-active); stroke: #fff; }
+    .pin:focus-visible .pin__dot { stroke: var(--map-pin-active); stroke-width: 2.5; }
+    .pin.is-active .pin__dot { fill: var(--map-pin-active); }
+    .pin.is-dimmed { opacity: 0.28; }
+
+    /* Zoom controls */
+    .map-tools {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      z-index: 2;
+    }
+    .map-tools button {
+      width: 1.9rem;
+      height: 1.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.94);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      color: var(--color-text-dark);
+      font: inherit;
+      font-size: 0.9rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, opacity 0.2s;
+    }
+    .map-tools button:hover:not(:disabled) { border-color: var(--map-pin); color: var(--map-pin); }
+    .map-tools button:disabled { opacity: 0.35; cursor: default; }
+    .map-tools button.reset { font-size: 0.72rem; }
+
+    /* Legend */
+    .map-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 1.1rem;
+      margin: 0.6rem 0 0;
+      font-family: var(--font-prose);
+      font-size: 0.78rem;
+      color: var(--color-muted);
+    }
+    .map-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .legend-mark { width: 9px; height: 9px; flex: none; border-radius: 50%;
+                   background: var(--map-pin); border: 1px solid #fff; box-shadow: 0 0 0 1px var(--map-pin); }
+    .legend-mark--haunt { background: var(--map-sea); box-shadow: 0 0 0 2px var(--map-pin); border: none; }
+    .legend-mark--rec { background: var(--map-pin-rec); border-radius: 1px;
+                        transform: rotate(45deg); box-shadow: 0 0 0 1px var(--map-pin-rec); }
+    .legend-mark--route { width: 18px; height: 0; border-radius: 0; background: none;
+                          border-top: 1.5px dashed var(--map-pin); box-shadow: none; opacity: 0.6; }
+
+    /* Hover read-out under the map, instead of a floating tooltip */
+    .map-caption {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-height: 1.6rem;
+      margin: 0.6rem 0 0;
+      font-family: var(--font-prose);
+      font-size: 0.85rem;
+      color: var(--color-muted);
+    }
+    .map-caption strong { color: var(--color-text-dark); font-weight: 600; }
+    .map-hint { font-size: 0.85rem; }
+
+    /* ── Trip list ───────────────────────────────────────────────────── */
+    .section-title {
+      font-family: var(--font-prose);
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--color-text-dark);
+      margin: 3rem 0 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--color-border);
+    }
+
+    .trip-list { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); }
+
+    .trip-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      text-align: left;
+      font: inherit;
+      padding: 0;
+      cursor: pointer;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .trip-card:hover { border-color: #c9ced6; box-shadow: var(--shadow-card); transform: translateY(-2px); }
+    .trip-card__img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: var(--map-land); display: block; }
+    .trip-card__body { padding: 0.9rem 1rem 1.1rem; }
+    .trip-card__title { font-family: var(--font-prose); font-size: 1.05rem; font-weight: 600; color: var(--color-text-dark); margin: 0 0 0.35rem; }
+    .trip-card__meta { font-size: 0.78rem; color: var(--color-muted); display: flex; flex-wrap: wrap; gap: 0.3rem 0.9rem; margin-bottom: 0.5rem; }
+    .trip-card__summary { font-family: var(--font-prose); font-size: 0.9rem; color: #555; line-height: 1.6; margin: 0; }
+
+    /* ── Memoir panel ────────────────────────────────────────────────── */
+    #trip-panel { display: none; }
+    #trip-panel.is-open { display: block; }
+
+    .memoir {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem 2rem;
+      margin-top: 1.5rem;
+      box-shadow: var(--shadow-card);
+    }
+    .memoir__head { border-bottom: 1px solid var(--color-border); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+    .memoir__head h2 {
+      font-family: var(--font-prose);
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--color-text-dark);
+      margin: 0 0 0.6rem;
+      line-height: 1.3;
+    }
+    .memoir__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1.2rem; font-size: 0.82rem; color: var(--color-muted); }
+    .memoir__places { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .memoir__place {
+      display: inline-block;
+      font-size: 0.72rem;
+      background: rgba(0,123,255,.06);
+      color: #003d83;
+      border: 1px solid rgba(0,123,255,.2);
+      border-radius: 3px;
+      padding: 1px 6px;
+      font-family: var(--font-mono);
+    }
+
+    .close-trip {
+      float: right;
+      background: none;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      color: var(--color-muted);
+      font: inherit;
+      font-size: 0.8rem;
+      padding: 0.15rem 0.6rem;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .close-trip:hover { color: var(--color-text-dark); border-color: #c9ced6; }
+
+    /* Prose inside the memoir */
+    .prose { font-family: var(--font-prose); font-size: 1rem; line-height: 1.85; color: #3a3a3a; }
+    .prose h2 { font-family: var(--font-prose); font-size: 1.35rem; font-weight: 600; color: var(--color-text-dark); margin: 2em 0 .6em; line-height: 1.3; }
+    .prose h3 { font-family: var(--font-prose); font-size: 1.1rem; font-weight: 600; color: var(--color-text-dark); margin: 1.8em 0 .5em; }
+    .prose p { margin: 0 0 1.25em; }
+    .prose > *:first-child { margin-top: 0; }
+    .prose a { color: var(--color-link); font-weight: 400; border-bottom: 1px solid rgba(0,61,131,.25); }
+    .prose a:hover { border-bottom-color: var(--color-link-hover); }
+    .prose ul, .prose ol { margin: 0 0 1.25em; padding-left: 1.4em; }
+    .prose li { margin-bottom: 0.4em; }
+    .prose blockquote {
+      margin: 1.5em 0;
+      padding: 0.2em 0 0.2em 1.2em;
+      border-left: 3px solid var(--color-border);
+      color: #555;
+      font-style: italic;
+    }
+    .prose code { font-family: var(--font-mono); font-size: 0.875em; background: #f6f8fa; border-radius: 3px; padding: 0.1em 0.35em; }
+    .prose figure { margin: 1.8em 0; }
+    .prose figure img { width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--color-border); display: block; }
+    .prose figcaption { font-size: 0.82rem; color: var(--color-muted); text-align: center; margin-top: 0.5rem; }
+    .prose hr { border: none; border-top: 1px solid var(--color-border); margin: 2.5em 0; }
+
+    /* Chooser — shown when one pin carries several entries */
+    .chooser {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.75rem 1.75rem;
+      margin-top: 1.5rem;
+      box-shadow: var(--shadow-card);
+    }
+    .chooser h2 {
+      font-family: var(--font-prose);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--color-text-dark);
+      margin: 0 0 0.25rem;
+    }
+    .chooser__note { font-family: var(--font-prose); font-size: 0.85rem; color: var(--color-muted); margin: 0 0 1rem; }
+    .chooser__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+    .chooser__list button {
+      width: 100%;
+      text-align: left;
+      font: inherit;
+      font-family: var(--font-prose);
+      font-size: 0.95rem;
+      color: var(--color-text-dark);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 0.6rem 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .chooser__list button:hover { border-color: var(--map-pin); background: #fff; }
+    .chooser__list i { color: var(--color-muted); width: 1rem; text-align: center; }
+    .chooser__date { margin-left: auto; font-size: 0.8rem; color: var(--color-muted); }
+
+    .kind-chip {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      border-radius: 3px;
+      padding: 1px 6px;
+      background: rgba(0,123,255,.06);
+      color: #003d83;
+      border: 1px solid rgba(0,123,255,.2);
+    }
+    .kind-chip--recommendation {
+      background: rgba(179,112,26,.08);
+      color: var(--map-pin-rec);
+      border-color: rgba(179,112,26,.28);
+    }
+
+    .trip-card__img--none { aspect-ratio: 16 / 10; background: var(--map-land); }
+
+    /* Photo gallery */
+    .gallery { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); margin-top: 2rem; }
+    .gallery figure { margin: 0; }
+    .gallery img { width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--color-border); display: block; }
+    .gallery figcaption { font-size: 0.8rem; color: var(--color-muted); margin-top: 0.4rem; line-height: 1.5; }
+
+    /* ── States ──────────────────────────────────────────────────────── */
+    #loading-indicator { display: flex; align-items: center; gap: 0.6rem; color: var(--color-muted); font-size: 0.9rem; padding: 2rem 0; }
+    .spinner { width: 16px; height: 16px; border: 2px solid var(--color-border); border-top-color: var(--color-link); border-radius: 50%; animation: spin 0.7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .spinner { animation: none; } .trip-card:hover { transform: none; } }
+
+    #error-container { display: none; padding: 2rem 0; color: var(--color-muted); font-size: 0.95rem; }
+    .empty-note { font-family: var(--font-prose); font-style: italic; color: var(--color-muted); }
+
+    /* ── Bottom Navigation Bar ───────────────────────────────────────── */
+    .page-foot {
+      margin-top: 4rem;
+      border-top: 1px solid var(--color-border);
+      padding: 1.5rem 0 2.5rem;
+      font-size: 0.82rem;
+      color: var(--color-muted);
+    }
+    .page-foot .foot-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .page-foot .foot-links { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+    .page-foot a { color: var(--color-menu-ink); font-weight: 300; transition: color 0.2s; }
+    .page-foot a:hover { color: var(--color-link-hover); }
+
+    /* ── Responsive ──────────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .page-head h1 { font-size: 1.6rem; }
+      .page-wrapper { padding: 1.5rem 1rem 3rem; }
+      .page-nav .nav-inner { padding: 0 1rem; }
+      .page-foot .foot-inner { padding: 0 1rem; }
+      .memoir { padding: 1.25rem 1.1rem 1.5rem; }
+      .prose { font-size: 0.95rem; }
+      .pin circle { r: 6; }          /* a bigger tap target on a phone */
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Navigation Bar ────────────────────────────────────────────────── -->
+  <header class="page-nav">
+    <div class="nav-inner">
+      <a class="nav-home" href="index.html">Sagalpreet Singh</a>
+      <span class="nav-sep">/</span>
+      <span class="nav-breadcrumb" id="nav-breadcrumb">Travel</span>
+      <nav class="bar-links" aria-label="Primary">
+        <a class="bar-link" href="blog.html">Blog</a>
+        <a class="bar-link" href="projects/">Utilities</a>
+        <a class="bar-link" href="travel.html" aria-current="page">Travel</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── Main Content ───────────────────────────────────────────────────── -->
+  <div class="page-wrapper">
+
+    <div class="page-head">
+      <h1>Travel</h1>
+      <p>Places I have been, and what I remember of them. Pick a pin, or a trip
+        from the list below.</p>
+    </div>
+
+    <div id="loading-indicator">
+      <div class="spinner" aria-hidden="true"></div>
+      <span>Loading the map…</span>
+    </div>
+
+    <div id="error-container" role="alert" aria-live="polite">
+      <p id="error-message">Could not load the map.</p>
+    </div>
+
+    <main id="content" style="display:none">
+      <div class="worldmap" id="map">
+        <div class="map-tools">
+          <button type="button" id="zoom-in" title="Zoom in" aria-label="Zoom in">+</button>
+          <button type="button" id="zoom-out" title="Zoom out" aria-label="Zoom out">−</button>
+          <button type="button" id="zoom-reset" class="reset" title="Reset the view" aria-label="Reset the view">⤾</button>
+        </div>
+      </div>
+      <p class="map-caption" id="map-caption" aria-live="polite">
+        <span class="map-hint">Hover a pin for the place, click it to read.</span>
+      </p>
+      <p class="map-legend">
+        <span><i class="legend-mark"></i> Trip stop</span>
+        <span><i class="legend-mark legend-mark--haunt"></i> Somewhere I keep going back to</span>
+        <span><i class="legend-mark legend-mark--rec"></i> Recommended</span>
+        <span><i class="legend-mark legend-mark--route"></i> One trip, in order</span>
+      </p>
+
+      <div id="trip-panel" aria-live="polite"></div>
+
+      <h2 class="section-title">Trips</h2>
+      <div class="trip-list" id="trip-list"></div>
+
+      <div id="place-section">
+        <h2 class="section-title">Places</h2>
+        <div class="trip-list" id="place-list"></div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- ── Bottom Navigation Bar ──────────────────────────────────────────── -->
+  <footer class="page-foot">
+    <div class="foot-inner">
+      <span>&copy; 2026 Sagalpreet Singh</span>
+      <span class="foot-links">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="projects/">Utilities</a>
+        <a href="https://github.com/sagalpreet/sagalpreet.github.io" target="_blank" rel="noopener">Source</a>
+      </span>
+    </div>
+  </footer>
+
+  <!-- marked.js — Markdown parser -->
+  <script src="assets/vendor/marked.min.js"></script>
+
+  <!-- Travel engine -->
+  <script src="travel.js" defer></script>
+
+</body>
+
+</html>

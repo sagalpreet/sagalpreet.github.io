@@ -1,0 +1,139 @@
+{
+  "trips": [
+    {
+      "slug": "example-trip",
+      "title": "Example Trip",
+      "date": "2026-01-15",
+      "summary": "A placeholder so the map has something on it — replace or delete this folder.",
+      "cover": "example-1.png",
+      "places": [
+        {
+          "name": "Kapurthala, India",
+          "lat": 31.38,
+          "lon": 75.38
+        },
+        {
+          "name": "Leh, India",
+          "lat": 34.1526,
+          "lon": 77.5771
+        },
+        {
+          "name": "Pangong Tso, India",
+          "lat": 33.75,
+          "lon": 78.9
+        }
+      ],
+      "photos": [
+        {
+          "src": "example-1.png",
+          "caption": "Alt text becomes the caption under the photo"
+        },
+        {
+          "src": "example-2.png",
+          "caption": "A second photo, to show how the gallery wraps"
+        }
+      ]
+    }
+  ],
+  "places": [
+    {
+      "slug": "example-haunt",
+      "name": "Kapurthala",
+      "kind": "haunt",
+      "lat": 31.38,
+      "lon": 75.38,
+      "summary": "An example of a place you keep returning to, with no single trip attached.",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "example-recommendation",
+      "name": "Kyoto",
+      "kind": "recommendation",
+      "lat": 35.0116,
+      "lon": 135.7681,
+      "summary": "An example of somewhere you would send someone else.",
+      "cover": "",
+      "photos": []
+    }
+  ],
+  "pins": [
+    {
+      "id": "31.380,75.380",
+      "name": "Kapurthala",
+      "lat": 31.38,
+      "lon": 75.38,
+      "items": [
+        {
+          "type": "trip",
+          "slug": "example-trip",
+          "title": "Example Trip",
+          "date": "2026-01-15",
+          "placeName": "Kapurthala, India"
+        },
+        {
+          "type": "place",
+          "slug": "example-haunt",
+          "title": "Kapurthala",
+          "kind": "haunt"
+        }
+      ],
+      "shape": "trip",
+      "recommended": false,
+      "visits": 1
+    },
+    {
+      "id": "35.012,135.768",
+      "name": "Kyoto",
+      "lat": 35.012,
+      "lon": 135.768,
+      "items": [
+        {
+          "type": "place",
+          "slug": "example-recommendation",
+          "title": "Kyoto",
+          "kind": "recommendation"
+        }
+      ],
+      "shape": "recommendation",
+      "recommended": true,
+      "visits": 0
+    },
+    {
+      "id": "34.153,77.577",
+      "name": "Leh, India",
+      "lat": 34.153,
+      "lon": 77.577,
+      "items": [
+        {
+          "type": "trip",
+          "slug": "example-trip",
+          "title": "Example Trip",
+          "date": "2026-01-15",
+          "placeName": "Leh, India"
+        }
+      ],
+      "shape": "trip",
+      "recommended": false,
+      "visits": 1
+    },
+    {
+      "id": "33.750,78.900",
+      "name": "Pangong Tso, India",
+      "lat": 33.75,
+      "lon": 78.9,
+      "items": [
+        {
+          "type": "trip",
+          "slug": "example-trip",
+          "title": "Example Trip",
+          "date": "2026-01-15",
+          "placeName": "Pangong Tso, India"
+        }
+      ],
+      "shape": "trip",
+      "recommended": false,
+      "visits": 1
+    }
+  ]
+}

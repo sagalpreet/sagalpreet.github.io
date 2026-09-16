@@ -1,1 +1,3 @@
 **/.DS_Store
+# cached source for tools/build_worldmap.py; re-downloaded on demand
+tools/countries-110m.json

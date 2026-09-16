@@ -1,30 +1,42 @@
 # sagalpreet.github.io
 
-Personal website, blog and utilities for Sagalpreet Singh.
+Personal website, blog, utilities and travel map for Sagalpreet Singh.
 
 Static files, no build tooling, no framework. GitHub Pages serves the repository
-as-is; the only script you ever need to run is the feed builder below. Everything
-the home page and blog need is vendored into the repo — three of the utilities
-are the exception and pull their libraries from a CDN.
+as-is; the only scripts you ever need to run are the two builders below, and only
+after adding a post or a trip. Everything the home page, blog and travel map need
+is vendored into the repo — three of the utilities are the exception and pull
+their libraries from a CDN.
 
 ```
 ├── index.html              home — bio, news, projects, publications
 ├── blog.html               blog shell (index + post reader), self-contained CSS
 ├── blog.js                 the blog engine, and the POSTS / RECOMMENDED_READS lists
+├── travel.html             travel shell (map + memoir reader), self-contained CSS
+├── travel.js               the travel engine
 ├── feed.xml                RSS 2.0 — generated
 ├── .nojekyll               serve the tree as-is, no Jekyll pass
 ├── posts/
 │   └── <slug>/index.md     one folder per post, assets alongside
+├── trips/
+│   ├── index.json          trips, places and merged pins — generated
+│   └── <slug>/index.md     one folder per trip, photos alongside
+├── places/
+│   └── <slug>/index.md     standing places: haunts and recommendations
 ├── projects/               the utilities, one folder each, plus their index
 ├── assets/
 │   ├── css/                site.css · app.css   (utilities only)
 │   ├── fonts/              self-hosted, subset, with licences
 │   ├── vendor/             marked · highlight.js · KaTeX · Bootstrap · jQuery
 │   │                       · Popper · Font Awesome
+│   ├── world.svg           country outlines for the map — generated
 │   └── *.pdf               CV, résumé, posters and slides
 ├── css/ · fonts/           Academicons, used by the home page and blog
 ├── images/                 photo, logos, publication thumbnails, icon sources
-├── tools/build_blog.py     regenerates feed.xml
+├── tools/
+│   ├── build_blog.py       regenerates feed.xml
+│   ├── build_travel.py     regenerates trips/index.json
+│   └── build_worldmap.py   regenerates assets/world.svg (run once)
 └── d3/ · nextprot/ · javascript/ · javascripts/
                             older standalone pages, not linked from the site
 ```
@@ -131,6 +143,122 @@ the entry row has to fit them on a phone.
 
 ---
 
+## Adding a trip or a place
+
+The travel map is `travel.html`. It reads `trips/index.json`, which the builder
+writes from the Markdown — unlike the blog there is no array to keep in step.
+
+There are two kinds of entry:
+
+| | Lives in | Is | Drawn as |
+|:--|:--|:--|:--|
+| **Trip** | `trips/<slug>/` | somewhere you went on a particular occasion | filled dots, joined in order by a dashed route |
+| **Haunt** | `places/<slug>/` | somewhere you keep going back to, no single visit | a hollow ring |
+| **Recommendation** | `places/<slug>/` | somewhere you would send someone else | a warm amber diamond |
+
+### A trip
+
+```
+trips/ladakh-by-road/
+  index.md
+  hunder.jpg
+```
+
+```markdown
+---
+title: Ladakh by Road
+date: 2025-06-10
+summary: One line for the trip card.
+cover: hunder.jpg
+places:
+  - Leh, India | 34.1526, 77.5771
+  - Nubra Valley, India | 34.6868, 77.5619
+photos:
+  - hunder.jpg | Sand dunes at Hunder
+---
+
+The memoir, in Markdown, exactly like a blog post.
+```
+
+A place is `Name | latitude, longitude`; the order you list them is the order
+the route line joins them. A photo is `file | caption`.
+
+### A place
+
+```markdown
+---
+name: Nani's house, Phagwara
+kind: haunt              # haunt | recommendation
+at: 31.2200, 75.7700
+---
+
+Whatever you want to say about the place in general.
+```
+
+For both, `summary` falls back to the first paragraph, `cover` to the first
+photo, and `draft: true` keeps the entry off the map.
+
+### Then regenerate
+
+```bash
+python3 tools/build_travel.py
+```
+
+It warns about coordinates it cannot read, coordinates off the globe, unknown
+`kind` values, and photos named in the front matter that are not in the folder.
+Re-running it with nothing changed produces no diff.
+
+### One pin per location
+
+The same place can appear in any number of trips, and a haunt or a
+recommendation can sit at the same coordinates as a trip stop. Rather than
+stacking markers — where the lower one is unclickable and effectively invisible
+— the builder **merges everything within about 100 m into a single pin** and
+records what is attached to it. Click a pin carrying more than one entry and the
+page offers a chooser.
+
+A merged pin takes its *shape* from what it is (trip beats haunt beats
+recommendation) and its *colour* from whether anything there is recommended, so
+a recommended place you have also visited still reads as recommended.
+
+### The map
+
+`assets/world.svg` is generated by `tools/build_worldmap.py` from Natural
+Earth's public-domain 110m boundaries, and committed. There is no tile server
+and no third-party request; it is plain country outlines coloured by the page's
+own tokens. You should not need to run that builder again.
+
+Pins are placed with an equirectangular projection that **must match** the one
+the SVG was drawn with:
+
+```
+x = (lon + 180) * (1000 / 360)
+y = (90  - lat) * (500  / 180)
+```
+
+It lives in both `tools/build_worldmap.py` and `travel.js`. Change one and the
+pins drift off the coastlines.
+
+The map pans and zooms by rewriting the SVG `viewBox` — no library, no tiles.
+Pins are drawn at unit size and counter-scaled by the inverse of the zoom, so
+they stay the same size on screen however far in you go; borders and route lines
+use `vector-effect: non-scaling-stroke` for the same reason. Each pin's visible
+dot is about 6px with a much larger transparent disc behind it taking the
+clicks, so the markers can stay small without becoming hard to tap.
+
+Controls: drag to pan, the `+` / `−` / reset buttons, double-click to zoom in
+(shift-double-click out), ⌘/Ctrl + scroll, and pinch on touch. A plain scroll
+wheel is deliberately left alone so the page can still be scrolled past the map.
+On touch the map only captures gestures once zoomed in; at the default view a
+finger scrolls the page as usual. Pins are keyboard reachable, and opening one
+sets `travel.html?trip=<slug>` or `?place=<slug>` so the link can be shared.
+
+There is no marker clustering yet. With zoom and pan in place it may not be
+needed; if the pins do get crowded, the next step would be to merge pins closer
+than ~20 screen pixels into a counted badge that splits as you zoom in.
+
+---
+
 ## Adding a utility
 
 Create `projects/<name>/index.html` and add an entry to the `PROJECTS` array near
@@ -166,10 +294,13 @@ tool interfaces themselves.
 There is no dark mode — it was removed so the utilities match the rest of the
 site, and the toggle is hidden.
 
-The home page and the blog do **not** use these stylesheets. `index.html` and
-`blog.html` each carry their own `<style>` block with their own variables
-(`--color-link`, `--color-border`, …), which is why a change to `site.css` will
-not reach them.
+The home page, the blog and the travel map do **not** use these stylesheets.
+`index.html`, `blog.html` and `travel.html` each carry their own `<style>` block
+with their own variables (`--color-link`, `--color-border`, …), which is why a
+change to `site.css` will not reach them. `blog.html` and `travel.html` carry the
+same bar and footer rules under different class names — `.blog-nav`/`.blog-foot`
+and `.page-nav`/`.page-foot` — so a change to one wants the same change in the
+other.
 
 Fonts are self-hosted and subset to Latin, and shared by all three: **Roboto**
 for interface text, **Inter** for headings and blog prose, **JetBrains Mono** for
@@ -209,3 +340,6 @@ go live.
 - [Inter](https://rsms.me/inter/), [Roboto](https://fonts.google.com/specimen/Roboto)
   and [JetBrains Mono](https://www.jetbrains.com/lp/mono/); vendored licences are
   in `assets/fonts/`.
+- [Natural Earth](https://www.naturalearthdata.com/) for the country boundaries
+  behind `assets/world.svg`, public domain, via
+  [world-atlas](https://github.com/topojson/world-atlas).
