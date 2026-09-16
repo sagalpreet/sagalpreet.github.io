@@ -14,7 +14,7 @@ To kick things off, I thought it would be fitting to write a short introduction 
 
 ## Background
 
-I am originally from **Kapurthala**, a small, quiet, town-like city in Punjab, India. Kapurthala is very close to my heart. To me, it is the best city because it offers a peaceful, almost village-like quietness while still providing all modern facilities, thanks to its proximity to the larger city of Jalandhar. You truly get to experience the best of both worlds there.
+I am originally from **Kapurthala**, a small, quiet, town-like city in Punjab, India. Kapurthala is very close to my heart. To me, it is the best city because it offers a peaceful, almost village-like quietness while still providing all modern facilities, thanks to its proximity to the larger city of Jalandhar. You truly get to experience the best of both worlds there. If you're curious what it looks like, [this tour of Kapurthala](https://www.youtube.com/watch?v=jD9wAYE5tnQ) gives a good sense of the place.
 
 ---
 
