@@ -154,17 +154,16 @@
 					href="https://linkedin.com/in/sagalpreet" target="_blank">LinkedIn</a>!
 				<br>
 				<br>
-				Last Updated: April 2026
+				Last Updated: September 2026
 
 				<!-- NEWS -->
 				<div class="header-1 pt-5">What's New</div>
 				<div class="news-scroll">
 					<ul class="news-list">
 						<li class="news-item">
-							<span class="news-date">May, 2026</span>
-							<div class="news-content">Our work on goal coverage
-								in
-								RL has been accepted to RLC. See you in Montreal!</div>
+							<span class="news-date">August, 2026</span>
+							<div class="news-content">Gave a talk and presented a poster on goal coverage in RL at
+								<b>RLC</b> (Montreal).</div>
 						</li>
 						<li class="news-item">
 							<span class="news-date">December, 2025</span>
@@ -256,6 +255,7 @@
 
 				<!-- PROJECTS -->
 				<div class="header-1 pt-5">Projects</div>
+				<div class="proj-scroll">
 				<div class="row gemini-thinking mb-2">
 					<div class="col-md-2 my-auto">
 						<img class="logoimg" lsrc="images/logos/gemini.webp">
@@ -326,10 +326,12 @@
 						</p>
 					</div>
 				</div>
+				</div>
 
 				<!-- PUBLICATIONS SECTION -->
 				<div class="header-1 pt-5">Publications</div>
 				<p align="left">C=Conference, P=Preprint, <sup>*</sup>=Equal Contribution</p>
+				<div class="pub-scroll">
 				<div class="row rl-goal">
 					<div class="col-md-2 my-auto">
 						<img class="sideimg" lsrc="images/sides/rl_goal_coverage.png">
@@ -404,6 +406,7 @@
 							<br>
 						</p>
 					</div>
+				</div>
 				</div>
 
 
@@ -499,8 +502,9 @@
 			width: 110%;
 		}
 
-		.news-scroll {
-			max-height: 280px;
+		.news-scroll,
+		.proj-scroll,
+		.pub-scroll {
 			overflow-y: auto;
 			padding: 10px 25px 10px 0;
 			background: transparent;
@@ -508,15 +512,27 @@
 			scrollbar-color: #e0e0e0 transparent;
 		}
 
-		.news-scroll::-webkit-scrollbar {
+		/* Each pane is capped at the height its content happened to need, so the
+		   page stops growing as entries are added and the section scrolls. */
+		.news-scroll { max-height: 280px; }
+		.proj-scroll { max-height: 480px; }
+		.pub-scroll  { max-height: 550px; }
+
+		.news-scroll::-webkit-scrollbar,
+		.proj-scroll::-webkit-scrollbar,
+		.pub-scroll::-webkit-scrollbar {
 			width: 5px;
 		}
 
-		.news-scroll::-webkit-scrollbar-track {
+		.news-scroll::-webkit-scrollbar-track,
+		.proj-scroll::-webkit-scrollbar-track,
+		.pub-scroll::-webkit-scrollbar-track {
 			background: transparent;
 		}
 
-		.news-scroll::-webkit-scrollbar-thumb {
+		.news-scroll::-webkit-scrollbar-thumb,
+		.proj-scroll::-webkit-scrollbar-thumb,
+		.pub-scroll::-webkit-scrollbar-thumb {
 			background-color: #e0e0e0;
 			border-radius: 10px;
 		}
