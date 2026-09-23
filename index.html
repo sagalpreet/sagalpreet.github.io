@@ -77,14 +77,24 @@
 							sagalpreet60 [at] gmail [dot] com</a>
 					</div>
 					<div class="">
-						<a class="menulink" target="_blank" href="https://github.com/sagalpreet">
+						<a class="menulink" target="_blank" href="https://github.com/sagalpreet"
+							aria-label="GitHub: sagalpreet">
 							<i class="had fab fa-github"></i>
-							GitHub</a>
+							sagalpreet</a>
 					</div>
 					<div class="">
-						<a class="menulink" target="_blank" href="https://linkedin.com/in/sagalpreet">
+						<a class="menulink" target="_blank" rel="noopener" href="https://x.com/realsagalpreet"
+							aria-label="X: realsagalpreet">
+							<svg class="xicon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+								<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+							</svg>
+							realsagalpreet</a>
+					</div>
+					<div class="">
+						<a class="menulink" target="_blank" href="https://linkedin.com/in/sagalpreet"
+							aria-label="LinkedIn: sagalpreet">
 							<i class="fab fa-linkedin-in"></i>
-							LinkedIn</a>
+							sagalpreet</a>
 					</div>
 					<div class="">
 						<a class="menulink" target="_blank"
@@ -666,6 +676,16 @@
 		/* .talk:not(.papertitle) {
         font-size: 0.5rem
     } */
+
+		/* The vendored Font Awesome is 5.15.4, which predates the X rebrand and has
+		   only the old bird, so the X mark is inline SVG. currentColor makes it
+		   follow .menulink's colour and its hover. */
+		.xicon {
+			width: 0.85em;
+			height: 0.85em;
+			fill: currentColor;
+			vertical-align: -0.08em;
+		}
 
 		.menulink {
 			/* color: #444; */
