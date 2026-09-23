@@ -66,41 +66,25 @@
 				<div class="fixed-posi">
 					<p class="name">Sagalpreet Singh</p>
 					<img lsrc="images/sagalpreet.jpg" class="profilepic mt-3 rounded shadow mb-3">
+					<!-- Profile links as icons only, centred under the photo -->
+					<div class="iconrow">
+						<a class="iconlink" target="_blank" href="mailto:sagalpreet60@gmail.com"
+							aria-label="Email" title="Email"><i class="fas fa-envelope"></i></a>
+						<a class="iconlink" target="_blank" rel="noopener" href="https://github.com/sagalpreet"
+							aria-label="GitHub" title="GitHub"><i class="fab fa-github"></i></a>
+						<a class="iconlink" target="_blank" rel="noopener" href="https://x.com/realsagalpreet"
+							aria-label="X" title="X"><svg class="xicon" viewBox="0 0 24 24" aria-hidden="true"
+								focusable="false"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+						<a class="iconlink" target="_blank" rel="noopener" href="https://linkedin.com/in/sagalpreet"
+							aria-label="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+						<a class="iconlink" target="_blank" rel="noopener"
+							href="https://scholar.google.com/citations?user=eQIEse0AAAAJ"
+							aria-label="Google Scholar" title="Google Scholar"><i class="ai ai-google-scholar"></i></a>
+					</div>
 					<div class="pt-4 menur">
 						<a class="menulink" target="_blank" href="assets/Sagalpreet-Resume.pdf">
 							<i class="had fas fa-file-alt"></i>
 							Resume / </a> <a class="menulink" href="assets/Sagalpreet-CV.pdf" target="_blank">CV</a>
-					</div>
-					<div class="">
-						<a class="menulink" target="_blank" href="mailto:sagalpreet60@gmail.com">
-							<i class="fas fa-envelope"></i>
-							sagalpreet60 [at] gmail [dot] com</a>
-					</div>
-					<div class="">
-						<a class="menulink" target="_blank" href="https://github.com/sagalpreet"
-							aria-label="GitHub: sagalpreet">
-							<i class="had fab fa-github"></i>
-							sagalpreet</a>
-					</div>
-					<div class="">
-						<a class="menulink" target="_blank" rel="noopener" href="https://x.com/realsagalpreet"
-							aria-label="X: realsagalpreet">
-							<svg class="xicon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-								<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-							</svg>
-							realsagalpreet</a>
-					</div>
-					<div class="">
-						<a class="menulink" target="_blank" href="https://linkedin.com/in/sagalpreet"
-							aria-label="LinkedIn: sagalpreet">
-							<i class="fab fa-linkedin-in"></i>
-							sagalpreet</a>
-					</div>
-					<div class="">
-						<a class="menulink" target="_blank"
-							href="https://scholar.google.com/citations?user=eQIEse0AAAAJ">
-							<i class="ai ai-google-scholar ai-1x"></i>
-							Google Scholar</a>
 					</div>
 					<div class="">
 						<a class="menulink" href="blog.html">
@@ -693,6 +677,50 @@
         font-size: 0.5rem
     } */
 
+		/* The icon-only row under the photo. Width tracks .profilepic so the
+		   icons centre under the photo rather than under the whole column. */
+		.iconrow {
+			display: flex;
+			justify-content: space-between;   /* first and last flush with the photo's edges */
+			align-items: center;
+			gap: 0.5rem;                      /* only a floor; space-between sets the real gap */
+			width: 230px;
+			max-width: 100%;
+			margin: 0.35rem 0 0.25rem;
+		}
+
+		/* Each box is exactly its glyph's width, so space-between puts the first
+		   and last glyphs flush with the photo's edges and makes the gaps between
+		   glyphs truly equal. The glyphs are 15-20px, under the 24px minimum
+		   target, so ::after restores a comfortable hit area without taking part
+		   in the layout. */
+		.iconlink {
+			position: relative;
+			color: #002147;
+			font-size: 1.25rem;
+			line-height: 1;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			transition: color 0.2s, transform 0.2s;
+		}
+
+		.iconlink::after {
+			content: '';
+			position: absolute;
+			top: -9px;
+			bottom: -9px;
+			left: -7px;
+			right: -7px;
+		}
+
+		.iconlink:hover { color: #1f62cc; transform: translateY(-2px); }
+		.iconlink .xicon { width: 1em; height: 1em; vertical-align: 0; }
+
+		@media (prefers-reduced-motion: reduce) {
+			.iconlink:hover { transform: none; }
+		}
+
 		/* The vendored Font Awesome is 5.15.4, which predates the X rebrand and has
 		   only the old bird, so the X mark is inline SVG. currentColor makes it
 		   follow .menulink's colour and its hover. */
@@ -740,6 +768,12 @@
 
 			.allstuffp {
 				padding-top: 0px !important;
+			}
+
+			.iconrow {
+				width: 350px;
+				margin-left: auto;
+				margin-right: auto;
 			}
 
 			.profilepic {
