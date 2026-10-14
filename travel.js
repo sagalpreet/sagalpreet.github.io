@@ -29,7 +29,12 @@ var SVG_NS = 'http://www.w3.org/2000/svg';
    stay the same size on screen however far in you go. */
 var PIN_R = 3.2;
 var HIT_R = 13;          /* the invisible disc that actually takes the clicks */
-var MAX_ZOOM = 40;
+/* Recommendations are venue-scale: two restaurants on the same road sit ~200m
+   apart, which is 0.005 of a viewBox unit. At 40x the whole view was still
+   1000km across and such pins landed on the same pixel, leaving one of them
+   unclickable. The basemap is Natural Earth 110m and turns into a flat wash
+   long before this limit, but by then you are reading pins, not coastlines. */
+var MAX_ZOOM = 4000;
 var DRAG_SLOP = 4;       /* px of movement below which a drag counts as a click */
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -70,13 +75,20 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
+/* Not every trip is pinned to a day. A date may be a year, a year and month, or
+   a full date, and each is shown at the precision it was given rather than being
+   padded out to a day nobody recorded. */
 function formatDate(str) {
   if (!str) return '';
-  try {
-    var d = new Date(str + 'T00:00:00');
-    if (isNaN(d)) return str;
-    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-  } catch (_) { return str; }
+  var m = String(str).match(/^(\d{4})(?:-(\d{2}))?(?:-(\d{2}))?$/);
+  if (!m) return str;
+  var year = m[1], month = m[2], day = m[3];
+  if (!month) return year;
+  var d = new Date(year + '-' + month + '-' + (day || '01') + 'T00:00:00');
+  if (isNaN(d)) return str;
+  return d.toLocaleDateString('en-US', day
+    ? { year: 'numeric', month: 'long', day: 'numeric' }
+    : { year: 'numeric', month: 'long' });
 }
 
 function stripFrontMatter(raw) {
@@ -309,7 +321,7 @@ function buildMap(svgText) {
   TRIPS.forEach(function (trip) {
     if (!trip.places || trip.places.length < 2) return;
     var d = trip.places.map(function (p, i) {
-      return (i ? 'L' : 'M') + projectX(p.lon).toFixed(1) + ' ' + projectY(p.lat).toFixed(1);
+      return (i ? 'L' : 'M') + projectX(p.lon).toFixed(3) + ' ' + projectY(p.lat).toFixed(3);
     }).join('');
     var route = document.createElementNS(SVG_NS, 'path');
     route.setAttribute('class', 'route');
@@ -325,8 +337,10 @@ function buildMap(svgText) {
     var cls = 'pin pin--' + pin.shape + (pin.recommended ? ' is-recommended' : '');
     g.setAttribute('class', cls);
     g.setAttribute('data-pin', pin.id);
-    g.setAttribute('data-x', projectX(pin.lon).toFixed(2));
-    g.setAttribute('data-y', projectY(pin.lat).toFixed(2));
+    /* 4 decimals is ~4m. At 2 decimals (~400m) two restaurants on the same
+       road rounded to the same point and one became unclickable. */
+    g.setAttribute('data-x', projectX(pin.lon).toFixed(4));
+    g.setAttribute('data-y', projectY(pin.lat).toFixed(4));
     g.setAttribute('tabindex', '0');
     g.setAttribute('role', 'button');
     g.setAttribute('aria-label', pinLabel(pin));
@@ -435,7 +449,7 @@ function renderLists() {
     section.style.display = '';
     placeList.innerHTML = PLACES.map(function (p) {
       var meta = '<span class="kind-chip kind-chip--' + p.kind + '">' +
-        (p.kind === 'recommendation' ? 'Recommendation' : 'Haunt') + '</span>';
+        (p.kind === 'recommendation' ? 'Recommended' : 'Haunt') + '</span>';
       return cardHtml('place', p.slug, p.name, meta, p.summary, p.cover,
                       'places/' + encodeURIComponent(p.slug) + '/');
     }).join('');
@@ -471,7 +485,7 @@ function choosePin(pin) {
           : '<i class="fas fa-' + (it.kind === 'recommendation' ? 'star' : 'home') + '"></i> ' +
             escapeHtml(it.title) +
             ' <span class="chooser__date">' +
-            (it.kind === 'recommendation' ? 'recommendation' : 'haunt') + '</span>';
+            (it.kind === 'recommendation' ? 'recommended' : 'haunt') + '</span>';
         return '<li><button type="button" data-kind="' + it.type + '" data-slug="' +
           escapeHtml(it.slug) + '">' + label + '</button></li>';
       }).join('') + '</ul>' +
@@ -542,7 +556,7 @@ async function open(kind, slug, push) {
           }).join('') + '</span>'
         : '')
     : '<span class="kind-chip kind-chip--' + entry.kind + '">' +
-      (entry.kind === 'recommendation' ? 'Recommendation' : 'Haunt') + '</span>';
+      (entry.kind === 'recommendation' ? 'Recommended' : 'Haunt') + '</span>';
 
   var panel = $id('trip-panel');
   panel.classList.add('is-open');

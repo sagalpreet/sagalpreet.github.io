@@ -1,97 +1,376 @@
 {
   "trips": [
     {
-      "slug": "example-trip",
-      "title": "Example Trip",
-      "date": "2026-01-15",
-      "summary": "A placeholder so the map has something on it — replace or delete this folder.",
-      "cover": "example-1.png",
+      "slug": "mtl26-trip",
+      "title": "Montreal, and a few hours in Dubai",
+      "date": "2026-08",
+      "summary": "Montreal for RLC 2026, routed through Dubai both ways, with long enough on the way back to get into the city.",
+      "cover": "",
       "places": [
         {
-          "name": "Kapurthala, India",
-          "lat": 31.38,
-          "lon": 75.38
+          "name": "Dubai, United Arab Emirates",
+          "lat": 25.2048,
+          "lon": 55.2708
         },
         {
-          "name": "Leh, India",
-          "lat": 34.1526,
-          "lon": 77.5771
+          "name": "Montreal, Canada",
+          "lat": 45.5017,
+          "lon": -73.5673
+        }
+      ],
+      "photos": []
+    },
+    {
+      "slug": "san25-trip",
+      "title": "San Diego",
+      "date": "2025-12",
+      "summary": "San Diego for NeurIPS 2025, where we demoed goal coverage at the DeepMind kiosk. Out through Doha, back through Narita.",
+      "cover": "",
+      "places": [
+        {
+          "name": "Doha, Qatar",
+          "lat": 25.2731,
+          "lon": 51.608
         },
         {
-          "name": "Pangong Tso, India",
-          "lat": 33.75,
-          "lon": 78.9
+          "name": "San Diego, United States",
+          "lat": 32.7157,
+          "lon": -117.1611
+        },
+        {
+          "name": "Narita, Japan",
+          "lat": 35.7647,
+          "lon": 140.3864
+        }
+      ],
+      "photos": []
+    },
+    {
+      "slug": "goa-2025",
+      "title": "Goa",
+      "date": "2025-11",
+      "summary": "A trip to Goa.",
+      "cover": "",
+      "places": [
+        {
+          "name": "Panaji, India",
+          "lat": 15.4909,
+          "lon": 73.8278
+        }
+      ],
+      "photos": []
+    },
+    {
+      "slug": "coorg-2024",
+      "title": "Coorg",
+      "date": "2024-11",
+      "summary": "A trip to Coorg.",
+      "cover": "",
+      "places": [
+        {
+          "name": "Madikeri, India",
+          "lat": 12.4244,
+          "lon": 75.7382
+        }
+      ],
+      "photos": []
+    },
+    {
+      "slug": "ldn23-trip",
+      "title": "London",
+      "date": "2023-05",
+      "summary": "Ten days in London for AAMAS 2023, where I gave a talk on subset selection for human-AI teams.",
+      "cover": "ldn23-3.jpg",
+      "places": [
+        {
+          "name": "London, United Kingdom",
+          "lat": 51.5074,
+          "lon": -0.1278
         }
       ],
       "photos": [
         {
-          "src": "example-1.png",
-          "caption": "Alt text becomes the caption under the photo"
+          "src": "ldn23-3.jpg",
+          "caption": "At the AAMAS 2023 welcome board, with the rest of the group"
         },
         {
-          "src": "example-2.png",
-          "caption": "A second photo, to show how the gallery wraps"
+          "src": "ldn23-4.jpg",
+          "caption": "Presenting our work on human-AI teams"
+        },
+        {
+          "src": "ldn23-2.jpg",
+          "caption": "Piccadilly Circus at dusk"
+        },
+        {
+          "src": "ldn23-1.jpg",
+          "caption": "A path through the green, on a clear May afternoon"
         }
       ]
+    },
+    {
+      "slug": "hyderabad-2022",
+      "title": "Hyderabad",
+      "date": "2022-12",
+      "summary": "A short trip to Hyderabad for an event I was invited to by Oppo.",
+      "cover": "",
+      "places": [
+        {
+          "name": "Hyderabad, India",
+          "lat": 17.385,
+          "lon": 78.4867
+        }
+      ],
+      "photos": []
+    },
+    {
+      "slug": "shimla-2019",
+      "title": "Shimla",
+      "date": "2019",
+      "summary": "Back to Shimla, five years after the first visit.",
+      "cover": "",
+      "places": [
+        {
+          "name": "Shimla, India",
+          "lat": 31.1048,
+          "lon": 77.1734
+        }
+      ],
+      "photos": []
+    },
+    {
+      "slug": "shimla-2014",
+      "title": "Shimla",
+      "date": "2014",
+      "summary": "The first of two trips to Shimla.",
+      "cover": "",
+      "places": [
+        {
+          "name": "Shimla, India",
+          "lat": 31.1048,
+          "lon": 77.1734
+        }
+      ],
+      "photos": []
+    },
+    {
+      "slug": "una-2011",
+      "title": "Una",
+      "date": "2011",
+      "summary": "A visit to Una, in Himachal Pradesh.",
+      "cover": "",
+      "places": [
+        {
+          "name": "Una, India",
+          "lat": 31.4685,
+          "lon": 76.2708
+        }
+      ],
+      "photos": []
+    },
+    {
+      "slug": "vaishno-devi-2009",
+      "title": "Vaishno Devi",
+      "date": "2009",
+      "summary": "A pilgrimage to the shrine above Katra. The year is from memory, so it may be a little out.",
+      "cover": "",
+      "places": [
+        {
+          "name": "Katra, India",
+          "lat": 32.9917,
+          "lon": 74.9319
+        }
+      ],
+      "photos": []
     }
   ],
   "places": [
     {
-      "slug": "example-haunt",
-      "name": "Kapurthala",
-      "kind": "haunt",
-      "lat": 31.38,
-      "lon": 75.38,
-      "summary": "An example of a place you keep returning to, with no single trip attached.",
+      "slug": "asha-tiffins-aecs",
+      "name": "Asha Tiffins, AECS Layout",
+      "kind": "recommendation",
+      "lat": 12.9646,
+      "lon": 77.7144,
+      "summary": "Tiffins on 60 Feet Road, AECS Layout, Bengaluru.",
       "cover": "",
       "photos": []
     },
     {
-      "slug": "example-recommendation",
-      "name": "Kyoto",
+      "slug": "bengaluru",
+      "name": "Bengaluru",
+      "kind": "haunt",
+      "lat": 12.9716,
+      "lon": 77.5946,
+      "summary": "Where I lived and worked from 2023 to 2026.",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "candolim-beach",
+      "name": "Candolim Beach",
       "kind": "recommendation",
-      "lat": 35.0116,
-      "lon": 135.7681,
-      "summary": "An example of somewhere you would send someone else.",
+      "lat": 15.5181,
+      "lon": 73.7629,
+      "summary": "A beach in north Goa.",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "chandigarh",
+      "name": "Chandigarh",
+      "kind": "haunt",
+      "lat": 30.7333,
+      "lon": 76.7794,
+      "summary": "Home for a few months in 2017.",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "coorg-marriott",
+      "name": "Coorg Marriott Resort & Spa",
+      "kind": "recommendation",
+      "lat": 12.4516116,
+      "lon": 75.7765132,
+      "summary": "A resort in Coorg, Karnataka.",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "coronado-beach",
+      "name": "Coronado Beach",
+      "kind": "recommendation",
+      "lat": 32.6831,
+      "lon": -117.1859,
+      "summary": "The beach across the bay from San Diego.",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "cubbon-park",
+      "name": "Cubbon Park",
+      "kind": "recommendation",
+      "lat": 12.9743,
+      "lon": 77.5922,
+      "summary": "The park in central Bengaluru.",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "kapurthala",
+      "name": "Kapurthala",
+      "kind": "haunt",
+      "lat": 31.38,
+      "lon": 75.38,
+      "summary": "Home. I lived here for most of my life, until 2019.",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "lavelle-road",
+      "name": "Lavelle Road",
+      "kind": "recommendation",
+      "lat": 12.9683,
+      "lon": 77.5965,
+      "summary": "A street in central Bengaluru.",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "meghana-marathahalli",
+      "name": "Meghana Foods, Marathahalli",
+      "kind": "recommendation",
+      "lat": 12.9496,
+      "lon": 77.6997,
+      "summary": "Andhra food on Service Road, MSR Layout, Marathahalli, Bengaluru.",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "oxford",
+      "name": "Oxford",
+      "kind": "haunt",
+      "lat": 51.752,
+      "lon": -1.2577,
+      "summary": "Where I have been since the start of October 2026.",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "polar-bear-aecs",
+      "name": "Polar Bear, AECS Layout",
+      "kind": "recommendation",
+      "lat": 12.9639,
+      "lon": 77.7126,
+      "summary": "Ice cream on 60 Feet Road, AECS Layout, Bengaluru.",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "rupnagar",
+      "name": "Rupnagar",
+      "kind": "haunt",
+      "lat": 30.9661,
+      "lon": 76.5231,
+      "summary": "IIT Ropar. A few months before the pandemic, and again for my final year in 2022-23.",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "sweet-things-sd",
+      "name": "Sweet Things Frozen Yogurt",
+      "kind": "recommendation",
+      "lat": 32.7036,
+      "lon": -117.1584,
+      "summary": "Frozen yogurt on Gull Street, San Diego.",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "rameshwaram-cafe-brookefield",
+      "name": "The Rameshwaram Cafe, Brookefield",
+      "kind": "recommendation",
+      "lat": 12.9708,
+      "lon": 77.7126,
+      "summary": "South Indian, on Kundalahalli Main Road in Brookefield, Bengaluru.",
       "cover": "",
       "photos": []
     }
   ],
   "pins": [
     {
-      "id": "31.380,75.380",
-      "name": "Kapurthala",
-      "lat": 31.38,
-      "lon": 75.38,
+      "id": "31.105,77.173",
+      "name": "Shimla, India",
+      "lat": 31.105,
+      "lon": 77.173,
       "items": [
         {
           "type": "trip",
-          "slug": "example-trip",
-          "title": "Example Trip",
-          "date": "2026-01-15",
-          "placeName": "Kapurthala, India"
+          "slug": "shimla-2019",
+          "title": "Shimla",
+          "date": "2019",
+          "placeName": "Shimla, India"
         },
         {
-          "type": "place",
-          "slug": "example-haunt",
-          "title": "Kapurthala",
-          "kind": "haunt"
+          "type": "trip",
+          "slug": "shimla-2014",
+          "title": "Shimla",
+          "date": "2014",
+          "placeName": "Shimla, India"
         }
       ],
       "shape": "trip",
       "recommended": false,
-      "visits": 1
+      "visits": 2
     },
     {
-      "id": "35.012,135.768",
-      "name": "Kyoto",
-      "lat": 35.012,
-      "lon": 135.768,
+      "id": "12.965,77.714",
+      "name": "Asha Tiffins, AECS Layout",
+      "lat": 12.965,
+      "lon": 77.714,
       "items": [
         {
           "type": "place",
-          "slug": "example-recommendation",
-          "title": "Kyoto",
+          "slug": "asha-tiffins-aecs",
+          "title": "Asha Tiffins, AECS Layout",
           "kind": "recommendation"
         }
       ],
@@ -100,17 +379,119 @@
       "visits": 0
     },
     {
-      "id": "34.153,77.577",
-      "name": "Leh, India",
-      "lat": 34.153,
-      "lon": 77.577,
+      "id": "12.972,77.595",
+      "name": "Bengaluru",
+      "lat": 12.972,
+      "lon": 77.595,
+      "items": [
+        {
+          "type": "place",
+          "slug": "bengaluru",
+          "title": "Bengaluru",
+          "kind": "haunt"
+        }
+      ],
+      "shape": "haunt",
+      "recommended": false,
+      "visits": 0
+    },
+    {
+      "id": "15.518,73.763",
+      "name": "Candolim Beach",
+      "lat": 15.518,
+      "lon": 73.763,
+      "items": [
+        {
+          "type": "place",
+          "slug": "candolim-beach",
+          "title": "Candolim Beach",
+          "kind": "recommendation"
+        }
+      ],
+      "shape": "recommendation",
+      "recommended": true,
+      "visits": 0
+    },
+    {
+      "id": "30.733,76.779",
+      "name": "Chandigarh",
+      "lat": 30.733,
+      "lon": 76.779,
+      "items": [
+        {
+          "type": "place",
+          "slug": "chandigarh",
+          "title": "Chandigarh",
+          "kind": "haunt"
+        }
+      ],
+      "shape": "haunt",
+      "recommended": false,
+      "visits": 0
+    },
+    {
+      "id": "12.452,75.777",
+      "name": "Coorg Marriott Resort & Spa",
+      "lat": 12.452,
+      "lon": 75.777,
+      "items": [
+        {
+          "type": "place",
+          "slug": "coorg-marriott",
+          "title": "Coorg Marriott Resort & Spa",
+          "kind": "recommendation"
+        }
+      ],
+      "shape": "recommendation",
+      "recommended": true,
+      "visits": 0
+    },
+    {
+      "id": "32.683,-117.186",
+      "name": "Coronado Beach",
+      "lat": 32.683,
+      "lon": -117.186,
+      "items": [
+        {
+          "type": "place",
+          "slug": "coronado-beach",
+          "title": "Coronado Beach",
+          "kind": "recommendation"
+        }
+      ],
+      "shape": "recommendation",
+      "recommended": true,
+      "visits": 0
+    },
+    {
+      "id": "12.974,77.592",
+      "name": "Cubbon Park",
+      "lat": 12.974,
+      "lon": 77.592,
+      "items": [
+        {
+          "type": "place",
+          "slug": "cubbon-park",
+          "title": "Cubbon Park",
+          "kind": "recommendation"
+        }
+      ],
+      "shape": "recommendation",
+      "recommended": true,
+      "visits": 0
+    },
+    {
+      "id": "25.273,51.608",
+      "name": "Doha, Qatar",
+      "lat": 25.273,
+      "lon": 51.608,
       "items": [
         {
           "type": "trip",
-          "slug": "example-trip",
-          "title": "Example Trip",
-          "date": "2026-01-15",
-          "placeName": "Leh, India"
+          "slug": "san25-trip",
+          "title": "San Diego",
+          "date": "2025-12",
+          "placeName": "Doha, Qatar"
         }
       ],
       "shape": "trip",
@@ -118,17 +499,315 @@
       "visits": 1
     },
     {
-      "id": "33.750,78.900",
-      "name": "Pangong Tso, India",
-      "lat": 33.75,
-      "lon": 78.9,
+      "id": "25.205,55.271",
+      "name": "Dubai, United Arab Emirates",
+      "lat": 25.205,
+      "lon": 55.271,
       "items": [
         {
           "type": "trip",
-          "slug": "example-trip",
-          "title": "Example Trip",
-          "date": "2026-01-15",
-          "placeName": "Pangong Tso, India"
+          "slug": "mtl26-trip",
+          "title": "Montreal, and a few hours in Dubai",
+          "date": "2026-08",
+          "placeName": "Dubai, United Arab Emirates"
+        }
+      ],
+      "shape": "trip",
+      "recommended": false,
+      "visits": 1
+    },
+    {
+      "id": "17.385,78.487",
+      "name": "Hyderabad, India",
+      "lat": 17.385,
+      "lon": 78.487,
+      "items": [
+        {
+          "type": "trip",
+          "slug": "hyderabad-2022",
+          "title": "Hyderabad",
+          "date": "2022-12",
+          "placeName": "Hyderabad, India"
+        }
+      ],
+      "shape": "trip",
+      "recommended": false,
+      "visits": 1
+    },
+    {
+      "id": "31.380,75.380",
+      "name": "Kapurthala",
+      "lat": 31.38,
+      "lon": 75.38,
+      "items": [
+        {
+          "type": "place",
+          "slug": "kapurthala",
+          "title": "Kapurthala",
+          "kind": "haunt"
+        }
+      ],
+      "shape": "haunt",
+      "recommended": false,
+      "visits": 0
+    },
+    {
+      "id": "32.992,74.932",
+      "name": "Katra, India",
+      "lat": 32.992,
+      "lon": 74.932,
+      "items": [
+        {
+          "type": "trip",
+          "slug": "vaishno-devi-2009",
+          "title": "Vaishno Devi",
+          "date": "2009",
+          "placeName": "Katra, India"
+        }
+      ],
+      "shape": "trip",
+      "recommended": false,
+      "visits": 1
+    },
+    {
+      "id": "12.968,77.597",
+      "name": "Lavelle Road",
+      "lat": 12.968,
+      "lon": 77.597,
+      "items": [
+        {
+          "type": "place",
+          "slug": "lavelle-road",
+          "title": "Lavelle Road",
+          "kind": "recommendation"
+        }
+      ],
+      "shape": "recommendation",
+      "recommended": true,
+      "visits": 0
+    },
+    {
+      "id": "51.507,-0.128",
+      "name": "London, United Kingdom",
+      "lat": 51.507,
+      "lon": -0.128,
+      "items": [
+        {
+          "type": "trip",
+          "slug": "ldn23-trip",
+          "title": "London",
+          "date": "2023-05",
+          "placeName": "London, United Kingdom"
+        }
+      ],
+      "shape": "trip",
+      "recommended": false,
+      "visits": 1
+    },
+    {
+      "id": "12.424,75.738",
+      "name": "Madikeri, India",
+      "lat": 12.424,
+      "lon": 75.738,
+      "items": [
+        {
+          "type": "trip",
+          "slug": "coorg-2024",
+          "title": "Coorg",
+          "date": "2024-11",
+          "placeName": "Madikeri, India"
+        }
+      ],
+      "shape": "trip",
+      "recommended": false,
+      "visits": 1
+    },
+    {
+      "id": "12.950,77.700",
+      "name": "Meghana Foods, Marathahalli",
+      "lat": 12.95,
+      "lon": 77.7,
+      "items": [
+        {
+          "type": "place",
+          "slug": "meghana-marathahalli",
+          "title": "Meghana Foods, Marathahalli",
+          "kind": "recommendation"
+        }
+      ],
+      "shape": "recommendation",
+      "recommended": true,
+      "visits": 0
+    },
+    {
+      "id": "45.502,-73.567",
+      "name": "Montreal, Canada",
+      "lat": 45.502,
+      "lon": -73.567,
+      "items": [
+        {
+          "type": "trip",
+          "slug": "mtl26-trip",
+          "title": "Montreal, and a few hours in Dubai",
+          "date": "2026-08",
+          "placeName": "Montreal, Canada"
+        }
+      ],
+      "shape": "trip",
+      "recommended": false,
+      "visits": 1
+    },
+    {
+      "id": "35.765,140.386",
+      "name": "Narita, Japan",
+      "lat": 35.765,
+      "lon": 140.386,
+      "items": [
+        {
+          "type": "trip",
+          "slug": "san25-trip",
+          "title": "San Diego",
+          "date": "2025-12",
+          "placeName": "Narita, Japan"
+        }
+      ],
+      "shape": "trip",
+      "recommended": false,
+      "visits": 1
+    },
+    {
+      "id": "51.752,-1.258",
+      "name": "Oxford",
+      "lat": 51.752,
+      "lon": -1.258,
+      "items": [
+        {
+          "type": "place",
+          "slug": "oxford",
+          "title": "Oxford",
+          "kind": "haunt"
+        }
+      ],
+      "shape": "haunt",
+      "recommended": false,
+      "visits": 0
+    },
+    {
+      "id": "15.491,73.828",
+      "name": "Panaji, India",
+      "lat": 15.491,
+      "lon": 73.828,
+      "items": [
+        {
+          "type": "trip",
+          "slug": "goa-2025",
+          "title": "Goa",
+          "date": "2025-11",
+          "placeName": "Panaji, India"
+        }
+      ],
+      "shape": "trip",
+      "recommended": false,
+      "visits": 1
+    },
+    {
+      "id": "12.964,77.713",
+      "name": "Polar Bear, AECS Layout",
+      "lat": 12.964,
+      "lon": 77.713,
+      "items": [
+        {
+          "type": "place",
+          "slug": "polar-bear-aecs",
+          "title": "Polar Bear, AECS Layout",
+          "kind": "recommendation"
+        }
+      ],
+      "shape": "recommendation",
+      "recommended": true,
+      "visits": 0
+    },
+    {
+      "id": "30.966,76.523",
+      "name": "Rupnagar",
+      "lat": 30.966,
+      "lon": 76.523,
+      "items": [
+        {
+          "type": "place",
+          "slug": "rupnagar",
+          "title": "Rupnagar",
+          "kind": "haunt"
+        }
+      ],
+      "shape": "haunt",
+      "recommended": false,
+      "visits": 0
+    },
+    {
+      "id": "32.716,-117.161",
+      "name": "San Diego, United States",
+      "lat": 32.716,
+      "lon": -117.161,
+      "items": [
+        {
+          "type": "trip",
+          "slug": "san25-trip",
+          "title": "San Diego",
+          "date": "2025-12",
+          "placeName": "San Diego, United States"
+        }
+      ],
+      "shape": "trip",
+      "recommended": false,
+      "visits": 1
+    },
+    {
+      "id": "32.704,-117.158",
+      "name": "Sweet Things Frozen Yogurt",
+      "lat": 32.704,
+      "lon": -117.158,
+      "items": [
+        {
+          "type": "place",
+          "slug": "sweet-things-sd",
+          "title": "Sweet Things Frozen Yogurt",
+          "kind": "recommendation"
+        }
+      ],
+      "shape": "recommendation",
+      "recommended": true,
+      "visits": 0
+    },
+    {
+      "id": "12.971,77.713",
+      "name": "The Rameshwaram Cafe, Brookefield",
+      "lat": 12.971,
+      "lon": 77.713,
+      "items": [
+        {
+          "type": "place",
+          "slug": "rameshwaram-cafe-brookefield",
+          "title": "The Rameshwaram Cafe, Brookefield",
+          "kind": "recommendation"
+        }
+      ],
+      "shape": "recommendation",
+      "recommended": true,
+      "visits": 0
+    },
+    {
+      "id": "31.468,76.271",
+      "name": "Una, India",
+      "lat": 31.468,
+      "lon": 76.271,
+      "items": [
+        {
+          "type": "trip",
+          "slug": "una-2011",
+          "title": "Una",
+          "date": "2011",
+          "placeName": "Una, India"
         }
       ],
       "shape": "trip",

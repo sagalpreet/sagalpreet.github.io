@@ -27,8 +27,11 @@ joined in the order you list them:
       - hunder.jpg | Sand dunes at Hunder
     ---
 
-A PLACE is somewhere that is not a single occasion — a town you keep going back
-to, or somewhere you would send someone else:
+A PLACE is somewhere not tied to a single occasion. Either a `haunt`, a town you
+keep going back to or have lived in, or a `recommendation`, a specific spot you
+liked enough to send someone else to: a restaurant, a cafe, a viewpoint. Both are
+places you have been; a recommendation is a verdict on one, not a wish list. A
+haunt is usually a town, a recommendation usually something inside one:
 
     ---
     name: Nani's house, Phagwara

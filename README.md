@@ -154,7 +154,16 @@ There are two kinds of entry:
 |:--|:--|:--|:--|
 | **Trip** | `trips/<slug>/` | somewhere you went on a particular occasion | filled dots, joined in order by a dashed route |
 | **Haunt** | `places/<slug>/` | somewhere you keep going back to, no single visit | a hollow ring |
-| **Recommendation** | `places/<slug>/` | somewhere you would send someone else | a warm amber diamond |
+| **Recommendation** | `places/<slug>/` | a specific spot you liked and would send someone to: a restaurant, a cafe, a viewpoint | a warm amber diamond |
+
+All three are places you have **been**. A recommendation is a positive review of
+somewhere you went, not a list of places you hope to visit, so it is normal for
+one to sit inside a city you have already written a trip about.
+
+Trips and haunts are usually towns or cities. A recommendation is finer grained
+than that: pin the restaurant, not the neighbourhood. Those pins will sit almost
+on top of the city pin at full zoom and separate as you zoom in, which is what
+the zoom is for.
 
 ### A trip
 
@@ -219,7 +228,7 @@ page offers a chooser.
 
 A merged pin takes its *shape* from what it is (trip beats haunt beats
 recommendation) and its *colour* from whether anything there is recommended, so
-a recommended place you have also visited still reads as recommended.
+somewhere you went on a trip and also vouch for still reads as recommended.
 
 ### The map
 
