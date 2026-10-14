@@ -1,0 +1,106 @@
+\documentclass[10pt, letterpaper]{article}
+
+% --- Packages ---
+\usepackage[left=0.6in,right=0.6in,top=0.5in,bottom=0.5in]{geometry}
+\usepackage{times}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage[colorlinks=true, allcolors=myblue]{hyperref}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+
+% --- Custom Colors ---
+\definecolor{myblue}{RGB}{25, 85, 165}
+
+% --- Custom Commands ---
+\newcommand{\cvsection}[2][]{
+  \vspace{10pt}
+  \noindent{\large\scshape\textcolor{myblue}{#2} \hfill \scriptsize\scshape #1} \\
+  \vspace{-6pt}
+  \hrule
+  \vspace{6pt}
+}
+
+\pagestyle{empty}
+
+\begin{document}
+
+% --- Header ---
+\begin{center}
+    {\Huge \textbf{Sagalpreet Singh}} \\ \vspace{9pt}
+    \faEnvelope \hspace{2pt} \href{mailto:sagalpreet60@gmail.com}{\underline{sagalpreet60@gmail.com}} \quad
+    \faGlobe \hspace{2pt} \href{https://sagalpreet.github.io}{\underline{sagalpreet.github.io}} \quad
+    \faGithub \hspace{2pt} \href{https://github.com/sagalpreet}{\underline{sagalpreet}} \quad
+    \faGraduationCap \hspace{2pt} \href{https://scholar.google.com/citations?user=eQIEse0AAAAJ}{\underline{Google Scholar}} \quad
+    \faFilePdf \hspace{2pt} \href{https://sagalpreet.github.io/assets/Sagalpreet-CV.pdf}{\underline{Extended CV}}
+\end{center}
+
+% --- Education ---
+\cvsection{Education}
+
+\noindent
+\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}}
+\textbf{University of Oxford} & Oxford, United Kingdom \\
+\textit{DPhil in Computer Science, OATML Group;} \textbf{Supervisor:} Prof.\ Yarin Gal & \textit{2029 (tentative)} \\
+\textit{Funded by LASR} & \\[3pt]
+\textbf{Indian Institute of Technology Ropar} & Rupnagar, India \\
+\textit{Bachelor of Technology in Computer Science and Engineering;} \textbf{CGPA:} 9.31/10 & \textit{May 2023} \\
+\textit{Concentration in Artificial Intelligence;} \textbf{CGPA:} 10/10 & \\
+\end{tabular*}
+
+% --- Publications ---
+\cvsection[C=Conference]{Publications}
+
+\begin{itemize}[leftmargin=3em, labelsep=0.5em, itemsep=4pt, parsep=0pt, topsep=0pt]
+    \item[\textbf{[C.3]}] \hypertarget{C3}{} \textbf{Dense and Diverse Goal Coverage in Reinforcement Learning} \\
+    \underline{Sagalpreet Singh}, Rishi Saket, Aravindan Raghuveer \quad \textbf{[RLC '26 (Oral)]} \hfill \href{https://arxiv.org/abs/2510.25311}{\textcolor{myblue}{[Paper]}}
+
+    \item[\textbf{[C.2]}] \hypertarget{C2}{} \textbf{Learning from Label Proportions and Covariate-shifted Instances} \\
+    \underline{Sagalpreet Singh}, Navodita Sharma, Shreyas Havaldar, Rishi Saket, Aravindan Raghuveer \quad \textbf{[UAI '25]} \hfill \href{https://arxiv.org/pdf/2411.12334}{\textcolor{myblue}{[Paper]}}
+
+    \item[\textbf{[C.1]}] \hypertarget{C1}{} \textbf{On Subset Selection of Multiple Humans to Improve Human-AI Team Accuracy} \\
+    \underline{Sagalpreet Singh}, Shweta Jain, Shashi Shekhar Jha \quad \textbf{[AAMAS '23 (Oral)]} \hfill \href{https://www.ifaamas.org/Proceedings/aamas2023/pdfs/p317.pdf}{\textcolor{myblue}{[Paper]}}
+\end{itemize}
+
+% --- Experience ---
+\cvsection{Experience}
+
+\noindent
+\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}}
+\textcolor{myblue}{\textbf{Google DeepMind}} $|$ \textit{Pre-Doctoral Researcher} & \textit{Aug 2024 -- Jul 2026} \\
+\end{tabular*}
+\begin{itemize}[leftmargin=0.15in, itemsep=3.5pt, parsep=0pt, topsep=5pt]
+    \item Ran end-to-end \textbf{RL training} on \textbf{Gemini} models across \textbf{multi-step coding} and \textbf{long-horizon} environments; designed production-scale data mixtures; evaluated impact through systematic \textbf{checkpoint evaluation} and \textbf{auto-analysis} to attribute gains across algorithm, data, and infrastructure
+    \item Monitored \textbf{training curves} and \textbf{trajectories} to detect \textbf{reward hacking}; wrote \textbf{agentic workflows} for trajectory analysis to identify capability gaps; designed \textbf{evaluation setups} that distinguish genuine gains from artifacts of task or reward design
+    \item Built \textbf{long-horizon RL} training data for \textbf{filesystem exploration and navigation} across \textbf{multiple Gemini scales}; achieved \textbf{$>$6 pp} improvement on downstream \textbf{agentic evals} with headroom confirmed for larger models; in collaboration with \textbf{Code Strike} and \textbf{Recursive Self-Improvement} teams
+    \item Engineered scalable, \textbf{fully-verifiable curriculum generation} engine for \textbf{Gemini Thinking} via RL; contributed \textbf{38\% weighted data} in the Gemini thinking data revision; \textbf{$>$10 pp} improvement on Math and NL Reasoning; in collaboration with \textbf{Thinking Strike} team
+    \item Designed RL algorithm with \textbf{convergence guarantee} and \textbf{sample complexity} for preventing mode collapse in multi-goal environments \hyperlink{C3}{[C.3]}; demo at \textbf{NeurIPS '25} (Google DeepMind booth); \textbf{patent} filed
+    \item \textbf{Multi-million dollar} impact on Google Ads and \textbf{SOTA} on public datasets via novel \textbf{domain adaptation} objective for weakly supervised target domains \hyperlink{C2}{[C.2]}; derived generalization bounds and sample complexity
+\end{itemize}
+
+\vspace{10pt}
+\noindent
+\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}}
+\textcolor{myblue}{\textbf{Oracle AI}} $|$ \textit{Member of Technical Staff} & \textit{Jun 2023 -- Aug 2024} \\
+\end{tabular*}
+\begin{itemize}[leftmargin=0.15in, itemsep=4pt, parsep=0pt, topsep=6pt]
+    \item Built Oracle's \textbf{transformer-based} in-house \textbf{Text-to-Speech model} with \textbf{few-shot voice cloning}; trained on \textbf{distributed Slurm cluster}; deployed via \textbf{Triton inference server}; achieved \textbf{SOTA WER/CER} against baselines
+\end{itemize}
+
+% --- Honors & Awards ---
+\cvsection[*=Declined]{Honors \& Awards}
+
+\begin{itemize}[leftmargin=0.15in, itemsep=4pt, parsep=0pt, topsep=0pt]
+    \item \textbf{Google Research Travel Grant} (USD 2000) \& \textbf{Microsoft Research Travel Grant*} (INR 120k)
+    \item \textbf{NTSE Scholarship} by Government of India (top 1000 students nationally)
+    \item \textbf{Applied Scientist Internship*} --- Amazon (via ML Summer School)
+    \item \textbf{Institute Merit Scholarship} (top 7\% of batch) $|$ \textbf{Best Poster} \& \textbf{Best B.Tech.\ Project} --- IIT Ropar
+\end{itemize}
+
+% --- Academic Service ---
+\cvsection{Academic Service}
+
+\noindent \textbf{Reviewer:} NeurIPS '26, ICML '26, UAI '26, AISTATS '26, ACL-ARR '25
+
+\end{document}

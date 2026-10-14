@@ -2,11 +2,11 @@
 
 Personal website, blog, utilities and travel map for Sagalpreet Singh.
 
-Static files, no build tooling, no framework. GitHub Pages serves the repository
-as-is; the only scripts you ever need to run are the two builders below, and only
-after adding a post or a trip. Everything the home page, blog and travel map need
-is vendored into the repo — three of the utilities are the exception and pull
-their libraries from a CDN.
+Static files, no framework. GitHub Pages serves the repository as-is, so nothing
+is compiled on deploy; the scripts in `tools/` are run by hand, and only after
+adding a post or a trip, or editing the CV. Everything the home page, blog and
+travel map need is vendored into the repo — three of the utilities are the
+exception and pull their libraries from a CDN.
 
 ```
 ├── index.html              home — bio, news, projects, publications
@@ -33,8 +33,11 @@ their libraries from a CDN.
 │   └── *.pdf               CV, résumé, posters and slides
 ├── css/ · fonts/           Academicons, used by the home page and blog
 ├── images/                 photo, logos, publication thumbnails, icon sources
+├── cv/                     LaTeX source for the CV and résumé, plus a
+│                           vendored moderncv — see below
 ├── tools/
 │   ├── build_blog.py       regenerates feed.xml
+│   ├── build_cv.sh         compiles cv/ into assets/*.pdf
 │   ├── build_travel.py     regenerates trips/index.json
 │   └── build_worldmap.py   regenerates assets/world.svg (run once)
 └── d3/ · nextprot/ · javascript/ · javascripts/
@@ -265,6 +268,35 @@ sets `travel.html?trip=<slug>` or `?place=<slug>` so the link can be shared.
 There is no marker clustering yet. With zoom and pan in place it may not be
 needed; if the pins do get crowded, the next step would be to merge pins closer
 than ~20 screen pixels into a counted badge that splits as you zoom in.
+
+---
+
+## Updating the CV and résumé
+
+`assets/Sagalpreet-CV.pdf` and `assets/Sagalpreet-Resume.pdf` are built from
+LaTeX in `cv/`, not edited as PDFs. GitHub Pages does not run LaTeX, so the
+built PDFs are committed alongside their source. Edit the `.tex`, then:
+
+```sh
+./tools/build_cv.sh            # both
+./tools/build_cv.sh resume     # just one
+```
+
+Two things are load-bearing, and both are handled by the script:
+
+- `cv/` vendors **moderncv v1.2.0** (2012). TeX Live ships v2.3.1, which is a
+  different class and silently changes the layout, so the script puts `cv/`
+  ahead on `TEXINPUTS`.
+- pdfTeX stamps the build time into the PDF, which would make every rebuild a
+  diff even with no edits. The script pins `SOURCE_DATE_EPOCH` to the `.tex`
+  file's own mtime, so an unchanged source rebuilds byte-identically.
+
+Aux files land in `cv/.build/`, which is gitignored. The résumé is deliberately
+held to **one page**; check `pdfinfo` after editing it.
+
+Inside `\cvitem`, the hint column accepts `\\` but the content column does not —
+it is interpolated inside braces, so `\\` reads as the tabular row break and the
+build fails. Use `\newline` there.
 
 ---
 

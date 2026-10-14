@@ -1,0 +1,370 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% "ModernCV" CV and Cover Letter
+% LaTeX Template
+% Version 1.11 (19/6/14)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Xavier Danaux (xdanaux@gmail.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+% Important note:
+% This template requires the moderncv.cls and .sty files to be in the same 
+% directory as this .tex file. These files provide the resume style and themes 
+% used for structuring the document.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[11pt,a4paper,sans]{moderncv} % Font sizes: 10, 11, or 12; paper sizes: a4paper, letterpaper, a5paper, legalpaper, executivepaper or landscape; font families: sans or roman
+
+\moderncvstyle{classic} % CV theme - options include: 'casual' (default), 'classic', 'oldstyle' and 'banking'
+\moderncvcolor{blue} % CV color - options include: 'blue' (default), 'orange', 'green', 'red', 'purple', 'grey' and 'black'
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+\usepackage{soul}
+\usepackage[scale=0.85]{geometry} % Reduce document margins
+\usepackage{fontawesome5}
+\setlength{\hintscolumnwidth}{3cm} % Uncomment to change the width of the dates column
+%\setlength{\makecvtitlenamewidth}{10cm} % For the 'classic' style, uncomment to adjust the width of the space allocated to your name
+
+%----------------------------------------------------------------------------------------
+%	NAME AND CONTACT INFORMATION SECTION
+%----------------------------------------------------------------------------------------
+
+\firstname{Sagalpreet} % Your first name
+\familyname{Singh} % Your last name
+
+% All information in this block is optional, comment out any lines you don't need
+\title{}
+\address{Oxford, United Kingdom}{}
+\mobile{Contact: +44 xxxx xx5912}
+\email{sagalpreet60@gmail.com}
+\homepage{sagalpreet.github.io/}{https://sagalpreet.github.io}
+\extrainfo{
+    \faLinkedin\ \href{https://linkedin.com/in/sagalpreet}{sagalpreet} \ 
+    \faGithub\ \href{https://github.com/sagalpreet}{sagalpreet} \quad 
+    \faGraduationCap\ \href{https://scholar.google.com/citations?user=eQIEse0AAAAJ}{Google Scholar}
+}
+% The first argument is the url for the clickable link, the second argument is the url displayed in the template - this allows special characters to be displayed such as the tilde in this example
+%\extrainfo{additional information}
+% \photo[70pt][0.4pt]{pictures/daniele} % The first bracket is the picture height, the second is the thickness of the frame around the picture (0pt for no frame)
+%\quote{"A witty and playful quotation" - John Smith}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\makecvtitle % Print the CV title
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION SECTION
+%----------------------------------------------------------------------------------------
+
+\section{\textbf{Education}}
+
+\cvitem{2026 -- 2029\\(tentative)}{\textbf{University of Oxford}, Oxford, United Kingdom\newline DPhil in Computer Science, OATML Group}
+\cvitem{}{Supervisor: Prof. Yarin Gal; funded by LASR}
+\vspace{1em}
+
+\cvitem{2019 -- 2023}{\textbf{Indian Institute of Technology Ropar (IIT Ropar)}, Punjab, India}
+\cvitem{9.31/10.0}{Bachelor of Technology, Computer Science and Engineering}
+\cvitem{10.0/10.0}{Concentration in Artificial Intelligence}
+% \cvitem{\faTrophy}{Institute Merit Scholarship for 5/8 semesters}
+% \cvitem{\faTrophy}{Best B.Tech. Project Award}
+% \cvitem{\faTrophy}{Best Poster Award}
+\vspace{1em}
+
+%\section{Masters Thesis}
+
+%\cvitem{Title}{\emph{Technologies and characterization of ferroelectric polymers for biomedical sensors}}
+%\cvitem{Supervisors}{Professor Antonino Fiorillo}
+%\cvitem{Description}{This thesis is based on the implementation of a temperature sensor.}
+
+%----------------------------------------------------------------------------------------
+%	WORK EXPERIENCE SECTION
+%----------------------------------------------------------------------------------------
+
+\section{\textbf{Work Experience}}
+
+\cventry{Aug'26 -- Oct'26}{Proximal}{Member of Technical Staff}{Bengaluru}{Karnataka, India}{Focus: Reinforcement Learning; Long-Horizon Agentic Environments}
+\cvitem{}{\faAngleRight\ Built \textbf{long-horizon RL environments} for training and evaluating agents on multi-step, verifiable tasks}
+\vspace{1em}
+
+\cventry{Aug'24 -- Jul'26}{Google DeepMind}{Pre-Doctoral Researcher}{Bengaluru}{Karnataka, India}{Focus: Reinforcement Learning; Continual Learning; Domain Adaptation\\Advisors: Dr. Rishi Saket, Dr. Aravindan Raghuveer}
+\cvitem{}{\faAngleRight\ Designed RL algorithm with \textbf{convergence guarantee} and \textbf{sample complexity} for preventing mode collapse in multi-goal environments; conducted systematic training runs and checkpoint evaluations on multi-step coding environments; patent filed; presented demo at NeurIPS'25}
+\cvitem{}{\faAngleRight\ Engineered scalable, fully-verifiable \textbf{RL-driven curriculum generation} engine for training \textbf{Gemini Thinking} models; designed verifiable reward functions and training signal pipelines; contributed 38\% weighted data; $>$10\% improvement on Math and NL Reasoning}
+\cvitem{}{\faAngleRight\ Investigated \textbf{reward hacking} phenomena and conducted trajectory-level analysis in multi-step RL settings; systematic evaluations across training checkpoints to characterize emergent failure modes}
+\cvitem{}{\faAngleRight\ Proposed novel objective for \textbf{domain adaptation} to weakly supervised target domain with label proportions; derived \textbf{generalization bounds}; \textbf{SOTA} on public benchmarks; multi-million dollar impact on Google Ads}
+\cvitem{}{\faAngleRight\ Designed \textbf{continual learning} system via active retrieval in LLM-based agents for persistent non-parametric memory and compounded lifelong improvement}
+\vspace{1em}
+
+\cventry{Jun'23 -- Aug'24}{Oracle AI}{Member of Technical Staff}{Bengaluru}{Karnataka, India}{Focus: Text-to-Speech; Transformers; Distributed Training; Backend Engineering\\Manager: Phanindra Mankale}
+\vspace{1em}
+
+% \cventry{Apr'23 -- Aug'24}{Guvi}{Teaching Consultant (part-time)}{Remote}{}
+% {Focus: Machine Learning, Deep Learning}
+% \vspace{1em}
+
+\cventry{Jan'23 -- Apr'23}{LASII Lab}{Undergraduate Researcher}{IIT Ropar}{Punjab, India}
+{Focus: Style Transfer, Diffusion Models, Audio Processing\\Advisors: Prof. Abhinav Dhall}
+\vspace{1em}
+
+\cventry{Mar'22 -- Oct'22}{GTML Lab}{Undergraduate Researcher}{IIT Ropar}{Punjab, India}
+{Focus: Machine Learning, Human-AI Teaming, Bayesian Inference\\Advisors: Prof. Shweta Jain, Prof. Shashi Shekhar Jha}
+\vspace{1em}
+
+\cventry{Jun'22 -- Jul'22}{Oracle Integrations Cloud}{Software Engineering Intern}{Remote}{}
+{Focus: Backend Engineering\\Manager: Muthu Palanisamy}
+\vspace{1em}
+
+\cventry{Jan'22 -- May'22}{IPSA Lab}{Department Engineering Project}{IIT Ropar}{Punjab, India}
+{Focus: Android Development, Backend Engineering\\Supervisor: Prof. Puneet Goyal}
+\vspace{1em}
+
+% \cventry{2013 -- 2013}{Columbia University}{Research Intern}{}{New York, NY, United States}
+% {}
+% \vspace{0.5em}
+
+% \cventry{2012 -- 2012}{Carnegie Mellon University}{Research Intern}{}{Pittsburgh, PA, United States}
+% {}
+% \vspace{0.5em}
+
+% \cventry{2009 -- 2009}{Baidu}{Product Manager}{}{Beijing, China}
+% {}
+% \vspace{1em}
+
+%------------------------------------------------
+
+\section{\textbf{Publications}}
+
+\cvitem{RLC 2026\\(Oral)}{\textbf{Sagalpreet Singh}, Rishi Saket, Aravindan Raghuveer. 2026. \ul{Dense and Diverse Goal Coverage in Reinforcement Learning}.}
+\vspace{1em}
+
+\cvitem{UAI 2025}{\textbf{Sagalpreet Singh}, Navodita Sharma, Shreyas Havaldar, Rishi Saket, Aravindan Raghuveer. 2025. \ul{Learning from Label Proportions and Covariate-shifted Instances}. Proceedings of the Forty-first Conference on Uncertainty in Artificial Intelligence, PMLR 286:3920-3938, 2025.}
+\vspace{1em}
+
+\cvitem{AAMAS 2023\\(Oral)}{\textbf{Sagalpreet Singh}, Shweta Jain, Shashi Shekhar Jha. 2023. \ul{On subset selection of multiple humans to improve human-AI team accuracy}. In Proceedings of the 2023 International Conference on Autonomous Agents and Multiagent Systems (AAMAS '23). International Foundation for Autonomous Agents and Multiagent Systems, Richland, SC, 317–325.}
+\vspace{1em}
+
+\section{\textbf{Patents}}
+
+\cvitem{2025}{\textbf{Sagalpreet Singh}, Rishi Saket, Aravindan Raghuveer. Dense and Diverse Goal Coverage in Reinforcement Learning. (Filed)}
+\vspace{1em}
+
+\section{\textbf{Talks and Demos}}
+
+\cventry{Aug 2026}{Dense and Diverse Goal Coverage in Reinforcement Learning}{RLC 2026 (Oral)}{Montreal}{}{}
+\vspace{1em}
+
+\cventry{Dec 2025}{Dense and Diverse Goal Coverage in Reinforcement Learning}{Google DeepMind Booth}{NeurIPS 2025}{San Diego}{}
+\vspace{1em}
+
+\cventry{Dec 2024}{Learning from Label Proportions and Covariate-shifted Instances}{Chaupal, Google DeepMind}{Bengaluru}{}{}
+\vspace{1em}
+
+\cventry{Jun 2023}{On subset selection of multiple humans to improve human-AI team accuracy}{AAMAS 2023 (Oral)}{London}{}{}
+\vspace{1em}
+
+
+\section{\textbf{Professional Projects}}
+
+\cvitem{\faBuilding}{\textbf{Google DeepMind}}
+\vspace{0.5em}
+
+\cvitem{2025}{\textbf{Verifiable Problem Generation for Gemini Thinking}}
+\cvitem{}{\faAngleRight\ Engineered scalable, fully-verifiable \textbf{RL-driven curriculum generation} engine for training Gemini Thinking models; designed verifiable reward functions and training signal pipelines for mathematical and logical reasoning tasks.}
+\cvitem{}{\faAngleRight\ Contributed 38\% weighted data in the Gemini thinking data revision leading to $>$10\% improvement on downstream tasks like Math and NL Reasoning.}
+\vspace{0.5em}
+
+\cvitem{2026}{\textbf{Long-Horizon RL for Filesystem Exploration and Navigation}}
+\cvitem{}{\faAngleRight\ Built long-horizon RL training data for filesystem exploration and navigation in Gemini models across multiple scales.}
+\cvitem{}{\faAngleRight\ Achieved $>$6 pp improvement on downstream agentic evals for XS model with headroom confirmed for larger models.}
+\cvitem{}{\faAngleRight\ In collaboration with Code Strike and Recursive Self-Improvement teams.}
+\vspace{0.5em}
+
+\cvitem{2026}{\textbf{Active Retrieval for Continual Learning in Agents}}
+\cvitem{}{\faAngleRight\ Enabling continual learning via active retrieval in LLM-based agents to have persistent non-parametric memory that leads to compounded and lifelong improvement through experience.}
+\vspace{0.5em}
+
+\cvitem{2025}{\textbf{Hybrid LLP for Ad Conversion Modeling}}
+\cvitem{}{\faAngleRight\ Proposed novel objective function for domain adaptation to weakly supervised target domain consisting of aggregated data with label proportions.}
+\cvitem{}{\faAngleRight\ Multi-million dollar impact on Google Ads.}
+\vspace{1em}
+
+\cvitem{\faBuilding}{\textbf{Oracle AI}}
+\vspace{0.5em}
+
+\cvitem{2024}{\textbf{Text-to-Speech Model Development, Training and Deployment}}
+\cvitem{}{\faAngleRight\ Built Oracle’s transformer-based in-house Text-to-Speech model supporting few-shot voice cloning.}
+\cvitem{}{\faAngleRight\ Worked with vendors for high fidelity data procurement.}
+\cvitem{}{\faAngleRight\ Trained model on distributed Slurm cluster and ran extensive evaluations against baselines showing SOTA WER/CER scores.}
+\cvitem{}{\faAngleRight\ Deployed the model via Triton inference server, created API spec, implemented API backend, and generated SDK
+and documentation.}
+\cvitem{}{\faAngleRight\ Handled customer calls for integrating the service into their applications.}
+\vspace{0.5em}
+
+\cvitem{2023}{\textbf{Supporting Async Job Deletion in ASR Service}}
+\cvitem{}{\faAngleRight\ Added support for deleting async transcription jobs with rigorous checks in place and implemented corresponding UI changes.}
+\vspace{1em}
+
+\cvitem{\faBuilding}{\textbf{Oracle Integrations Cloud}}
+\vspace{0.5em}
+
+\cvitem{2022}{\textbf{Support customer-tenancy based quota for email notifications}}
+\cvitem{}{\faAngleRight\ Developed circuit breaker to handle the noisy neighbor problem in the email notification microservice that is used more than a million times a day}
+\cvitem{}{\faAngleRight\ Modified UI to allow users to enter SMTP credentials.}
+\cvitem{}{\faAngleRight\ Was offered full time role at the end of the internship.}
+\vspace{1em}
+
+\cvitem{\faBuilding}{\textbf{IPSA Lab (IIT Ropar)}}
+\vspace{0.5em}
+
+\cvitem{2022}{\textbf{SAMPAN App and Dashboard}}
+\cvitem{}{\faAngleRight\ Worked on SAMPAN Android App used by 1200+ Anganwadi (courtyard-shelter) workers in India to log 50000+ data points every month.}
+\cvitem{}{\faAngleRight\ Designed, developed and deployed dashboard on IIT Ropar servers for district officials.}
+\cvitem{}{\faAngleRight\ Featured in The Tribune.}
+\vspace{1em}
+
+\section{\textbf{Selected Open Sourced Projects}}
+
+\cvitem{\faBuilding}{\textbf{Google DeepMind}}
+\vspace{0.5em}
+
+\cvitem{2026}{\textbf{Dense and Diverse Goal Coverage in Reinforcement Learning}}
+\cvitem{}{\faAngleRight\ Designed RL algorithm with convergence guarantee and sample complexity for preventing mode collapse in multi-goal environments.}
+\cvitem{}{\faAngleRight\ Open sourced Jax based implementation of our algorithm, baseline algorithms as well as adaptation of Brax environments to multi-goal setup.}
+\vspace{0.5em}
+
+\cvitem{2025}{\textbf{Learning from Label Proportions and Covariate-shifted Instances}}
+\cvitem{}{\faAngleRight\ Proposed novel objective function for domain adaptation from fully supervised source domain to weakly supervised target domain comprising aggregate data in form of label proportions.}
+\cvitem{}{\faAngleRight\ Derived generalization error bound and corresponding sample complexity.}
+\cvitem{}{\faAngleRight\ Achieved SOTA results on public datasets like Criteo Sponsored Search Conversion Log and IPUMS.}
+\cvitem{}{\faAngleRight\ Open sourced TensorFlow based implementation of our method as well as baseline techniques.}
+\vspace{1em}
+
+\cvitem{\faBuilding}{\textbf{IIT Ropar}}
+\vspace{0.5em}
+
+\cvitem{2023}{\textbf{On Subset Selection of Multiple Humans to Improve Human-AI Team Accuracy}}
+\cvitem{}{\faAngleRight\ Developed an efficient algorithm based on Bayes’ rule to combine multiple human labels with logits from ML models.}
+\cvitem{}{\faAngleRight\ Our method significantly outperformed naive combination methods in image classification on CIFAR-10H.}
+\vspace{1em}
+
+%----------------------------------------------------------------------------------------
+%	AWARDS SECTION
+%----------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%	COMPUTER SKILLS SECTION
+%----------------------------------------------------------------------------------------
+
+% \section{\textbf{Skills}}
+
+% \cvitem{Programming}{Python, C++}
+% \cvitem{Frameworks}{Jax, PyTorch, Tensorflow}
+% \cvitem{Utilities}{\LaTeX}
+% \cvitem{Language}{English (TOEFL:113/120), Punjabi, Hindi}
+
+%----------------------------------------------------------------------------------------
+%	COMMUNICATION SKILLS SECTION
+%----------------------------------------------------------------------------------------
+
+%\section{Communication Skills}
+
+%\cvitem{2010}{Oral Presentation at the California Business Conference}
+%\cvitem{2009}{Poster at the Annual Business Conference in Oregon}
+
+%----------------------------------------------------------------------------------------
+%	LANGUAGES SECTION
+%----------------------------------------------------------------------------------------
+
+\section{\textbf{Honors and Awards}}
+
+\cventry{2023}{Google Research travel grant (USD 2000) for AAMAS 2023}{}{Google Research}{}{}
+\cventry{2023}{Microsoft Research travel grant (INR 120k) for AAMAS 2023}{}{Microsoft Research}{}{}
+\cventry{2023}{Best poster award}{Research Scholar's Day}{IIT Ropar}{}{}
+\cventry{2019-23}{Institute Merit Scholarship for being in the top 7\% of the batch}{IIT Ropar}{}{}{}
+\cventry{2022}{Selected for Amazon ML Summer School and offered Applied Scientist Internship}{}{Alexa AI}{}{}
+\cventry{2022}{Best B.Tech. project award}{Technology Day}{IIT Ropar}{}{}
+\cventry{2019}{Top 0.1\% Merit Certificate in Physics}{Senior Secondary Exam}{CBSE}{}{}{}
+\cventry{2017}{NTSE Scholarship (given to top 1000 students in India)}{}{Government of India}{}{}
+\vspace{1em}
+
+\section{\textbf{Competitions and Rankings}}
+% \cvitem{Competitive}{2022: \textbf{India Top 20}, \textit{Oppo Inspiration Cup}, Oppo.}
+% \cvitem{Programming}{{2022: \textbf{Global Rank 238}, \textit{Google Kick Start}, Google.}}
+% \cvitem{Competitive Programming}{
+% 2022: \textbf{India Top 20}, \textit{Oppo Inspiration Cup}, Oppo.\newline
+% 2022: \textbf{Global Rank 238}, \textit{Google Kick Start}, Google.
+% }
+\cvitem{Competitive Programming}{
+\begin{minipage}[t]{\linewidth}
+2022: \textbf{India Top 20}, \textit{Oppo Inspiration Cup}, Oppo.\\[0.15em]
+2022: \textbf{Global Rank 238}, \textit{Google Kick Start}, Google.
+\end{minipage}
+}
+\cvitem{}{{2021: \textbf{Global Rank 198 (18th India)}, \textit{Google Hash Code}, Google.}}
+\cvitem{}{{2021: \textbf{Global Rank 84}, \textit{Codegoda}, Agoda.}}
+\cvitem{}{{2021: \textbf{Global Rank 83}, \textit{Newton's Grand Contest}, Newton School.}}
+\cvitem{}{{2021: \textbf{Rank 7}, \textit{AMEXpert Smartathon}, American Express.}}
+\cvitem{Olympiads}{2019: \textbf{National Top 1\%}, \textit{National Standard Examination in Physics}, IAPT.}
+\cvitem{}{2017: \textbf{State Top 1\%}, \textit{National Standard Examination in Junior Science}, IAPT.}
+
+\section{\textbf{Responsibilities}}
+% \cvitem{Program}{2017: EMNLP and CIKM}
+% \cvitem{Committee}{2016: EMNLP and CIKM}
+% \cvitem{}{2015: EMNLP and SBP}
+% \cvitem{}{2014: SBP}
+
+% \vspace{1em}
+
+
+
+\cvitem{Reviewer}{2025: ACL-ARR (May)}
+\cvitem{}{2026: AISTATS, ICML, UAI, NeurIPS.}
+\cvitem{Teaching}{2023: Deep Learning, Guvi.}
+\cvitem{}{2022: Algorithms and Data Structures, Coding Club, IIT Ropar.}
+\cvitem{Senior Member}{2023: Inter IIT Tech Contingent, IIT Ropar.}
+\cvitem{Representative}{2022: Computer Science and Engineering (Batch of 2019-23), IIT Ropar.}
+\cvitem{Representative}{2020: Coding Club, IIT Ropar.}
+\cvitem{Organizer}{2020: Fury Road Event, Robotics Club, IIT Ropar.}
+\vspace{1em}
+
+\section{\textbf{References}}
+\cvitem{}{\textit{Available on request.}}
+
+
+%----------------------------------------------------------------------------------------
+%	COVER LETTER
+%----------------------------------------------------------------------------------------
+
+% To remove the cover letter, comment out this entire block
+
+%\clearpage
+
+%\recipient{HR Department}{Corporation\\123 Pleasant Lane\\12345 City, State} % Letter recipient
+%\date{\today} % Letter date
+%\opening{Dear Sir or Madam,} % Opening greeting
+%\closing{Sincerely yours,} % Closing phrase
+%\enclosure[Attached]{curriculum vit\ae{}} % List of enclosed documents
+
+%\makelettertitle % Print letter title
+
+%\lipsum[1-3] % Dummy text
+
+%\makeletterclosing % Print letter signature
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
+
+
+

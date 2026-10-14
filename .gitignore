@@ -1,3 +1,15 @@
 **/.DS_Store
 # cached source for tools/build_worldmap.py; re-downloaded on demand
 tools/countries-110m.json
+
+# LaTeX build artefacts from tools/build_cv.sh
+cv/.build/
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+
+# local Claude Code session config (launch.json etc.)
+.claude/
